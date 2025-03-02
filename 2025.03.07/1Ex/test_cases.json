@@ -1,0 +1,46 @@
+{
+  "exe": "a01.exe",
+  "filename": "matrix.txt",
+  "tests": [
+    {
+      "name": "File Matrix Test",
+      "k": 0,
+      "matrix": "1 2 3 4\n1 2 3 4\n1 2 3 4\n1 2 3 4",
+      "expected_res": 0
+    },
+	{
+      "name": "File Symmetric Matrix Test",
+      "k": 0,
+      "matrix": "1 2 3 4\n2 3 4 5\n3 4 5 6\n4 5 6 7",
+      "expected_res": 4
+    },
+    {
+      "name": "Generated Matrix (k=1)",
+      "k": 1,
+      "n": 3,
+      "p": 3,
+      "expected_res": 3
+    },
+	{
+      "name": "Generated Matrix (k=2)",
+      "k": 2,
+      "n": 3,
+      "p": 3,
+      "expected_res": 3
+    },
+    {
+      "name": "Generated Matrix (k=3)",
+      "k": 3,
+      "n": 3,
+      "p": 3,
+      "expected_res": 3
+    },
+	{
+      "name": "Generated Matrix (k=4)",
+      "k": 4,
+      "n": 3,
+      "p": 3,
+      "expected_res": 3
+    }
+  ]
+}
