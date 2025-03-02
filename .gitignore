@@ -1,0 +1,9 @@
+*.exe
+*~
+*.out
+*.o
+.*.sw*
+*output*
+cmake-build-debug/
+.idea/
+CMakeLists.txt
