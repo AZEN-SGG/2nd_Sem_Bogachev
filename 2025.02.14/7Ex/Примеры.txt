@@ -1,0 +1,35 @@
+Default:
+{
+    s: 'some'
+    t: 'someone\nsome'
+}
+
+Проверка ?:
+{
+    s: 's?ome'
+    t: 'some\nhome'
+}
+
+Проверка \s -> s:
+{
+    s: 's\ome\\'
+    t: 'some\'
+}
+
+Проверка \:
+{
+    s: 'some\\\'
+    t: 'not important'
+}
+
+Проверка \?:
+{
+    s: '?oho'
+    t: 'haha?oho!'
+}
+
+Множество ?:
+{
+    s: 'ha????ha'
+    t: 'hihihhahoho'
+}

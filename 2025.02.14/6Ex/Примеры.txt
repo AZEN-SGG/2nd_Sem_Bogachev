@@ -1,0 +1,23 @@
+Дефолт:
+{
+    's': 'some'
+    'a': 'some\nhellosome\nsomeone'
+}
+
+\ в конце:
+{
+    's': 'some\\\' - ERROR
+    'a': 'not important'
+}
+
+замена \some на some:
+{
+    's': '\.wh\at'
+    'a': '.what'
+}
+
+Проверка шаблона:
+{
+    's': 's.m.'
+    'a': 'some\nsone\nsumy\n.o.e\nsm'
+}

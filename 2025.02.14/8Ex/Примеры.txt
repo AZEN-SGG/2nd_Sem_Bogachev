@@ -1,0 +1,76 @@
+Default:
+{
+    s: 'some'
+    t: 'some'
+}
+
+Проверка, что если часть предложения:
+{
+    s: 'some'
+    t: 'somebody here!?'
+}
+
+Проверка +:
+{
+    s: 'so+me'
+    t: 'sooooome\nsme\nsome'
+}
+
+Проверка \s -> s:
+{
+    s: 's\ome\\'
+    t: 'some\'
+}
+
+Проверка \:
+{
+    s: 'some\\\'
+    t: 'not important'
+}
+
+Проверка \+:
+{
+    s: '+o\+o'
+    t: '+o+o'
+}
+
+Множество +:
+{
+    s: 'ha++++++ha'
+    t: 'haaaaaaaaha'
+}
+
+Проверка на не выход за стэк:
+{
+    s: 'som+e'
+    t: 'sommmme'
+}
+
+abs
+\abs
+absababa
+ahahabs
+ahahahabsahhaha
+^abs
+ahahahabs$jajaja
+ha\abss$hello what!
+pbs
+ubs
+.abs
+abs
+pbt
+ats
+.b.
+bs
+bsaha
+?abs
+aaaaaaaaaaaaabs
++abs+
+absssssss
+abs*
+somePalongPway
+some
+howPsomePitPbe
+howPsomething
+whyPanysome
+

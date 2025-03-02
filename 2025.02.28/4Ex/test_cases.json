@@ -1,0 +1,76 @@
+{
+  "exe": "a04.exe",
+  "filename": "input.txt",
+  "tests": [
+    {
+      "c": 1,
+      "text": "1\n3\n2\n4\n5",
+      "expected": "1\n2\n3\n4\n5"
+    },
+	{
+  "c": 2,
+  "text": "apple\nbanana\ncherry\ndate",
+  "expected": "date\ncherry\nbanana\napple"
+},
+{
+  "c": 3,
+  "text": "a\nabcde\nabc\nabcd",
+  "expected": "a\nabc\nabcd\nabcde"
+},
+{
+  "c": 4,
+  "text": "a\nabcde\nabc\nabcd",
+  "expected": "abcde\nabcd\nabc\na"
+},
+{
+  "c": 1,
+  "text": "",
+  "expected": ""
+},
+{
+  "c": 1,
+  "text": "onlyone",
+  "expected": "onlyone"
+},
+{
+  "c": 1,
+  "text": "same\nsame\nsame\nsame",
+  "expected": "same\nsame\nsame\nsame"
+},
+{
+  "c": 1,
+  "text": "apple\nbanana\ncherry\ndate",
+  "expected": "apple\nbanana\ncherry\ndate"
+},
+{
+  "c": 1,
+  "text": "date\ncherry\nbanana\napple",
+  "expected": "apple\nbanana\ncherry\ndate"
+},
+{
+  "c": 3,
+  "text": "a\nbbbbbbbbbbbbbbbbbbbbbbbb\nccc",
+  "expected": "a\nccc\nbbbbbbbbbbbbbbbbbbbbbbbb"
+},
+{
+  "c": 1,
+  "text": "Apple\nbanana\nCherry\ndate",
+  "expected": "Apple\nCherry\nbanana\ndate"
+},
+{
+  "c": 1,
+  "text": " apple\nbanana\n cherry\ndate",
+  "expected": " apple\n cherry\nbanana\ndate"
+},
+{
+  "c": 1,
+  "text": "10\n2\n1",
+  "expected": "1\n10\n2"
+},
+{
+  "c": 1,
+  "text": "abc\nabcd\nabcde",
+  "expected": "abc\nabcd\nabcde"
+}
+  ]
+}

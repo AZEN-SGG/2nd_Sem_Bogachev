@@ -1,0 +1,231 @@
+{
+  "exe": "a06.exe",
+  "filename": "input.txt",
+  "tests": [
+    {
+      "c": 1,
+      "text": "1\n3\n2\n4\n5",
+      "expected": "1\n2\n3\n4\n5"
+    },
+	{
+  "c": 2,
+  "text": "apple\nbanana\ncherry\ndate",
+  "expected": "date\ncherry\nbanana\napple"
+},
+{
+  "c": 3,
+  "text": "a\nabcde\nabc\nabcd",
+  "expected": "a\nabc\nabcd\nabcde"
+},
+{
+  "c": 4,
+  "text": "a\nabcde\nabc\nabcd",
+  "expected": "abcde\nabcd\nabc\na"
+},
+{
+  "c": 1,
+  "text": "",
+  "expected": ""
+},
+{
+  "c": 1,
+  "text": "onlyone",
+  "expected": "onlyone"
+},
+{
+  "c": 1,
+  "text": "same\nsame\nsame\nsame",
+  "expected": "same\nsame\nsame\nsame"
+},
+{
+  "c": 1,
+  "text": "apple\nbanana\ncherry\ndate",
+  "expected": "apple\nbanana\ncherry\ndate"
+},
+{
+  "c": 1,
+  "text": "date\ncherry\nbanana\napple",
+  "expected": "apple\nbanana\ncherry\ndate"
+},
+{
+  "c": 3,
+  "text": "a\nbbbbbbbbbbbbbbbbbbbbbbbb\nccc",
+  "expected": "a\nccc\nbbbbbbbbbbbbbbbbbbbbbbbb"
+},
+{
+  "c": 1,
+  "text": "Apple\nbanana\nCherry\ndate",
+  "expected": "Apple\nCherry\nbanana\ndate"
+},
+{
+  "c": 1,
+  "text": " apple\nbanana\n cherry\ndate",
+  "expected": " apple\n cherry\nbanana\ndate"
+},
+{
+  "c": 1,
+  "text": "10\n2\n1",
+  "expected": "1\n10\n2"
+},
+{
+  "c": 1,
+  "text": "abc\nabcd\nabcde",
+  "expected": "abc\nabcd\nabcde"
+},
+  {
+    "c": 1,
+    "text": "1\n3\n2\n4\n5",
+    "expected": "1\n2\n3\n4\n5"
+  },
+  {
+    "c": 2,
+    "text": "apple\nbanana\ncherry\ndate",
+    "expected": "date\ncherry\nbanana\napple"
+  },
+  {
+    "c": 3,
+    "text": "a\nabcde\nabc\nabcd",
+    "expected": "a\nabc\nabcd\nabcde"
+  },
+  {
+    "c": 4,
+    "text": "a\nabcde\nabc\nabcd",
+    "expected": "abcde\nabcd\nabc\na"
+  },
+  {
+    "c": 1,
+    "text": "",
+    "expected": ""
+  },
+  {
+    "c": 1,
+    "text": "onlyone",
+    "expected": "onlyone"
+  },
+  {
+    "c": 1,
+    "text": "same\nsame\nsame\nsame",
+    "expected": "same\nsame\nsame\nsame"
+  },
+  {
+    "c": 1,
+    "text": "apple\nbanana\ncherry\ndate",
+    "expected": "apple\nbanana\ncherry\ndate"
+  },
+  {
+    "c": 1,
+    "text": "date\ncherry\nbanana\napple",
+    "expected": "apple\nbanana\ncherry\ndate"
+  },
+  {
+    "c": 3,
+    "text": "a\nbbbbbbbbbbbbbbbbbbbbbbbb\nccc",
+    "expected": "a\nccc\nbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  {
+    "c": 1,
+    "text": "Apple\nbanana\nCherry\ndate",
+    "expected": "Apple\nCherry\nbanana\ndate"
+  },
+  {
+    "c": 1,
+    "text": " apple\nbanana\n cherry\ndate",
+    "expected": " apple\n cherry\nbanana\ndate"
+  },
+  {
+    "c": 1,
+    "text": "10\n2\n1",
+    "expected": "1\n10\n2"
+  },
+  {
+    "c": 1,
+    "text": "abc\nabcd\nabcde",
+    "expected": "abc\nabcd\nabcde"
+  },
+  {
+    "c": 2,
+    "text": "zoo\napple\nbanana\ncherry",
+    "expected": "zoo\ncherry\nbanana\napple"
+  },
+  {
+    "c": 3,
+    "text": "abcd\na\nabcdef\nabc",
+    "expected": "a\nabc\nabcd\nabcdef"
+  },
+  {
+    "c": 4,
+    "text": "abcd\na\nabcdef\nabc",
+    "expected": "abcdef\nabcd\nabc\na"
+  },
+  {
+    "c": 3,
+    "text": "12345\n1234\n123\n12\n1",
+    "expected": "1\n12\n123\n1234\n12345"
+  },
+  {
+    "c": 4,
+    "text": "12345\n1234\n123\n12\n1",
+    "expected": "12345\n1234\n123\n12\n1"
+  },
+  {
+    "c": 1,
+    "text": "hello\nHELLO\nhElLo\nHeLLo",
+    "expected": "HELLO\nHeLLo\nhElLo\nhello"
+  },
+  {
+    "c": 1,
+    "text": "A\nB\nC\nD\nE",
+    "expected": "A\nB\nC\nD\nE"
+  },
+  {
+    "c": 2,
+    "text": "A\nB\nC\nD\nE",
+    "expected": "E\nD\nC\nB\nA"
+  },
+  {
+    "c": 3,
+    "text": "aaa\nbb\nc",
+    "expected": "c\nbb\naaa"
+  },
+  {
+    "c": 4,
+    "text": "aaa\nbb\nc",
+    "expected": "aaa\nbb\nc"
+  },
+  {
+    "c": 1,
+    "text": "zzzzzzzz\nzzzzzzz\nzzzzzz\nzzzzz\nzzzz\nzzz\nzz\nz",
+    "expected": "z\nzz\nzzz\nzzzz\nzzzzz\nzzzzzz\nzzzzzzz\nzzzzzzzz"
+  },
+  {
+    "c": 4,
+    "text": "zzzzzzzz\nzzzzzzz\nzzzzzz\nzzzzz\nzzzz\nzzz\nzz\nz",
+    "expected": "zzzzzzzz\nzzzzzzz\nzzzzzz\nzzzzz\nzzzz\nzzz\nzz\nz"
+  },
+  {
+    "c": 1,
+    "text": "z\nzz\nzzz\nzzzz\nzzzzz\nzzzzzz\nzzzzzzz\nzzzzzzzz",
+    "expected": "z\nzz\nzzz\nzzzz\nzzzzz\nzzzzzz\nzzzzzzz\nzzzzzzzz"
+  },
+  {
+    "c": 2,
+    "text": "z\nzz\nzzz\nzzzz\nzzzzz\nzzzzzz\nzzzzzzz\nzzzzzzzz",
+    "expected": "zzzzzzzz\nzzzzzzz\nzzzzzz\nzzzzz\nzzzz\nzzz\nzz\nz"
+  },
+  {
+    "c": 1,
+    "text": "3\n1\n4\n1\n5\n9\n2\n6\n5\n3",
+    "expected": "1\n1\n2\n3\n3\n4\n5\n5\n6\n9"
+  },
+  {
+    "c": 3,
+    "text": "hello\nworld\nhi\ncode",
+    "expected": "hi\ncode\nhello\nworld"
+  },
+  {
+    "c": 4,
+    "text": "hello\nworld\nhi\ncode",
+    "expected": "world\nhello\ncode\nhi"
+  }
+  ]
+}

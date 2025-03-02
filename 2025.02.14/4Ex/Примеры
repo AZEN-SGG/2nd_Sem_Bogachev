@@ -1,0 +1,12 @@
+Дефолт: Проверить что находит по паттерну:
+{
+  "pattern": "some",
+  "text": "some text"
+}
+
+Проверка работы \>:
+{
+    "pattern": "some\>",
+    "spaces": "abc"
+    "text": "sasobsomcsome"
+}

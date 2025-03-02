@@ -1,0 +1,47 @@
+Default:
+{
+    s: 'some'
+    t: 'some\nheysome\nsomeone\nhey someone!'
+}
+
+Проверка, на отсутствие буквы:
+{
+    s: 'so*me'
+    t: 'sme\nsome\nsume'
+}
+
+Проверка, на множественное повторение:
+{
+    s: 'so*me'
+    t: 'sooooome\nsme\nsome\nsiiiime'
+}
+
+Проверка \s -> s:
+{
+    s: 's\ome\\'
+    t: 'some\'
+}
+
+Проверка, что если заканчивается t, то он не подходит
+{
+    s: 'something'
+    t: 'some'
+}
+
+Проверка \:
+{
+    s: 'some\\\'
+    t: 'not important'
+}
+
+Проверка \*:
+{
+    s: '*o\*o'
+    t: '*o*o\no*o\n**o*o\n*ooooo\n**o\n*oooo*o'
+}
+
+Множество *:
+{
+    s: 'ha*****ha'
+    t: 'haaaaaaaaha'
+}

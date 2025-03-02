@@ -1,0 +1,212 @@
+{
+  "exe": "a08.exe",
+  "f_in": "input.txt",
+  "f_out": "output.txt",
+  "tests": [
+    {
+      "s": "some",
+      "text": "some\nnotsome\nrandom",
+      "expected": "some\n"
+    },
+    {
+      "s": "so+me",
+      "text": "some\nsooooome\nI'm sometimes",
+      "expected": "some\nsooooome\n"
+    },
+    {
+      "s": "s\\ome\\\\",
+      "text": "some\\",
+      "expected": "some\\\n"
+    },
+    {
+      "s": "some\\\\\\",
+      "text": "some\\",
+      "expected": "fall"
+    },
+    {
+      "s": "+oho",
+      "text": "+oho\noho",
+      "expected": "+oho\n"
+    },
+    {
+      "s": "a+",
+      "text": "\naha\na\na+\na++\naaaaaaaa\naa\naaaa\nbbb",
+      "expected": "a\naaaaaaaa\naa\naaaa\n"
+    },
+    {
+      "s": "abs",
+      "text": "abs\n\\abs\nabsababa\nahahabs\nahahahabsahhaha\n^abs\nahahahabs$jajaja\nha\\abss$hello what!\npbs\nubs\n.abs\nabs\npbt\natn.b.\nbs\nbsaha\n?abs\naaaaaaaaaaaaabs\n+abs+\nabsssssss\n\n",
+      "expected": "abs\nabs\n"
+    },
+    {
+      "s": "a+++++",
+      "text": "a\naaa\n\n",
+      "expected": "a\naaa\n"
+    },
+    {
+      "s": "a\\+++++",
+      "text": "a\naaa\na+\na++",
+      "expected": "a+\na++\n"
+    },
+    {
+      "s": "a+",
+      "text": "a\naa\naaa\naaaaaa\nb\naab\naaaaaax\n",
+      "expected": "a\naa\naaa\naaaaaa\n"
+    },
+    {
+        "s": "a+b",
+        "text": "ab\naab\naaaab\nacb",
+        "expected": "ab\naab\naaaab\n"
+    },
+    {
+        "s": "a++b",
+        "text": "ab\naab\naaaab",
+        "expected": "ab\naab\naaaab\n"
+    },
+    {
+        "s": "a+++b",
+        "text": "ab\naab\naaaab",
+        "expected": "ab\naab\naaaab\n"
+    },
+    {
+        "s": "+abc",
+        "text": "+abc\nabc\nxabc",
+        "expected": "+abc\n"
+    },
+    {
+        "s": "abc+",
+        "text": "abc\nabcc\nabcccc\nab",
+        "expected": "abc\nabcc\nabcccc\n"
+    },
+    {
+        "s": "a+b+c",
+        "text": "abc\naabbcc\naaaabbc",
+        "expected": "abc\naaaabbc\n"
+    },
+    {
+        "s": "a+b+c",
+        "text": "ac\nabbc",
+        "expected": "abbc\n"
+    },
+    {
+        "s": "a+b+c+",
+        "text": "abc\nabbcc\naaaabccccc",
+        "expected": "abc\nabbcc\naaaabccccc\n"
+    },
+    {
+        "s": "a+b+c+",
+        "text": "ac\nabb\n",
+        "expected": ""
+    },
+    {
+        "s": "a+b+c+d+",
+        "text": "abcd\naabbdcddd\naaaabbccddddd",
+        "expected": "abcd\naaaabbccddddd\n"
+    },
+    {
+        "s": "hello+world",
+        "text": "helloworld\nhelloooooworld\nhelo+world",
+        "expected": "helloworld\nhelloooooworld\n"
+    },
+    {
+        "s": "a\\+b",
+        "text": "a+b\nab\naab",
+        "expected": "a+b\n"
+    },
+    {
+        "s": "a++",
+        "text": "a\naa\naaa\naaaa",
+        "expected": "a\naa\naaa\naaaa\n"
+    },
+    {
+        "s": "a+++b+",
+        "text": "ab\naab\naaaabb\nabb",
+        "expected": "ab\naab\naaaabb\nabb\n"
+    },
+    {
+        "s": "x+y+z+",
+        "text": "xyz\nxxyz\nxxxxyzzzz",
+        "expected": "xyz\nxxyz\nxxxxyzzzz\n"
+    },
+    {
+        "s": "x+y+z+",
+        "text": "xz\nxyz\nxyzz",
+        "expected": "xyz\nxyzz\n"
+    },
+  {
+    "s": "+abc",
+    "text": "+abc\nabc\nxabc",
+    "expected": "+abc\n"
+  },
+  {
+    "s": "abc+",
+    "text": "abc\nabcc\nabccc\nab\n",
+    "expected": "abc\nabcc\nabccc\n"
+  },
+  {
+    "s": "so+me",
+    "text": "some\nsooooome\nsometimes\n",
+    "expected": "some\nsooooome\n"
+  },
+  {
+    "s": "a+b",
+    "text": "ab\naab\naaaab\nacb\n",
+    "expected": "ab\naab\naaaab\n"
+  },
+  {
+    "s": "a++b",
+    "text": "ab\naab\naaaab\nazb\n",
+    "expected": "ab\naab\naaaab\n"
+  },
+  {
+    "s": "a+++++b",
+    "text": "ab\naab\naaaab\naaaaaab\naxb\n",
+    "expected": "ab\naab\naaaab\naaaaaab\n"
+  },
+  {
+    "s": "start+end",
+    "text": "startend\nstartttend\nstart\nstartende\n",
+    "expected": "startend\nstartttend\n"
+  },
+  {
+    "s": "m++n",
+    "text": "mn\nmmn\nmmmn\nn\nmnn\n",
+    "expected": "mn\nmmn\nmmmn\n"
+  },
+  {
+    "s": "z+z",
+    "text": "z\nzz\nzzz\nzzzz\nzzzza\n",
+    "expected": "zz\nzzz\nzzzz\n"
+  },
+  {
+    "s": "++abc",
+    "text": "++abc\n+abc\n+++abc\n++++abc\n++abcd\n",
+    "expected": "++abc\n+abc\n+++abc\n++++abc\n"
+  },
+  {
+    "s": "slash\\+slash",
+    "text": "slash+slash\nslashslash\nslash++slash\n",
+    "expected": "slash+slash\n"
+  },
+  {
+    "s": "abc\\+def",
+    "text": "abc+def\nabc++def\nabcdef\nabc+defg\n",
+    "expected": "abc+def\n"
+  },
+  {
+    "s": "my++test",
+    "text": "mytest\nmyytest\nmtest\nmytests\n",
+    "expected": "mytest\nmyytest\n"
+  },
+  {
+    "s": "end+",
+    "text": "end\nendd\nenddd\nen\nendxd\n",
+    "expected": "end\nendd\nenddd\n"
+  },
+  {
+  "s": "",
+  "text": "some\nboy\nwhant\nto\nsee\n\n",
+  "expected": "\n"
+  }
+  ]
+}

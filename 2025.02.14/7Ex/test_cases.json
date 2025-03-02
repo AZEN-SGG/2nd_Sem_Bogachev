@@ -1,0 +1,222 @@
+{
+  "exe": "a07.exe",
+  "f_in": "input.txt",
+  "f_out": "output.txt",
+  "tests": [
+    {
+      "s": "some",
+      "text": "some\nnotsome\nrandom",
+      "expected": "some\n"
+    },
+    {
+      "s": "so?me",
+      "text": "some\nsme\nslome\nI'm sometimes",
+      "expected": "some\nsme\n"
+    },
+    {
+      "s": "s\\ome\\\\",
+      "text": "some\\",
+      "expected": "some\\\n"
+    },
+    {
+      "s": "some\\\\\\",
+      "text": "some\\",
+      "expected": "fall"
+    },
+    {
+      "s": "?oho",
+      "text": "?oho\noho",
+      "expected": "?oho\n"
+    },
+    {
+      "s": "a?",
+      "text": "\naha\na\na?\na????",
+      "expected": "\na\n"
+    },
+    {
+      "s": "abs",
+      "text": "abs\n\\abs\nabsababa\nahahabs\nahahahabsahhaha\n^abs\nahahahabs$jajaja\nha\\abss$hello what!\npbs\nubs\n.abs\nabs\npbt\natn.b.\nbs\nbsaha\n?abs\naaaaaaaaaaaaabs\n+abs+\nabsssssss\n\n",
+      "expected": "abs\nabs\n"
+    },
+    {
+      "s": "a??????",
+      "text": "a\naaa\n\n",
+      "expected": "a\n\n"
+    },
+    {
+      "s": "a\\????",
+      "text": "a\naaa\na?\na??",
+      "expected": "a\na?\n"
+    },
+    {
+      "s": "s\\ome\\\\",
+      "text": "some\\\nsome\ns\\ome\\\\\ns\\ome\\\nsome\\",
+      "expected": "some\\\nsome\\\n"
+    },
+    {
+      "s": "some\\\\\\",
+      "text": "some\\",
+      "expected": "fall"
+    },
+    {
+      "s": "ab????c",
+      "text": "abc\nac\nabbc\nab?c\nab???c\n",
+      "expected": "abc\nac\n"
+    },
+    {
+      "s": "\\?some",
+      "text": "?some\n\\?some\n?someother\n?som\n",
+      "expected": "?some\n"
+    },
+    {
+      "s": "",
+      "text": "hello\n\n\nabc",
+      "expected": "\n\n"
+    },
+    {
+      "s": "te\\?st",
+      "text": "te?st\nte\\?st\nte\\st\ntest",
+      "expected": "te?st\n"
+    },
+    {
+        "s": "hello?",
+        "text": "hello",
+        "expected": "hello\n"
+    },
+    {
+        "s": "hello?",
+        "text": "hell",
+        "expected": "hell\n"
+    },
+    {
+        "s": "hello?",
+        "text": "helloo",
+        "expected": ""
+    },
+    {
+        "s": "he?llo",
+        "text": "hllo",
+        "expected": "hllo\n"
+    },
+    {
+        "s": "he?llo",
+        "text": "hello",
+        "expected": "hello\n"
+    },
+    {
+        "s": "he?llo",
+        "text": "heeello",
+        "expected": ""
+    },
+    {
+        "s": "abc???",
+        "text": "abc",
+        "expected": "abc\n"
+    },
+    {
+        "s": "abc???",
+        "text": "ab",
+        "expected": "ab\n"
+    },
+    {
+        "s": "abc???",
+        "text": "abcd",
+        "expected": ""
+    },
+    {
+        "s": "?abc",
+        "text": "abc",
+        "expected": ""
+    },
+    {
+        "s": "?abc",
+        "text": "?abc",
+        "expected": "?abc\n"
+    },
+    {
+        "s": "abc\\?",
+        "text": "abc?",
+        "expected": "abc?\n"
+    },
+    {
+        "s": "abc\\?",
+        "text": "abc",
+        "expected": ""
+    },
+    {
+        "s": "ab??c",
+        "text": "ac",
+        "expected": "ac\n"
+    },
+    {
+        "s": "ab??c",
+        "text": "abc",
+        "expected": "abc\n"
+    },
+    {
+        "s": "ab??c",
+        "text": "abbc",
+        "expected": ""
+    },
+    {
+        "s": "a\\\\?",
+        "text": "a\\",
+        "expected": "a\\\n"
+    },
+    {
+        "s": "a\\\\?",
+        "text": "a",
+        "expected": "a\n"
+    },
+    {
+        "s": "\\?",
+        "text": "?",
+        "expected": "?\n"
+    },
+    {
+        "s": "\\?",
+        "text": "a",
+        "expected": ""
+    },
+    {
+        "s": "x??y??z",
+        "text": "xyz",
+        "expected": "xyz\n"
+    },
+    {
+        "s": "x??y??z",
+        "text": "xyyz",
+        "expected": ""
+    },
+    {
+        "s": "??abc",
+        "text": "abc",
+        "expected": "abc\n"
+    },
+    {
+        "s": "a?b?c?",
+        "text": "abc",
+        "expected": "abc\n"
+    },
+    {
+        "s": "a?b?c?",
+        "text": "ac",
+        "expected": "ac\n"
+    },
+    {
+        "s": "a?b?c?",
+        "text": "c",
+        "expected": "c\n"
+    },
+    {
+        "s": "a?b?c?",
+        "text": "ab",
+        "expected": "ab\n"
+    },
+    {
+        "s": "a?b?c?",
+        "text": "",
+        "expected": ""
+    }	
+  ]
+}

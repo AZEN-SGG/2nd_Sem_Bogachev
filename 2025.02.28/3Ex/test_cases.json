@@ -1,0 +1,110 @@
+{
+  "exe": "a03.exe",
+  "filename": "input.txt",
+  "tests": [
+    {
+        "name": "Basic Sorting Test",
+        "x": "5",
+        "c": 1,
+        "text": "9\n8\n7\n6\n5\n4\n3\n2\n1\n0",
+        "expected": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9",
+        "res": 5
+    },
+    {
+        "name": "Insert at Start (Should not change order)",
+        "x": "aaa",
+        "c": 1,
+        "text": "bbb\nccc\nddd\neee",
+        "expected": "bbb\nccc\nddd\neee",
+        "res": 0
+    },
+    {
+        "name": "Insert at End (Should not change order)",
+        "x": "zzz",
+        "c": 1,
+        "text": "aaa\nbbb\nccc\nddd",
+        "expected": "aaa\nbbb\nccc\nddd",
+        "res": 4
+    },
+    {
+        "name": "Insert in Middle",
+        "x": "mmm",
+        "c": 1,
+        "text": "aaa\njjj\nnnn\nzzz",
+        "expected": "aaa\njjj\nnnn\nzzz",
+        "res": 2
+    },
+    {
+        "name": "Already Present",
+        "x": "hello",
+        "c": 1,
+        "text": "apple\nbanana\nhello\norange\ntiger",
+        "expected": "apple\nbanana\nhello\norange\ntiger",
+        "res": 2
+    },
+    {
+        "name": "Reverse Order",
+        "x": "h",
+        "c": 2,
+        "text": "z\ny\nx\nw\nv\nu\nt\ns\nr\nq\np",
+        "expected": "z\ny\nx\nw\nv\nu\nt\ns\nr\nq\np",
+        "res": 11
+    },
+    {
+        "name": "Equal Length Sorting",
+        "x": "abc",
+        "c": 3,
+        "text": "x\ny\nz\napple\nbanana\ncoconut",
+        "expected": "x\ny\nz\napple\nbanana\ncoconut",
+        "res": 3
+    },
+    {
+        "name": "All Same Elements",
+        "x": "same",
+        "c": 1,
+        "text": "same\nsame\nsame\nsame",
+        "expected": "same\nsame\nsame\nsame",
+        "res": 0
+    },
+	{
+        "name": "Similar Elements",
+        "x": "one",
+        "c": 1,
+        "text": "same\none\none\nsame",
+        "expected": "same\none\none\nsame",
+        "res": 0
+    },
+    {
+        "name": "Insert in Empty List",
+        "x": "new",
+        "c": 1,
+        "text": "",
+        "expected": "",
+        "res": 1
+    },
+    {
+        "name": "Insert Before Larger Values",
+        "x": "mid",
+        "c": 1,
+        "text": "zeta\nzulu",
+        "expected": "zeta\nzulu",
+        "res": 0
+    },
+    {
+        "name": "Insert After Smaller Values",
+        "x": "mid",
+        "c": 1,
+        "text": "alpha\nbeta",
+        "expected": "alpha\nbeta",
+        "res": 2
+    },
+    {
+        "name": "Sorting Numbers as Strings",
+        "x": "5",
+        "c": 1,
+        "text": "10\n20\n30\n40",
+        "expected": "10\n20\n30\n40",
+        "res": 4
+    }
+  ]
+}
