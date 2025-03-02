@@ -98,9 +98,9 @@ def parse_matrix_output(output):
 
 def check_result(output, expected_res):
     """Checks if Result matches expected value"""
-    match = re.search(r"Result\s*=\s*(-?\d+)", output)
+    match = re.search(r"Result\s*=\s*(-?\d+\.\d{3}e[+-]?\d+)", output)
     if match:
-        result_value = int(match.group(1))
+        result_value = float(match.group(1))
         if result_value != expected_res:
             print(color_text(f"[FAIL] Test failed: Result = {result_value} (expected {expected_res})", Fore.RED))
             return False
@@ -151,7 +151,6 @@ def run_test(test_suite, test):
         except (FileNotFoundError, PermissionError):
             print(color_text(f"[WARNING] Could not delete {filename}, Windows may be locking it.", Fore.RED))
         
-    
     # Extract and format output matrix
     matrix_output = parse_matrix_output(result.stdout) if result else None
 

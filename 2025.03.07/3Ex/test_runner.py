@@ -25,12 +25,11 @@ signal.signal(signal.SIGINT, lambda sig, frame: cleanup_and_exit())
 
 class TestCase:
     """Represents a single test case"""
-    def __init__(self, k, matrix=None, n=None, p=None, expected_res=0, debug=False, name=None):
+    def __init__(self, k, matrix=None, n=None, p=None, debug=False, name=None):
         self.k = k
         self.matrix = matrix
         self.n = n
         self.p = p
-        self.expected_res = expected_res
         self.debug = debug
         self.name = name if name else f"Test k={k}, n={n if n else 'auto'}, p={p if p else 'auto'}"
 
@@ -88,42 +87,19 @@ def format_matrix(matrix):
         formatted.append(" ".join(f"{float(num):10.3e}" for num in row.split()))
     return "\n".join(formatted)
 
-def parse_matrix_output(output):
-    """Extracts and formats matrix from program output"""
-    parts = output.split("initial matrix:\n")[1].split("Result")
+def parse_matrix_output(output, label):
+    """Extracts and formats a labeled matrix from program output"""
+    parts = output.split(f"{label}:\n")
     if len(parts) > 1:
-        matrix = "\n".join(parts[0].strip().split("\n"))  # Remove last line with "Result = ..."
-        return format_matrix(matrix)
+        matrix_lines = parts[1].strip().split("\n")
+        return format_matrix("\n".join(matrix_lines[:-1]))  # Убираем Task = ... строку
     return ""
 
-def check_result(output, expected_res):
-    """Checks if Result matches expected value"""
-    match = re.search(r"Result\s*=\s*(-?\d+)", output)
-    if match:
-        result_value = int(match.group(1))
-        if result_value != expected_res:
-            print(color_text(f"[FAIL] Test failed: Result = {result_value} (expected {expected_res})", Fore.RED))
-            return False
-    return True
-
-def generate_expected_matrix(n, p, k):
-    """Generates expected matrix based on k"""
-    def f(k, i, j):
-        if k == 1:
-            return max(n, n) - max(i, j) + 1
-        elif k == 2:
-            return max(i, j)
-        elif k == 3:
-            return abs(i - j)
-        elif k == 4:
-            return 1.0 / (i + j - 1) if (i + j - 1) != 0 else 0
-        return 0
-
-    matrix = []
-    for i in range(min(n, p)):
-        row = [f(k, i + 1, j + 1) for j in range(min(n, p))]
-        matrix.append(" ".join(f"{num:10.3e}" for num in row))
-    return "\n".join(matrix)
+def transpose_matrix(matrix):
+    """Transposes a matrix given as a formatted string"""
+    rows = matrix.strip().split("\n")
+    transposed = zip(*[row.split() for row in rows])
+    return "\n".join(" ".join(f"{float(num):10.3e}" for num in row) for row in transposed)
 
 def run_test(test_suite, test):
     """Runs the program and checks its result"""
@@ -143,38 +119,33 @@ def run_test(test_suite, test):
 
     # Run the program
     result = run_command(cmd)
-    
-    if test.k == 0 and test.matrix:
-        # Cleanup test files
-        try:
-            os.remove(filename)
-        except (FileNotFoundError, PermissionError):
-            print(color_text(f"[WARNING] Could not delete {filename}, Windows may be locking it.", Fore.RED))
-        
-    
-    # Extract and format output matrix
-    matrix_output = parse_matrix_output(result.stdout) if result else None
 
-    # Generate expected matrix
-    expected_matrix = format_matrix(test.matrix) if test.k == 0 else generate_expected_matrix(test.n, test.p, test.k)
+    # Extract both initial and result matrices
+    initial_matrix = parse_matrix_output(result.stdout, "Initial matrix")
+    result_matrix = parse_matrix_output(result.stdout, "Result matrix")
 
-    if matrix_output.strip() != expected_matrix.strip():
+    # Compute expected transposed matrix
+    expected_transposed = transpose_matrix(initial_matrix)
+
+    if result_matrix.strip() != expected_transposed.strip():
         print(color_text(f"[FAIL] Test '{test.name}' matrix mismatch.", Fore.RED))
-        print(f"Expected:\n{expected_matrix}")
-        print(f"Got:\n{matrix_output}")
-        return
-
-    # Check Result
-    if not check_result(result.stdout, test.expected_res):
+        print(f"Expected:\n{expected_transposed}")
+        print(f"Got:\n{result_matrix}")
         return
 
     print(color_text(f"[PASS] Test '{test.name}' passed.", Fore.GREEN))
 
+    # Cleanup test file
+    try:
+        os.remove(filename)
+    except (FileNotFoundError, PermissionError):
+        print(color_text(f"[WARNING] Could not delete {filename}, Windows may be locking it.", Fore.RED))
+
 def main():
-    print(color_text("[CLEAN] Cleaning project...", Fore.CYAN))
+    print(color_text("[CLEAN] Cleaning project...", Fore.BLUE))
     run_command("make clean", exit_on_error=True)
 
-    print(color_text("[BUILD] Compiling project...", Fore.CYAN))
+    print(color_text("[BUILD] Compiling project...", Fore.BLUE))
     run_command("make", exit_on_error=True)
 
     test_suite = TestSuite("test_cases.json")
@@ -183,7 +154,7 @@ def main():
     for test in test_suite.tests:
         run_test(test_suite, test)
 
-    print(color_text("[CLEAN] Final cleanup...", Fore.CYAN))
+    print(color_text("[CLEAN] Final cleanup...", Fore.BLUE))
     run_command("make clean")
 
 if __name__ == "__main__":

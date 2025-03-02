@@ -7,7 +7,7 @@ int t1_solve(double *a, int n)
 {
 	int i, j;
 	for (i = 0; i < n; i++)
-		for (j = 0; j < n; j++)
+		for (j = i; j < n; j++)
 			if (i != j)
 				if (fabs(a[i * n + j] - a[j * n + i]) > eps) return 0;
 	return n;

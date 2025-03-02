@@ -41,6 +41,97 @@
       "n": 3,
       "p": 3,
       "expected_res": 3
+    },
+    {
+        "name": "File Matrix (Asymmetric)",
+        "k": 0,
+        "n": 4,
+        "p": 4,
+        "matrix": "1 2 3 4\n1 2 3 4\n1 2 3 4\n1 2 3 4",
+        "expected_res": 0
+    },
+    {
+        "name": "File Matrix (Symmetric)",
+        "k": 0,
+        "n": 4,
+        "p": 4,
+        "matrix": "1 2 3 4\n2 3 4 5\n3 4 5 6\n4 5 6 7",
+        "expected_res": 4
+    },
+    {
+        "name": "File Matrix (Diagonal Symmetric)",
+        "k": 0,
+        "n": 3,
+        "p": 3,
+        "matrix": "5 0 0\n0 5 0\n0 0 5",
+        "expected_res": 3
+    },
+    {
+        "name": "Generated Matrix (k=1, Symmetric)",
+        "k": 1,
+        "n": 3,
+        "p": 3,
+        "expected_res": 3
+    },
+    {
+        "name": "Generated Matrix (k=2, Symmetric)",
+        "k": 2,
+        "n": 3,
+        "p": 3,
+        "expected_res": 3
+    },
+    {
+        "name": "Generated Matrix (k=3, Symmetric)",
+        "k": 3,
+        "n": 3,
+        "p": 3,
+        "expected_res": 3
+    },
+    {
+        "name": "Generated Matrix (k=4, Symmetric)",
+        "k": 4,
+        "n": 3,
+        "p": 3,
+        "expected_res": 3
+    },
+    {
+        "name": "1x1 Matrix (Always Symmetric)",
+        "k": 0,
+        "n": 1,
+        "p": 1,
+        "matrix": "42",
+        "expected_res": 1
+    },
+    {
+        "name": "2x2 Symmetric Matrix",
+        "k": 0,
+        "n": 2,
+        "p": 2,
+        "matrix": "1 2\n2 3",
+        "expected_res": 2
+    },
+    {
+        "name": "2x2 Asymmetric Matrix",
+        "k": 0,
+        "n": 2,
+        "p": 2,
+        "matrix": "1 0\n2 3",
+        "expected_res": 0
+    },
+    {
+        "name": "4x4 Nearly Symmetric Matrix",
+        "k": 0,
+        "n": 4,
+        "p": 4,
+        "matrix": "1 2 3 4\n2 3 4 5\n3 4 5 6\n4 5 6 8",
+        "expected_res": 4
+    },
+    {
+        "name": "1000x1000 Large Symmetric Matrix",
+        "k": 1,
+        "n": 1000,
+        "p": 5,
+        "expected_res": 1000
     }
   ]
 }

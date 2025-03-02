@@ -1,0 +1,97 @@
+{
+  "exe": "a02.exe",
+  "filename": "matrix.txt",
+  "tests": [
+    {
+        "name": "File Matrix (Basic Trace)",
+        "k": 0,
+        "n": 3,
+        "p": 3,
+        "matrix": "1 2 3\n4 5 6\n7 8 9",
+        "expected_res": 15
+    },
+    {
+        "name": "File Matrix (Negative Numbers)",
+        "k": 0,
+        "n": 3,
+        "p": 3,
+        "matrix": "-1 -2 -3\n-4 -5 -6\n-7 -8 -9",
+        "expected_res": -15
+    },
+    {
+        "name": "File Matrix (Mixed Positive and Negative)",
+        "k": 0,
+        "n": 3,
+        "p": 3,
+        "matrix": "1 -2 3\n-4 5 -6\n7 -8 9",
+        "expected_res": 15
+    },
+    {
+        "name": "File Matrix (Floating Point Values)",
+        "k": 0,
+        "n": 3,
+        "p": 3,
+        "matrix": "1.1 2.2 3.3\n4.4 5.5 6.6\n7.7 8.8 9.9",
+        "expected_res": 16.5
+    },
+    {
+        "name": "Generated Matrix (k=1)",
+        "k": 1,
+        "n": 3,
+        "p": 3,
+        "expected_res": 6
+    },
+    {
+        "name": "Generated Matrix (k=2)",
+        "k": 2,
+        "n": 3,
+        "p": 3,
+        "expected_res": 6
+    },
+    {
+        "name": "Generated Matrix (k=3)",
+        "k": 3,
+        "n": 3,
+        "p": 3,
+        "expected_res": 0
+    },
+    {
+        "name": "Generated Matrix (k=4, Fractional Values)",
+        "k": 4,
+        "n": 3,
+        "p": 3,
+        "expected_res": 1.533
+    },
+    {
+        "name": "1x1 Matrix (Single Element)",
+        "k": 0,
+        "n": 1,
+        "p": 1,
+        "matrix": "42",
+        "expected_res": 42
+    },
+    {
+        "name": "2x2 Matrix",
+        "k": 0,
+        "n": 2,
+        "p": 2,
+        "matrix": "1 2\n3 4",
+        "expected_res": 5
+    },
+    {
+        "name": "4x4 Identity Matrix",
+        "k": 0,
+        "n": 4,
+        "p": 4,
+        "matrix": "1 0 0 0\n0 1 0 0\n0 0 1 0\n0 0 0 1",
+        "expected_res": 4
+    },
+    {
+        "name": "1000x1000 Large Matrix",
+        "k": 1,
+        "n": 1000,
+        "p": 5,
+        "expected_res": 500500
+    }
+  ]
+}

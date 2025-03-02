@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
 				break;
 		}
 			free(a);
+			free(b);
 			return 3;
 	} while (0);
 	
