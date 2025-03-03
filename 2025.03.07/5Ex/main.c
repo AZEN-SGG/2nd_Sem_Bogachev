@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 				k >= 0 && k <= 4 && (!(k == 0 && argc != 5))))
 	{
 		printf("Usage: %s n p k [filename]\n", argv[0]);
-		return 0;
+		return 1;
 	}
 	if (argc == 5) name = argv[4];
 
