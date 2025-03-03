@@ -1,0 +1,35 @@
+{
+  "exe": "a10.exe",
+  "fA": "matA.txt",
+  "fB": "matB.txt",
+  "tests": [
+    {
+      "name": "Gen A, Gen B",
+      "n": 4,
+      "m": 4,
+      "k": 4,
+      "p": 4,
+      "kA": 1,
+      "kB": 2
+    },
+    {
+      "name": "File A, Gen B",
+      "kA": 0,
+      "kB": 4,
+      "matrix_a": "1 2 3 4\n5 6 7 8\n9 0 1 2",
+      "n": 3,
+      "m": 4,
+      "k": 3
+    },
+    {
+      "name": "File A, File B",
+      "kA": 0,
+      "kB": 0,
+      "matrix_a": "1 2\n3 4",
+      "matrix_b": "1 0 2\n0 1 3",
+      "n": 2,
+      "m": 2,
+      "k": 3
+    }
+  ]
+}

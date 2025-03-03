@@ -1,0 +1,123 @@
+{
+  "exe": "a08.exe",
+  "filename": "matrix.txt",
+  "tests": [
+    {
+      "name": "File Matrix Test",
+	  "i": 1,
+	  "j": 2,
+	  "g": 2,
+      "k": 0,
+      "p": 5,
+      "matrix": "1 2 3 4\n5 6 7 8\n9 10 11 12\n13 14 15 16\n17 18 19 20"
+    },
+    {
+        "name": "Basic Addition",
+        "i": 1,
+        "j": 2,
+        "g": 2,
+        "n": 3,
+        "m": 3,
+        "p": 3,
+        "k": 0,
+        "matrix": "1 2 3\n4 5 6\n7 8 9"
+    },
+    {
+        "name": "Negative Gamma",
+        "i": 1,
+        "j": 3,
+        "g": -1,
+        "n": 3,
+        "m": 3,
+        "p": 3,
+        "k": 0,
+        "matrix": "1 2 3\n4 5 6\n7 8 9"
+    },
+    {
+        "name": "Large 1000x1000 Matrix",
+        "i": 500,
+        "j": 999,
+        "g": 1.5,
+        "n": 1000,
+        "m": 1000,
+        "k": 1
+    },
+    {
+        "name": "Floating Point Values",
+        "i": 1,
+        "j": 3,
+        "g": 0.5,
+        "n": 3,
+        "m": 3,
+        "p": 3,
+        "k": 0,
+        "matrix": "1.1 2.2 3.3\n4.4 5.5 6.6\n7.7 8.8 9.9"
+    },
+    {
+        "name": "Negative Values",
+        "i": 1,
+        "j": 2,
+        "g": -2,
+        "n": 3,
+        "m": 3,
+        "p": 3,
+        "k": 0,
+        "matrix": "-1 -2 -3\n-4 -5 -6\n-7 -8 -9"
+    },
+    {
+        "name": "Adding a Row to Itself (Should Double)",
+        "i": 2,
+        "j": 2,
+        "g": 1,
+        "n": 3,
+        "m": 3,
+        "p": 3,
+        "k": 0,
+        "matrix": "1 2 3\n4 5 6\n7 8 9"
+    },
+    {
+        "name": "Adding Row with Gamma = 0 (No Change)",
+        "i": 1,
+        "j": 3,
+        "g": 0,
+        "n": 3,
+        "m": 3,
+        "p": 3,
+        "k": 0,
+        "matrix": "1 2 3\n4 5 6\n7 8 9"
+    },
+    {
+        "name": "Identity Matrix Transformation",
+        "i": 2,
+        "j": 3,
+        "g": 1,
+        "n": 3,
+        "m": 3,
+        "p": 3,
+        "k": 0,
+        "matrix": "1 0 0\n0 1 0\n0 0 1"
+    },
+    {
+        "name": "All Zeroes",
+        "i": 1,
+        "j": 2,
+        "g": 5,
+        "n": 4,
+        "m": 4,
+        "p": 4,
+        "k": 0,
+        "matrix": "0 0 0 0\n0 0 0 0\n0 0 0 0\n0 0 0 0"
+    },
+    {
+        "name": "Different Row Sizes",
+        "i": 2,
+        "j": 3,
+        "g": 3,
+        "n": 4,
+        "m": 5,
+        "p": 5,
+        "k": 0,
+        "matrix": "10 20 30 40 50\n60 70 80 90 100\n110 120 130 140 150\n160 170 180 190 200"
+    }
+  ]
+}
