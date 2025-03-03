@@ -87,14 +87,6 @@ def format_matrix(matrix):
         formatted.append(" ".join(f"{float(num):10.3e}" for num in row.split()))
     return "\n".join(formatted)
 
-def parse_matrix_output(output, label, end_label):
-    """Extracts and formats a labeled matrix from program output"""
-    parts = output.split(f"{label}:\n")
-    if len(parts) > 1:
-        matrix_lines = parts[1].strip().split(end_label)[0].split("\n")
-        return format_matrix("\n".join(matrix_lines))  # Убираем Task = ... строку
-    return ""
-
 def result_matrix_output(output):
     parts = output.split("Result matrix:\n")
     if len(parts) > 1:
@@ -110,11 +102,10 @@ def initial_matrix_output(output):
         return format_matrix("\n".join(matrix_lines))
     return ""
 
-def transpose_matrix(matrix):
-    """Transposes a matrix given as a formatted string"""
-    rows = matrix.strip().split("\n")
-    transposed = zip(*[row.split() for row in rows])
-    return "\n".join(" ".join(f"{float(num):10.3e}" for num in row) for row in transposed)
+def symmetric_matrix(matrix):
+    rows = [list(map(float, row.split())) for row in matrix.strip().split("\n")]
+    symmetrize =  [[((rows[i][j] + rows[j][i]) / 2) for j in range(len(rows[i]))] for i in range(len(rows))]
+    return "\n".join(" ".join(f"{float(num):10.3e}" for num in row) for row in symmetrize)
 
 def run_test(test_suite, test):
     """Runs the program and checks its result"""
@@ -139,8 +130,7 @@ def run_test(test_suite, test):
     initial_matrix = initial_matrix_output(result.stdout)
     result_matrix = result_matrix_output(result.stdout)
 
-    # Compute expected transposed matrix
-    expected_transposed = transpose_matrix(initial_matrix)
+    expected_transposed = symmetric_matrix(initial_matrix)
 
     if result_matrix.strip() != expected_transposed.strip():
         print(color_text(f"[FAIL] Test '{test.name}' matrix mismatch.", Fore.RED))

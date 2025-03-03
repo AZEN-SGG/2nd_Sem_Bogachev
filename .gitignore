@@ -1,9 +1,15 @@
+# Executable files
 *.exe
-*~
 *.out
 *.o
+
+# Vim files
+*~
 .*.sw*
+
 *output*
+
+# Clion folders and files
 cmake-build-debug/
 .idea/
 CMakeLists.txt
