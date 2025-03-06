@@ -8,8 +8,8 @@
 /* ./a.out n p k [filename] */
 int main(int argc, char *argv[])
 {
-	double t, res, *a;
-	int n, p, k, task = 2;
+	double t, *a;
+	int n, p, k, task = 4;
 	char *name = 0;
 	
 	if (!((argc == 4 || argc == 5) && 
@@ -53,11 +53,12 @@ int main(int argc, char *argv[])
 	printf("Initial matrix:\n");
 	print_sq_matrix(a, n, p);
 
-	t =  clock();
-	res = t2_solve(a, n);
+	t = clock();
+	t4_solve(a, n);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 
-	printf("Result = %10.3e\n", res);
+	printf("Result matrix:\n");
+	print_sq_matrix(a, n, p);
 	printf("%s : Task = %d Elapsed = %.2f\n", argv[0], task, t);
 	free(a);
 	return 0;

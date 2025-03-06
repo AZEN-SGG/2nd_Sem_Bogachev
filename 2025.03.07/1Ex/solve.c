@@ -10,5 +10,5 @@ int t1_solve(double *a, int n)
 		for (j = i; j < n; j++)
 			if (i != j)
 				if (fabs(a[i * n + j] - a[j * n + i]) > eps) return 0;
-	return n;
+	return 1;
 }
