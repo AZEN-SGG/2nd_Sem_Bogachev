@@ -3,13 +3,11 @@
 
 void matrix_multiply(const double *A, const double *B, double *c, int n, int m, int l)
 {
-	int i, j, k, index;
+	int i, j, k;
 	for (i = 0; i < n; i++)
-		for (j = 0; j < l; j++)
+		for (k = 0; k < m; k++)
 		{
-			index = i * l + j;
-			c[index] = 0;
-			for (k = 0; k < m; k++)
-				c[index] += A[i * m + k] * B[k * l + j];
+			for (j = 0; j < l; j++)
+				c[i * l + j] += A[i * m + k] * B[k * l + j];
 		}
 }

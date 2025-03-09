@@ -13,3 +13,6 @@
 cmake-build-debug/
 .idea/
 CMakeLists.txt
+
+# FreeFileSync files
+*.ffs_db
