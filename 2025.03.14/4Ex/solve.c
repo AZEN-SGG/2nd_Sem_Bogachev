@@ -12,7 +12,7 @@ int compare(const double a, const double b)
 
 double t4_solve(const double *A, const double *X, double *B, int m, int n)
 {
-	double maximum = -1, cur;
+	double maximum = 0, cur;
 	int i, j;
 
 	for (i = 0; i < n; i++)
@@ -23,6 +23,7 @@ double t4_solve(const double *A, const double *X, double *B, int m, int n)
 		cur = fabs(cur);
 		if (compare(cur, maximum) == 1) maximum = cur;
 	}
+
 	return maximum;
 }
 

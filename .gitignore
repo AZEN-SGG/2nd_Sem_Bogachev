@@ -2,17 +2,113 @@
 *.exe
 *.out
 *.o
+*.elf
+*.app
+*.bin
+*.dll
+*.so
+*.dylib
 
-# Vim files
+# Object files and build artifacts
+*.obj
+*.a
+*.lib
+*.la
+*.lo
+*.def
+*.exp
+*.pdb
+
+# Vim swap and backup files
 *~
 .*.sw*
+*.swo
+*.swn
+*.bak
 
-*output*
-
-# Clion folders and files
-cmake-build-debug/
+# IDE and editor files
 .idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+
+# CLion and CMake build folders
+cmake-build-debug/
+cmake-build-release/
 CMakeLists.txt
+CMakeCache.txt
+CMakeFiles/
+Makefile
+build/
+dist/
+*.cmake
+
+# Python files
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.eggs/
+*.pyo
+
+# Java and Kotlin
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.ipr
+*.iws
+.gradle/
+build/
+
+# Node.js and frontend
+node_modules/
+npm-debug.log
+yarn-error.log
+*.log
+*.lock
+*.cache/
+dist/
+out/
+coverage/
+
+# Rust
+target/
+Cargo.lock
+
+# Go
+bin/
+pkg/
+*.test
+
+# Logs and temporary files
+*.log
+*.tmp
+*.pid
+*.seed
+*.old
+*.gz
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.bak
 
 # FreeFileSync files
 *.ffs_db
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+System Volume Information/
+
+# Linux system files
+lost+found/
