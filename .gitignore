@@ -39,7 +39,6 @@ cmake-build-release/
 CMakeLists.txt
 CMakeCache.txt
 CMakeFiles/
-Makefile
 build/
 dist/
 *.cmake
