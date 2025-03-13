@@ -14,13 +14,12 @@ double t1_solve(double *a, int n, int m)
 {
 	int i, j;
 	double cur = 0, maximum = 0;
-	if (n > 0)
-		for (j = 0; j < m; j++) maximum += fabs(a[j]);
-	for (i = 1; i < n; i++)
+	
+	for (i = 0; i < n; i++)
 	{
 		cur = 0;
 		for (j = 0; j < m; j++)
-			cur = fabs(a[i * m + j]);
+			cur += fabs(a[i * m + j]);
 		if (compare(cur, maximum) == 1) maximum = cur;
 	}
 
