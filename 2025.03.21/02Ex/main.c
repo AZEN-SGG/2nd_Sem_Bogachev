@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 	t = (clock() - t) / CLOCKS_PER_SEC;
 	
 	printf("New matrix:\n");
-	print_matrix(a, m, n - 1, p);
+	print_matrix(a, m - 1, n - 1, p);
 	printf ("%s : Task = %d Result = %d Elapsed = %.2f\n", argv[0], task, res, t);
 	
 	free(a);
