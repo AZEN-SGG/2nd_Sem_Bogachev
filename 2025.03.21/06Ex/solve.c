@@ -15,7 +15,7 @@ int t6_solve(double *a, int m, int n)
 			if (i != j)
 				sum += fabs(a[i*n + j] - a[j*n + j]);
 
-		if ((sum - maximum) > eps || j == 0) { maximum = sum; max_j = j; }
+		if ((sum - maximum) > eps) { maximum = sum; max_j = j; }
 	}
 
 	for (int l = max_j+1, del_j = 1; l < m*n; l++)
