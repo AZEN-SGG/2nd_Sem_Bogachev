@@ -8,7 +8,7 @@ CFLAGS = -mfpmath=sse -fstack-protector-all -W -Wall -Wextra -Wunused \
 -Wwrite-strings -Wno-long-long -std=gnu99 -Wstrict-prototypes \
 -Wmissing-field-initializers -Wpointer-sign -O3
 
-TARGET = a02.exe
+TARGET = a04.exe
 OBJ = main.o array_io.o solve.o init_f.o
 
 $(TARGET): $(OBJ)
