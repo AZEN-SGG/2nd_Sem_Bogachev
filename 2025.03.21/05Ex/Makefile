@@ -12,7 +12,7 @@ TARGET = a05.exe
 OBJ = main.o array_io.o solve.o init_f.o
 
 $(TARGET): $(OBJ)
-	gcc $(OBJ) -o $(TARGET) -lssp
+	gcc $(OBJ) -o $(TARGET) -lm -lssp
 	
 
 main.o: main.c

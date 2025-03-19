@@ -17,38 +17,17 @@ int t8_solve(double *a, int m, int n)
 		for (int i = 0; i < m; i++)
 		{
 			double sum_i = 0;
-			double aij = fabs(a[i*n + j]);
-			sum_j -= aij;
+			sum_j -= fabs(a[i*n + j]);
 
-			if (j == 0)
-			{
-				double num = a[i*n];
-				for (int k = 1; k < n; k++)
-					sum_i += fabs(a[i*n + k]);
-
-				a[i*n] = copysign(fabs(num) + sum_i, num);
-			}
-			else
-				sum_i = fabs(a[i*n]) - fabs(a[i*n + j]);
+			for (int k = 0; k < n; k++) if (k != j)
+				sum_i += fabs(a[i*n + k]);
 
 			if (((sum_j + sum_i) - maximum) > eps)
 				maximum = (sum_j + sum_i), max_i = i, max_j = j;
 			
-			sum_j += aij;
+			sum_j += fabs(a[i*n + j]);
 		}
 	}
-
-	if (max_j != 0)
-		for (int i = 0; i < m; i++)
-		{
-			double orig = a[i*n];
-			double num = fabs(orig);
-
-			for (int j = 1; j < n; j++)
-				num -= fabs(a[i*n + j]);
-
-		       	a[i*n] = copysign(num, orig);
-		}
 
 	for (int l = max_j+1, del_j = 1; l < max_i*n; l++)
 	{

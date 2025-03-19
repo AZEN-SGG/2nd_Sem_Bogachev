@@ -1,7 +1,7 @@
 #include "solve.h"
 #include <math.h>
-
-#define eps 1e-17
+#include <float.h>
+#include <stdio.h>
 
 int t5_solve(double *a, int m, int n)
 {
@@ -14,8 +14,8 @@ int t5_solve(double *a, int m, int n)
 		for (int i = 0; i < m; i++)
 			if (i != j)
 				sum += fabs(a[i*n + j]);
-
-		if ((sum - maximum) > eps || j == 0) { maximum = sum; max_j = j; }
+		
+		if ((sum - maximum) > DBL_EPSILON * fmax(fabs(maximum), fabs(sum))) { maximum = sum; max_j = j; }
 	}
 
 	for (int l = max_j+1, del_j = 1; l < m*n; l++)
