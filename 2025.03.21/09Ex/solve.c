@@ -5,25 +5,30 @@
 
 int t9_solve(double *a, int m, int n)
 {
+	const int BS = 32;
 	int max_i = 0, max_j = 0;
 	double maximum = 0;
 
-	for (int j = 0; j < n; j++)
-		for (int i = 0; i < m; i++)
-		{
-			double sum_i = 0;
-			double sum_j = 0;
-			double aij = a[i*n + j];
+	for (int jj = 0; jj < n; jj += BS)
+		for (int ii = 0; ii < m; ii += BS)
+			for (int j = jj; j < jj + BS && j < n; j++)
+				for (int i = ii; i < ii + BS && i < m; i++)
+				{
+					double sum_i = 0;
+					double sum_j = 0;
+					double aij = a[i*n + j];
+				
+					for (int kk = 0; kk < n; kk += BS)
+						for (int k = kk; k < kk + BS && k < n; k++) if (k != j)
+							sum_i += fabs(a[i*n + k] - aij);
 			
-			for (int k = 0; k < n; k++) if (k != j)
-				sum_i += fabs(a[i*n + k] - aij);
-
-			for (int k = 0; k < m; k++) if (i != k)
-				sum_j += fabs(a[k*n + j] - aij);
+					for (int kk = 0; kk < m; kk += BS)
+						for (int k = kk; k < kk + BS && k < m; k++) if (i != k)
+							sum_j += fabs(a[k*n + j] - aij);
 			
-			if (((sum_j + sum_i) - maximum) > eps)
-				maximum = (sum_j + sum_i), max_i = i, max_j = j;
-		}
+					if (((sum_j + sum_i) - maximum) > eps)
+						maximum = (sum_j + sum_i), max_i = i, max_j = j;
+				}
 
 	for (int l = max_j+1, del_j = 1; l < max_i*n; l++)
 	{

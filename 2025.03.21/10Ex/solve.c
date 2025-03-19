@@ -5,16 +5,19 @@
 
 int t10_solve(double *a, int m, int n)
 {
+	const int BS = 30;
 	int min_i = 0, min_j = 0;
 	double minimum = DBL_MAX;
 	double inn = 1./n, inm = 1./m;
 
-	for (int i = 0; i < m; i++)
+	for (int ii = 0; ii < m; ii += BS)
+	for (int i = ii; i < ii + BS && i < m; i++)
 	{
 		double cur = 0;
 		double sum = 0;
 		double sq_sum = 0;
-		for (int j = 0; j < n; j++)
+		for (int jj = 0; jj < n; jj += BS)
+		for (int j = jj; j < jj + BS && j < n; j++)
 		{	
 			double temp = a[i*n + j];
 			sum += temp;
@@ -29,9 +32,10 @@ int t10_solve(double *a, int m, int n)
 	}
 
 	minimum = DBL_MAX;
-	for (int j = 0; j < n; j++)
+
+	for (int jj = 0; jj < n; jj += BS)
+	for (int j = jj; j < jj + BS && j < n; j++)
 	{
-		const int BS = 32;
 		double cur = 0;
 		double sum = 0;
 		double sq_sum = 0;
