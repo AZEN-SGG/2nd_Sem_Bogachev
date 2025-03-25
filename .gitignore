@@ -40,7 +40,6 @@ CMakeLists.txt
 CMakeCache.txt
 CMakeFiles/
 build/
-dist/
 *.cmake
 
 # Python files
@@ -68,7 +67,6 @@ yarn-error.log
 *.log
 *.lock
 *.cache/
-dist/
 out/
 coverage/
 
