@@ -8,11 +8,11 @@ CFLAGS = -mfpmath=sse -fstack-protector-all -W -Wall -Wextra -Wunused \
 -Wwrite-strings -Wno-long-long -std=gnu99 -Wstrict-prototypes \
 -Wmissing-field-initializers -Wpointer-sign -O3
 
-TARGET = a06.exe
+TARGET = a06.out
 OBJ = main.o array_io.o solve.o init_f.o
 
 $(TARGET): $(OBJ)
-	gcc $(OBJ) -o $(TARGET) -lssp
+	gcc $(OBJ) -o $(TARGET) 
 	
 
 main.o: main.c
@@ -28,4 +28,4 @@ init_f.o: init_f.c
 	gcc $(CFLAGS) -c init_f.c
 
 clean:
-	del *.o *.exe
+	rm *.o *.out

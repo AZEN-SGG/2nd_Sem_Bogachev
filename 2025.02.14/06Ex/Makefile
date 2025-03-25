@@ -29,7 +29,7 @@ CFLAGS = -mfpmath=sse \
 		 -c
 
 all: main.o array.o
-	gcc main.o array.o -lssp && del *.o
+	gcc main.o array.o  && rm *.o
 
 main.o: main.c
 	gcc $(CFLAGS) main.c

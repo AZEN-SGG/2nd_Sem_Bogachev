@@ -8,12 +8,12 @@ CFLAGS = -mfpmath=sse -fstack-protector-all -W -Wall -Wextra -Wunused \
 -Wwrite-strings -Wno-long-long -std=gnu99 -Wstrict-prototypes \
 -Wmissing-field-initializers -Wpointer-sign -O3
 
-TARGET = a08.exe
+TARGET = a08.out
 OBJ = main.o array_io.o init_f.o
 
 $(TARGET): $(OBJ) solve.o slow.o
-	gcc $(OBJ) solve.o -o $(TARGET) -lssp
-	gcc $(OBJ) slow.o -o sa08.exe -lssp
+	gcc $(OBJ) solve.o -o $(TARGET) 
+	gcc $(OBJ) slow.o -o sa08.out 
 
 main.o: main.c
 	gcc $(CFLAGS) -c main.c
@@ -31,4 +31,4 @@ init_f.o: init_f.c
 	gcc $(CFLAGS) -c init_f.c
 
 clean:
-	del *.o *.exe
+	rm *.o *.out
