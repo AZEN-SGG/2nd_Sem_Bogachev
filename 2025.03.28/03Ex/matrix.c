@@ -16,8 +16,6 @@ void init_vec_b(const double * restrict a, double * restrict b, int n)
 	}
 }
 
-/*
- * OLD VERSION
 void matvec_mul(int n, const double * restrict A, const double * restrict x, double * restrict x_k)
 {
 	#pragma	omp parallel for
@@ -30,9 +28,4 @@ void matvec_mul(int n, const double * restrict A, const double * restrict x, dou
 		x_k[i] = sum;
 	}	
 }
-*/
 
-void matvec_mul(int n, const double * restrict A, const double * restrict x, double * restrict x_k)
-{
-	cblas_dgemv(CblasRowMajor, CblasdNoTrans, n, n, 1.0, A, n, x, 1, 0.0, x_k, 1);	
-}
