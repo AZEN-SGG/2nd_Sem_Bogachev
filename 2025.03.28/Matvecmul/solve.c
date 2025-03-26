@@ -1,6 +1,7 @@
 #include "solve.h"
 #include <math.h>
 
+
 #define eps 1e-17
 
 int compare(const double a, const double b)
@@ -38,3 +39,5 @@ void matvec_mul(int n, double * restrict A, double * restrict x, double * restri
 		x_k[i] = sum;
 	}	
 }
+
+
