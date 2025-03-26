@@ -10,7 +10,7 @@
 int main(int argc, char *argv[])
 {
 	double t, r1, r2, *a, *x_0, *b, *x, *r;
-	int n, m, p, k_a, k_x, task = 3;
+	int n, m, p, k_a, k_x, task = 4;
 	char *name_a = 0, *name_x = 0;
 	if (!((argc == 6 || argc == 7 || argc == 8) && 
 				sscanf(argv[1], "%d", &m) == 1 && 
@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
 	print_matrix(b, 1, n, p);
 
 	t = clock();
-	t3_solve(a, x_0, b, x, r, n, m);
+	t4_solve(a, x_0, b, x, r, n, m);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 	
 	r1 = get_r1(a, x, b, n);
