@@ -6,32 +6,33 @@
 #include "matrix.h"
 #include "solve.h"
 
-/* ./a.out m n p k_a [filename_a] k_x [filename_x] */
+/* ./a.out t m n p k_a [filename_a] k_x [filename_x] */
 int main(int argc, char *argv[])
 {
-	double t, r1, r2, *a, *x_0, *b, *x, *r;
-	int n, m, p, k_a, k_x, task = 3;
+	double tau, t, r1, r2, *a, *x_0, *b, *x, *r;
+	int n, m, p, k_a, k_x, task = 7;
 	char *name_a = 0, *name_x = 0;
-	if (!((argc == 6 || argc == 7 || argc == 8) && 
-				sscanf(argv[1], "%d", &m) == 1 && 
-				sscanf(argv[2], "%d", &n) == 1 && 
-				sscanf(argv[3], "%d", &p) == 1 && 
-				sscanf(argv[4], "%d", &k_a) == 1 && 
+	if (!((argc == 7 || argc == 8 || argc == 9) && 
+				sscanf(argv[1], "%lf", &tau) == 1 && 
+				sscanf(argv[2], "%d", &m) == 1 && 
+				sscanf(argv[3], "%d", &n) == 1 && 
+				sscanf(argv[4], "%d", &p) == 1 && 
+				sscanf(argv[5], "%d", &k_a) == 1 && 
 				(k_a >= 0 && k_a <= 4) &&
-				(!(k_a == 0 && argc == 6)) && 
-				((k_a == 0 && sscanf(argv[6], "%d", &k_x) == 1) || 
-				 (k_a != 0 && sscanf(argv[5], "%d", &k_x) == 1)) &&
+				(!(k_a == 0 && argc == 7)) && 
+				((k_a == 0 && sscanf(argv[7], "%d", &k_x) == 1) || 
+				 (k_a != 0 && sscanf(argv[6], "%d", &k_x) == 1)) &&
 				(k_x >= 0 && k_x <= 4) && 
-				(!(k_x == 0 && argc == 6)) && 
-				(!((k_a == 0 && k_x == 0) && argc != 8))))
+				(!(k_x == 0 && argc == 7)) && 
+				(!((k_a == 0 && k_x == 0) && argc != 9))))
 	{
-		printf("Usage: %s m n p k_a [filename_a] k_x [filename_x]\n", argv[0]);
+		printf("Usage: %s t m n p k_a [filename_a] k_x [filename_x]\n", argv[0]);
 		return 1;
 	}
-	if (argc != 6) 
+	if (argc != 7) 
 	{
-		int i_x = 6;
-		if (k_a == 0) {name_a = argv[5];i_x++;}
+		int i_x = 7;
+		if (k_a == 0) { name_a = argv[6]; i_x++; }
 		if (k_x == 0) name_x = argv[i_x];
 	}
 
@@ -136,7 +137,7 @@ int main(int argc, char *argv[])
 	print_matrix(b, 1, n, p);
 
 	t = clock();
-	t3_solve(a, x_0, b, x, r, n, m);
+	t7_solve(a, x_0, b, x, r, n, m, tau);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 	
 	r1 = get_r1(a, x, b, n);

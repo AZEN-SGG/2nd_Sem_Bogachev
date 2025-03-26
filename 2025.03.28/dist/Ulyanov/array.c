@@ -68,7 +68,7 @@ void init_vector(double* b, double* a, int n)
   for (i = 0; i < n; i++)
       {
       sum = 0;
-      for (k = 1; k < n; k += 2) sum += a[i * n + k];
+      for (k = 0; k < n; k += 2) sum += a[i * n + k];
       b[i] = sum;
       }
   }

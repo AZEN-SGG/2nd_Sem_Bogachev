@@ -96,6 +96,7 @@ int main(int argc, char *argv[])
 			free(x_0);
 			free(b);
 			free(x);
+			free(r);
 			return 3;
 		} while (0);
 	} else init_matrix(a, n, n, k_a);
@@ -120,6 +121,7 @@ int main(int argc, char *argv[])
 			free(x_0);
 			free(b);
 			free(x);
+			free(r);
 			return 3;
 		} while (0);
 	} else init_matrix(x_0, n, 1, k_x);
