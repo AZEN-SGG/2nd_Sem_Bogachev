@@ -63,7 +63,7 @@ double get_r2_value(const double * restrict x_k, int n)
 	#pragma omp parallel for reduction(+:total_diff, template_sum)
 	for (int i = 0; i < n; ++i)
 	{
-		short int modi = i ^ 1;
+		short int modi = !(i & 1);
 		total_diff += fabs(x_k[i] - modi);
 		template_sum += modi;
 	}

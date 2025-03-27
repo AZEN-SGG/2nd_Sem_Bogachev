@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <omp.h>
 #include "array_io.h"
 #include "io_status.h"
 #include "matrix.h"
@@ -9,8 +10,8 @@
 /* ./a.out t m n p k_a [filename_a] k_x [filename_x] */
 int main(int argc, char *argv[])
 {
-	double tau, t, r1, r2, *a, *x_0, *b, *x, *r;
-	int n, m, p, k_a, k_x, task = 7;
+	double tau, t, r1, r2, *a, *x_0, *b, *x, *r, *w;
+	int n, m, p, k_a, k_x, task = 8;
 	char *name_a = 0, *name_x = 0;
 	if (!((argc == 7 || argc == 8 || argc == 9) && 
 				sscanf(argv[1], "%lf", &tau) == 1 && 
@@ -76,6 +77,17 @@ int main(int argc, char *argv[])
 		printf("Not enough memory\n");
 		return 2;
 	}
+	w = (double *)malloc((size_t)n * sizeof(double));
+	if (!w)
+	{
+		free(a);
+		free(x_0);
+		free(b);
+		free(x);
+		free(r);
+		printf("Not enough memory\n");
+		return 2;
+	}
 
 	if (name_a)
 	{ /* из файла */
@@ -98,6 +110,7 @@ int main(int argc, char *argv[])
 			free(b);
 			free(x);
 			free(r);
+			free(w);
 			return 3;
 		} while (0);
 	} else init_matrix(a, n, n, k_a);
@@ -123,6 +136,7 @@ int main(int argc, char *argv[])
 			free(b);
 			free(x);
 			free(r);
+			free(w);
 			return 3;
 		} while (0);
 	} else init_matrix(x_0, n, 1, k_x);
@@ -136,14 +150,14 @@ int main(int argc, char *argv[])
 	printf("Vector b:\n");
 	print_matrix(b, 1, n, p);
 
-	t = clock();
-	t7_solve(a, x_0, b, x, r, n, m, tau);
-	t = (clock() - t) / CLOCKS_PER_SEC;
+	t = omp_get_wtime();
+	t8_solve(a, x_0, b, x, r, w, n, m, tau);
+	t = omp_get_wtime() - t;
 	
 	r1 = get_r1(a, x, b, n);
 	r2 = get_r2_value(x, n);
 
-	printf("Vector x_m:\n");
+	printf("New vector:\n");
 	print_matrix(x, 1, n, p);
 	printf("%s : Task = %d Res1 = %e Res2 = %e Elapsed = %.2f\n", argv[0], task, r1, r2, t);
 
@@ -152,6 +166,7 @@ int main(int argc, char *argv[])
 	free(b);
 	free(x);
 	free(r);
+	free(w);
 
 	return 0;
 }

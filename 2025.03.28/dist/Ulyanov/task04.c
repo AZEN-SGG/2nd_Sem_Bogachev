@@ -171,8 +171,8 @@ void solve4(double* a, double* x0, double* x, double* b, double* r, int n, int m
   for (k = 1; k <= m; k++)
       {
       multmatvec(a, r, x0, n);
-      scalp2 = scalp(x0, r, n);
-      if (!equal(scalp2, 0)) tau = scalp(r, r, n) / scalp2;
+      scalp2 = scalp(x0, x0, n);
+      if (!equal(scalp2, 0)) tau = scalp(x0, r, n) / scalp2;
       else break;
       veccomb(1, x, -tau, r, n);
       veccomb(1, r, -tau, x0, n);

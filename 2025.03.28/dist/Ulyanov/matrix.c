@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "io_status.h"
 #include "matrix.h"
 
 void multmatvec(double* a, double* x1, double* x2, int n)
@@ -97,3 +98,56 @@ int equal(double a, double b)
   if (fabs(a - b) <= EPS * fmax(fabs(a), fabs(b))) return 1;
   return 0;
   }
+  
+void multdiagvec(double* a, double* x1, double* x2, int n)
+  {
+  int i;
+  for (i = 0; i < n; i++) x2[i] = x1[i] * a[i * n + i];
+  }
+  
+void deldiagvec(double* a, double* x1, double* x2, int n)
+  {
+  int i;
+  for (i = 0; i < n; i++) x2[i] = x1[i] / a[i * n + i];
+  }
+  
+void deldiagmultvec(double* a, double* x1, double* x2, double tau, int n)
+  {
+  int i;
+  for (i = 0; i < n; i++) x2[i] = tau * (x1[i] / a[i * n + i]);
+  }
+  
+io_status checkdiag(double* a, int n)
+  {
+  int i;
+  for (i = 0; i < n; i++) 
+      {
+      if (equal(a[i * n + i], 0)) return ERROR_READ;
+      }
+  return SUCCESS;
+  }
+  
+void slaudown(double* a, double* x, double* r, int n)
+  {
+  int i, j;
+  double sum;
+  for (i = 0; i < n; i++)
+      {
+      sum = x[i];
+      for (j = 0; j < i; j++) sum -= a[i * n + j] * r[j];
+      r[i] = sum / a[i * n + i]; 
+      }
+  }
+  
+void slauup(double* a, double* x, double* r, int n)
+  {
+  int i, j;
+  double sum;
+  for (i = n - 1; i >= 0; i--)
+      {
+      sum = x[i];
+      for (j = i + 1; j < n; j++) sum -= a[i * n + j] * r[j];
+      r[i] = sum / a[i * n + i]; 
+      }
+  }
+

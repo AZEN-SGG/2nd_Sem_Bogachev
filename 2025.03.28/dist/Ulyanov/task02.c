@@ -131,9 +131,9 @@ int main(int argc, char* argv[])
     printf("Matrix:\n");
     print_matrix(a, n, n, p);
     printf("Vector:\n");
-    print_matrix(x0, 1, n, p);
+    print_matrix(x0, n, 1, p);
     printf("Vector b:\n");
-    print_matrix(b, 1, n, p);
+    print_matrix(b, n, 1, p);
     t = clock();
     solve2(a, x0, x, b, n, m, tau);
     t = (clock() - t) / CLOCKS_PER_SEC;

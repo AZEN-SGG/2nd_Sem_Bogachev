@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <omp.h>
 #include "array_io.h"
 #include "io_status.h"
 #include "solve.h"
@@ -107,13 +108,13 @@ int main(int argc, char *argv[])
 	printf("Vector x_0:\n");
 	print_matrix(x_0, 1, n, p);
 
-	t = clock();
+	t = omp_get_wtime();
 	r1 = t1_solve(a, x_0, x, n, m);
-	t = (clock() - t) / CLOCKS_PER_SEC;
+	t = omp_get_wtime() - t;
 
 	r2 = t1_get_residual_norm(x, x_0, n, r1);
 
-	printf("Vector x_m:\n");
+	printf("New vector:\n");
 	print_matrix(x, 1, n, p);
 	printf("%s : Task = %d Res1 = %e Res2 = %e Elapsed = %.2f\n", argv[0], task, r1, r2, t);
 

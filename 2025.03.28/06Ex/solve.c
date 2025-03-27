@@ -29,8 +29,8 @@ void t6_solve(const double * restrict A, double * restrict x_0, const double * r
 			#pragma omp simd reduction(+:sum)
 			for (int j = 0; j < n; ++j)
 				sum += A[i*n + j] * r[j];
-
-			dot_ADr_r += sum * r[i];
+			
+			dot_ADr_r += sum * r[i] * A[i*n + i];
 			dot_ADr_ADr += sum * sum;
 		}
 
@@ -38,7 +38,7 @@ void t6_solve(const double * restrict A, double * restrict x_0, const double * r
 		
 		#pragma omp simd
 		for (int i = 0; i < n; ++i)
-			x[i] = x_0[i] - r[i]*t;
+			x[i] = x_0[i] - (r[i]*t);
 		
 		swap_temp = x;
 		x = x_0;
