@@ -5,7 +5,7 @@ FLAGS = -fstack-protector-all -W -Wall -Wextra -Wunused -Wcast-align -Werror -pe
 %.o: %.c
 	 gcc -c $(FLAGS) $<
 
-all: a01.out a02.out a03.out a04.out a05.out a06.out a07.out a08.out
+all: a01.out a02.out a03.out a04.out a05.out a06.out a07.out a08.out a09.out a10.out
 
 solve.o: solve.c solve.h
 array_io.o: array_io.c array_io.h

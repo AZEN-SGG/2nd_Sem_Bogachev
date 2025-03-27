@@ -11,6 +11,8 @@ void t5_solve(const double * restrict A, double * restrict x_0, const double * r
 void t6_solve(const double * restrict A, double * restrict x_0, const double * restrict b, double * restrict x, double * restrict r, int n, int m);
 void t7_solve(const double * restrict A, double * restrict x_0, const double * restrict b, double * restrict x, double * restrict r, int n, int m, double t);
 void t8_solve(const double * restrict A, double * restrict x_0, const double * restrict b, double * restrict x, double * restrict r, double * restrict w, int n, int m, double t);
+void t9_solve(const double * restrict A, double * restrict x_0, const double * restrict b, double * restrict x, int n, int m, double t);
+void t10_solve(const double * restrict A, double * restrict x_0, const double * restrict b, double * restrict x, double * restrict r, double * restrict w, int n, int m, double t);
 
 #endif
  
