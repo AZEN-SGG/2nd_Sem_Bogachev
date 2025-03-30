@@ -8,7 +8,16 @@ CFLAGS = -mfpmath=sse -fstack-protector-all -W -Wall -Wextra -Wunused \
 -Wwrite-strings -Wno-long-long -std=gnu99 -Wstrict-prototypes \
 -Wmissing-field-initializers -Wpointer-sign -fopenmp -O3
 
-TARGET = a01.out
+OS := $(shell uname -s)
+
+ifeq ($(filter $(OS), Linux Darwin), $(OS))
+	EXT = .out
+
+else
+	EXT = .exe
+endif
+
+TARGET = a14$(EXT)
 OBJ = main.o solve.o array_io.o init_f.o matrix.o
 
 %.o: %.c

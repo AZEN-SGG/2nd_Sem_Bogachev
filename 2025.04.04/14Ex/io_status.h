@@ -1,7 +1,7 @@
 #ifndef IO_STATUS_H
 #define IO_STATUS_H
 
-#define LEN 1234
+#define SINGULAR 2
 
 typedef enum _io_status
 {

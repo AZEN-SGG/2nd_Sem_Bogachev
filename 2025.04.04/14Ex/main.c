@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <omp.h>
 #include "array_io.h"
 #include "io_status.h"
 #include "solve.h"
@@ -8,8 +9,8 @@
 /* ./a.out n p k [filename] */
 int main(int argc, char *argv[])
 {
-	double t, *a;
-	int n, p, k, res, task = 1;
+	double t, *a, *x;
+	int n, p, k, res, *c, task = 14;
 	char *name = 0;
 	
 	if (!((argc == 4 || argc == 5) && 
@@ -29,11 +30,27 @@ int main(int argc, char *argv[])
 		printf("Not enough memory\n");
 		return 2;
 	}
+	
+	x = (double *)malloc(n * n * sizeof(double));
+	if (!x)
+	{
+		free(a);
+		printf("Not enough memory\n");
+		return 2;
+	}
+	c = (int *)malloc(n * sizeof(int));
+	if (!c)
+	{
+		free(a);
+		free(b);
+		printf("Not enough memory\n");
+		return 2;
+	}
 
 	if (name)
 	{ /* из файла */
 		io_status ret;
-		ret = read_sq_matrix(a, n, name);
+		ret = read_matrix(a, n, name);
 		do {
 			switch (ret)
 			{
@@ -46,19 +63,32 @@ int main(int argc, char *argv[])
 					printf("Cannot read %s\n", name);
 			}
 			free(a);
+			free(x);
+			free(c);
 			return 3;
 		} while (0);
-	} else init_sq_matrix(a, n, k);
+	} else init_matrix(a, n, k);
+
+	init_identity_matrix(x, n);
+
+	#pragma omp simd
+	for (int i = 0; i < n; ++i)
+		c[i] = i;
 
 	printf("Initial matrix:\n");
-	print_sq_matrix(a, n, p);
+	print_matrix(a, n, p);
 
-	t =  clock();
-	res = t1_solve(a, n);
-	t = (clock() - t) / CLOCKS_PER_SEC;
+	t = omp_get_wtime();
+	res = t14_solve(n, a, x, c);
+	t = omp_get_wtime() - t;
+	
+	printf("Inverse matrix:\n");
+	print_matrix(x, n, p);
+	printf("%s : Task = %d Res1 = %e Res2 = %e Elapsed = %.2f K = %d N = %d\n", argv[0], task, r1, r2, t, k, n);
 
-	printf("Result = %d\n", res);
-	printf("%s : Task = %d Elapsed = %.2f\n", argv[0], task, t);
 	free(a);
+	free(x);
+	free(c);
+
 	return 0;
 }
