@@ -62,6 +62,13 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 		}
 
 		gauss_inverse(n, k, A, X);
+		gauss_back_substitution(n, A, X);
+
+		for (int k = 0; k < n; ++k)
+		{
+			int str
+			while (
+		}
 	}
 }
 
@@ -107,6 +114,21 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 
 void gauss_back_substitution(const int n, double * restrict A, double * restrict X)
 {
+	for (int k = n-1; k > 0; --k)
+	{
+		const int kn = k * n;
 
+		#pragma omp parallel for
+		for (int i = 0; i < j; ++i)
+		{
+			const int in = i*n;
+			const double aik = A[in + k];
+			A[in + k] = 0;
+
+			#pragma omp simd
+			for (int j = 0; j < n; ++j)
+				X[in + j] -= X[kn + j] * aik;	
+		}
+	}
 }
 
