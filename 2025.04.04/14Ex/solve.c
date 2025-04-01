@@ -2,32 +2,55 @@
 #include "io_status.h"
 #include <float.h>
 #include <math.h>
+#include "array_io.h"
+#include <stdio.h>
 
 // c - changes in rows
 int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 {
+	// Проходимся по главным минорам
 	for (int k = 0; k < n; ++k) {
 		double maximum = -1.;
 		int max_i = 0, max_j = 0;
+		
+		//printf("\n--------- K = %d ---------\n", k);
+			
+		// Ищем максимальный элемент минора
+		#pragma omp parallel
+		{
+			double local_max = -1.;
+			int loc_i = 0, loc_j = 0;
 
-		#pragma omp parallel for collapse(2) reduction(max:maximum)	
-		for (int i = k; i < n; ++i)
-			for (int j = k; j < n; ++j)
-			{
-				double aij = fabs(A[i * n + j]);
-				#pragma omp critical
+			#pragma omp for collapse(2) nowait	
+			for (int i = k; i < n; ++i)
+				for (int j = k; j < n; ++j)
 				{
-					if (aij > maximum) {
-						maximum = aij;
-						max_i = i;
-						max_j = j;
+					double aij = fabs(A[i * n + j]);
+					if (aij > local_max) {
+						local_max = aij;
+						loc_i = i;
+						loc_j = j;
 					}
 				}
+		
+			#pragma omp critical
+			{		
+				if (local_max > maximum) {
+					maximum = local_max;
+					max_i = loc_i;
+					max_j = loc_j;
+				}
 			}
+		}
 
+
+		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
 		if (fabs(maximum) < DBL_EPSILON)
 			return SINGULAR;
 		
+		//printf("Maximum = %lf for i = %d, j = %d\n", maximum, max_i, max_j);
+
+		// Меняем строки местами, если максимум находится не в k строке
 		if (max_i != k)
 		{
 			int kn = k*n;
@@ -56,10 +79,14 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			}
 		}
 
+		//print_matrix(A, n, n);
+		//printf("\n");
+
+		// Меняем столбцы местами
 		if (max_j != k)
 		{
 			int swap_temp = c[max_j];
-			c[max_j] = k;
+			c[max_j] = c[k];
 			c[k] = swap_temp;
 
 			#pragma omp simd
@@ -70,36 +97,44 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 				A[in + max_j] = swap;
 			}
 		}
-
+		/*
+		print_matrix(A, n, n);
+		printf("\n");
+		*/
 		gauss_inverse(n, k, A, X);
+		/*
+		print_matrix(A, n, n);
+		printf("Inverse matrix:\n");
+		print_matrix(X, n, n);
+		*/
 	}
 
 	gauss_back_substitution(n, A, X);
-
+	
+	// Возвращаем строки назад
 	for (int k = 0; k < n; ++k)
 	{
-		int str_k = k;
 		int str_i = c[k];
 		
 		if (str_i != k)
-		{
-			#pragma omp parallel for
 			for (int j = 0; j < n; ++j)
 			{
+				int loc_k = k;
+				int loc_i = str_i;
 				double elem = X[k*n + j];
 				
 				do {
-					X[str_i*n + j] = elem;
-					elem = X[str_i*n + j];
-
-					str_k = str_i;
-					str_i = c[str_i];
-					c[str_k] = str_k;
-				} while (str_i != k);
-
+					X[loc_i*n + j] = elem;
+					elem = X[loc_i*n + j];
+					
+					loc_k = loc_i;
+					loc_i = c[loc_i];
+					if (j == n-1)
+						c[loc_k] = loc_k;
+				} while (loc_i != k);
+	
 				X[k*n + j] = elem;
 			}
-		}
 	}
 
 	return 0;
@@ -112,7 +147,7 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 	const double inv_akk = 1./A[kn + k];
 	A[kn + k] = 1.;	
 	
-	for (int ij = kn; ij < kn+k; ++ij)
+	for (int ij = kn; ij <= kn+k; ++ij)
 	{
 		double xij = X[ij];
 		if (fabs(xij) > DBL_EPSILON) X[ij] = xij*inv_akk;
@@ -146,8 +181,10 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 	}
 }
 
+// Обратный ход метода Гаусса
 void gauss_back_substitution(const int n, double * restrict A, double * restrict X)
 {
+	// Идём с последней строки и вычитаем её из последующих
 	for (int k = n-1; k > 0; --k)
 	{
 		const int kn = k * n;
