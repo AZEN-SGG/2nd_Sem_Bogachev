@@ -29,45 +29,65 @@ void matvec_mul(int n, const double * restrict A, const double * restrict x, dou
 	}	
 }
 
-double get_r1(const double * restrict A, const double * restrict x_k, const double * restrict b, int n)
+double get_r1(const int n, const double * restrict A, const double * restrict X)
 {
-	double norm_r1x_1 = 0;
-	double residual_norm_1 = 0;
-	double r1 = 0;
+	double maximum = 0;
 
-	#pragma omp parallel for reduction(+:residual_norm_1, norm_r1x_1)
-	for (int i = 0; i < n; ++i)
+	if (n > 4000) return 0;
+	
+	#pragma omp parallel for reduction(max:maximum)
+	for (int j = 0; j < n; ++j)
 	{
-		double bi = b[i];
 		double sum = 0;
 		
 		#pragma omp simd reduction(+:sum)
-		for (int j = 0; j < n; ++j)
-			sum += A[i*n + j] * x_k[j];
-		
-		residual_norm_1 += fabs(sum - bi);
-		norm_r1x_1 += fabs(bi);
+		for (int i = 0; i < n; ++i)
+		{
+			int in = i*n;
+			double sum_ij = - (i == j);
+
+			#pragma omp simd reduction(+:sum_ij)
+			for (int k = 0; k < n; ++k)
+				sum_ij += A[in + k] * X[k*n + j];
+			
+			sum += fabs(sum_ij);
+		}
+
+		if (maximum < sum)
+			maximum = sum;
 	}
 
-	r1 = residual_norm_1 / norm_r1x_1;
-
-	return r1;
+	return maximum;
 }
 
-double get_r2_value(const double * restrict x_k, int n)
+double get_r2(const int n, const double * restrict A, const double * restrict X)
 {
-	double relative_error = 0;
-	double total_diff = 0;
-	double template_sum = 0;
+	double maximum = 0;
 
-	#pragma omp parallel for reduction(+:total_diff, template_sum)
-	for (int i = 0; i < n; ++i)
+	if (n > 4000) return 0;
+	
+	#pragma omp parallel for reduction(max:maximum)
+	for (int j = 0; j < n; ++j)
 	{
-		short int modi = !(i & 1);
-		total_diff += fabs(x_k[i] - modi);
-		template_sum += modi;
+		double sum = 0;
+
+		#pragma omp simd reduction(+:sum)
+		for (int i = 0; i < n; ++i)
+		{
+			int in = i*n;
+			double sum_ij = - (i == j);
+
+			#pragma omp simd reduction(+:sum_ij)
+			for (int k = 0; k < n; ++k)
+				sum_ij += X[in + k] * A[k*n + j];
+			
+			sum += fabs(sum_ij);
+		}
+
+		if (maximum < sum)
+			maximum = sum;
 	}
 
-	relative_error = total_diff / template_sum;
-	return relative_error;
+	return maximum;
 }
+

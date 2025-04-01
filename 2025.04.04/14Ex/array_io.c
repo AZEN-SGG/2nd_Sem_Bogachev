@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <omp.h>
 #include "array_io.h"
 
@@ -9,7 +10,7 @@ io_status read_matrix(double *a, int n, const char *name)
 	if (!(fp = fopen(name, "r"))) return ERROR_OPEN;
 	for (i = 0; i < n; i++)
 		for (j = 0; j < n; j++)
-			if (fscanf(fp, "%lf", a + i * m + j) != 1) 
+			if (fscanf(fp, "%lf", a + i * n + j) != 1) 
 				{fclose(fp); return ERROR_READ;}
 	fclose(fp);
 	return SUCCESS;
@@ -23,7 +24,7 @@ void print_matrix(const double *a, int n, int p)
 	for (i = 0; i < np; i++)
 	{
 		for (j = 0; j < np; j++)
-			printf(" %10.3e", a[i * m + j]);
+			printf(" %10.3e", a[i * n + j]);
 		printf("\n");
 	}
 }
@@ -35,8 +36,8 @@ void init_matrix(double *a, int n, int k)
 	int i, j;
 	q = f[k-1];
 	for (i = 0; i < n; i++)
-		for (j = 0; j < m; j++)
-			a[i * m + j] = q(n, m, i+1, j+1);
+		for (j = 0; j < n; j++)
+			a[i * n + j] = q(n, n, i+1, j+1);
 }
 
 void init_identity_matrix(double *a, int n)

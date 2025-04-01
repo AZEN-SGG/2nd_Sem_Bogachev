@@ -4,13 +4,14 @@
 #include <omp.h>
 #include "array_io.h"
 #include "io_status.h"
+#include "matrix.h"
 #include "solve.h"
 
 /* ./a.out n p k [filename] */
 int main(int argc, char *argv[])
 {
-	double t, *a, *x;
-	int n, p, k, res, *c, task = 14;
+	double t, *a, *x, r1 = 0, r2 = 0;
+	int n, p, k, res = 0, *c, task = 14;
 	char *name = 0;
 	
 	if (!((argc == 4 || argc == 5) && 
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
 	if (!c)
 	{
 		free(a);
-		free(b);
+		free(x);
 		printf("Not enough memory\n");
 		return 2;
 	}
@@ -81,6 +82,41 @@ int main(int argc, char *argv[])
 	t = omp_get_wtime();
 	res = t14_solve(n, a, x, c);
 	t = omp_get_wtime() - t;
+	
+	if (res == SINGULAR) 
+	{
+		free(a);
+		free(x);
+		free(c);
+
+		printf("The matrix is degenerate\n");
+		return 4;	
+	}	
+
+	if (name)
+	{ /* из файла */
+		io_status ret;
+		ret = read_matrix(a, n, name);
+		do {
+			switch (ret)
+			{
+				case SUCCESS:
+					continue;
+				case ERROR_OPEN:
+					printf("Cannot open %s\n", name);
+					break;
+				case ERROR_READ:
+					printf("Cannot read %s\n", name);
+			}
+			free(a);
+			free(x);
+			free(c);
+			return 3;
+		} while (0);
+	} else init_matrix(a, n, k);
+	
+	r1 = get_r1(n, a, x);	
+	r2 = get_r2(n, a, x);	
 	
 	printf("Inverse matrix:\n");
 	print_matrix(x, n, p);
