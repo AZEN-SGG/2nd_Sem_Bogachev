@@ -6,8 +6,9 @@
 int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 {
 	for (int k = 0; k < n; ++k) {
-		int kn = 0, maxn = 0
-		max_t max = { .val = -1.0 };	
+		max_t max = { .val = -1.0 };
+		
+		#pragma omp parallel for reduction(+:max)	
 		for (int i = k; i < n; ++i)
 			for (int j = k; j < n; ++j)
 			{
@@ -21,35 +22,91 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 
 		if (fabs(max.val) < DBL_EPSILON)
 			return SINGULAR;
-
-		#pragma omp parallel for
-		for (int j = 0; j < n; ++j)
+		
+		if (max.i != k)
 		{
-			double swap = X[k*n + j];
-			X[k*n + j] = X[max.i*n + j];
-			X[max.i*n + j] = swap;
-				
-			if (j >= k)
+			#pragma omp simd
+			for (int kn = k*n, in = max.i*n; kn < k*(n+1); ++kn, ++in)
 			{
-				swap = A[k*n + j];
-				A[k*n + j] = A[max.i*n + j];
-				A[max.i*n + j] = swap;
+				double swap = X[kn];
+				X[kn] = X[in];
+				X[in] = swap;
+			}		
+	
+			#pragma omp parallel for simd
+			for (int kn = k*n+k, in = max.i*n+k; kn < (k+1)*n; ++kn, ++in)
+			{
+				double swap = X[kn];
+				X[kn] = X[in];
+				X[in] = swap;
+				
+				swap = A[kn];
+				A[kn] = A[in];
+				A[in] = swap;
 			}
 		}
 
-		#pragma omp parallel for
-		for (int i = 0; i < n; ++i)
+		if (max.j != j)
 		{
-			double swap = X[i*n + k];
-			X[i*n + k] = X[i*n + max.j];
-			X[i*n + max.j] = swap;
-				
-			if (i >= k)
+			int swap_temp = c[max.j];
+			c[max.j] = k;
+			c[k] = swap_temp;
+
+			#pragma omp simd
+			for (int in = k * n; in < n; in+=n)
 			{
-				swap = A[i*n + k];
-				A[i*n + k] = A[i*n + max.j];
-				A[i*n + max.j] = swap;
+				double swap = A[in + k];
+				A[in + k] = A[in + max.j];
+				A[in + max.j] = swap;
 			}
-		}	
+		}
+
+		gauss_inverse(n, k, A, X);
 	}
 }
+
+void gauss_inverse(const int n, const int k, double * restrict A, double * restrict X)
+{
+	const int kn = k*n, const int kk = kn + k;
+	const double inv_akk = 1./A[kn + k];
+	A[kn + k] = 1.;	
+	
+	for (int ij = kn; ij < kn+k; ++ij)
+	{
+		double xij = X[ij];
+		if (fabs(xij) > DBL_EPSILON) X[ij] = xij*inv_akk;
+	}
+
+	for (int ij = kn + k+1; ij < kn+n; ++ij)
+	{
+		double aij = A[ij], xij = X[ij];
+		if (fabs(aij) > DBL_EPSILON) A[ij] = aij*inv_akk;
+		if (fabs(xij) > DBL_EPSILON) X[ij] = xij*inv_akk;
+	}
+	
+	#pragma omp parallel for
+	for (int i = k+1; i < n; ++i)
+	{
+		const int in = i*n;
+		const double aik = A[in + k];
+		A[in + k] = 0;
+		X[in + k] -= X[kk] * aik;
+		
+		#pragma omp simd
+		for (int j = 0; j < k; ++j)
+			X[in + j] -= X[kn + j] * aik;
+		
+		#pragma omp simd
+		for (int j = k+1; j < n; ++j)
+		{
+			A[in + j] -= A[kn + j] * aik;
+			X[in + j] -= X[kn + j] * aik;
+		}
+	}
+}
+
+void gauss_back_substitution(const int n, double * restrict A, double * restrict X)
+{
+
+}
+
