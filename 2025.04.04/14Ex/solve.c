@@ -13,7 +13,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 		double maximum = -1.;
 		int max_i = 0, max_j = 0;
 		
-		//printf("\n--------- K = %d ---------\n", k);
+//		printf("\n--------- K = %d ---------\n", k);
 			
 		// Ищем максимальный элемент минора
 		#pragma omp parallel
@@ -48,7 +48,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 		if (fabs(maximum) < DBL_EPSILON)
 			return SINGULAR;
 		
-		//printf("Maximum = %lf for i = %d, j = %d\n", maximum, max_i, max_j);
+//		printf("Maximum = %lf for i = %d, j = %d\n", maximum, max_i, max_j);
 
 		// Меняем строки местами, если максимум находится не в k строке
 		if (max_i != k)
@@ -79,8 +79,8 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			}
 		}
 
-		//print_matrix(A, n, n);
-		//printf("\n");
+//		print_matrix(A, n, n);
+//		printf("\n");
 
 		// Меняем столбцы местами
 		if (max_j != k)
@@ -90,23 +90,23 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			c[k] = swap_temp;
 
 			#pragma omp simd
-			for (int in = k * n; in < n; in+=n)
+			for (int in = 0; in < n*n; in+=n)
 			{
 				double swap = A[in + k];
 				A[in + k] = A[in + max_j];
 				A[in + max_j] = swap;
 			}
 		}
-		/*
-		print_matrix(A, n, n);
-		printf("\n");
-		*/
+		
+//		print_matrix(A, n, n);
+//		printf("\n");
+		
 		gauss_inverse(n, k, A, X);
-		/*
-		print_matrix(A, n, n);
-		printf("Inverse matrix:\n");
-		print_matrix(X, n, n);
-		*/
+		
+//		print_matrix(A, n, n);
+//		printf("Inverse matrix:\n");
+//		print_matrix(X, n, n);
+		
 	}
 
 	gauss_back_substitution(n, A, X);
@@ -114,27 +114,38 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 	// Возвращаем строки назад
 	for (int k = 0; k < n; ++k)
 	{
-		int str_i = c[k];
+		int pnt_cur = c[k];
+
+		if (pnt_cur != k)
+		{
+			int pnt_nxt = 0;
 		
-		if (str_i != k)
+			#pragma omp parallel for	
 			for (int j = 0; j < n; ++j)
 			{
-				int loc_k = k;
-				int loc_i = str_i;
-				double elem = X[k*n + j];
-				
+				int loc_cur = pnt_cur;
+				double temp_cur = X[k*n + j];
+				double temp_nxt = 0;
+
 				do {
-					X[loc_i*n + j] = elem;
-					elem = X[loc_i*n + j];
-					
-					loc_k = loc_i;
-					loc_i = c[loc_i];
-					if (j == n-1)
-						c[loc_k] = loc_k;
-				} while (loc_i != k);
+					temp_nxt = X[loc_cur*n + j];
+					X[loc_cur*n + j] = temp_cur;
+					temp_cur = temp_nxt;					
+
+					loc_cur = c[loc_cur];
+				} while (loc_cur != k);
 	
-				X[k*n + j] = elem;
+				X[k*n + j] = temp_cur;
 			}
+
+			do {
+				pnt_nxt = c[pnt_cur];
+				c[pnt_cur] = pnt_cur;
+				pnt_cur = pnt_nxt;
+			} while (pnt_nxt != k);
+
+			c[k] = k;
+		}
 	}
 
 	return 0;
