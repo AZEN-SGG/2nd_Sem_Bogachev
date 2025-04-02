@@ -13,8 +13,6 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 		double maximum = -1.;
 		int max_i = 0, max_j = 0;
 		
-//		printf("\n--------- K = %d ---------\n", k);
-			
 		// Ищем максимальный элемент минора
 		#pragma omp parallel
 		{
@@ -48,8 +46,6 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 		if (fabs(maximum) < DBL_EPSILON)
 			return SINGULAR;
 		
-//		printf("Maximum = %lf for i = %d, j = %d\n", maximum, max_i, max_j);
-
 		// Меняем строки местами, если максимум находится не в k строке
 		if (max_i != k)
 		{
@@ -79,9 +75,6 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			}
 		}
 
-//		print_matrix(A, n, n);
-//		printf("\n");
-
 		// Меняем столбцы местами
 		if (max_j != k)
 		{
@@ -98,15 +91,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			}
 		}
 		
-//		print_matrix(A, n, n);
-//		printf("\n");
-		
 		gauss_inverse(n, k, A, X);
-		
-//		print_matrix(A, n, n);
-//		printf("Inverse matrix:\n");
-//		print_matrix(X, n, n);
-		
 	}
 
 	gauss_back_substitution(n, A, X);
