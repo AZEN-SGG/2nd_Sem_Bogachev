@@ -40,7 +40,6 @@ double get_r1(const int n, const double * restrict A, const double * restrict X)
 	{
 		double sum = 0;
 		
-		#pragma omp simd reduction(+:sum)
 		for (int i = 0; i < n; ++i)
 		{
 			int in = i*n;
@@ -71,7 +70,6 @@ double get_r2(const int n, const double * restrict A, const double * restrict X)
 	{
 		double sum = 0;
 
-		#pragma omp simd reduction(+:sum)
 		for (int i = 0; i < n; ++i)
 		{
 			int in = i*n;
