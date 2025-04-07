@@ -3,47 +3,34 @@
 #include <float.h>
 #include <math.h>
 #include "array_io.h"
+#include "matrix.h"
 #include <stdio.h>
 
 // c - changes in rows
 int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 {
+	double norm = get_matrix_norm(n, A);
+
 	// Проходимся по главным минорам
 	for (int k = 0; k < n; ++k) {
 		double maximum = -1.;
 		int max_i = 0, max_j = 0;
 		
 		// Ищем максимальный элемент минора
-		#pragma omp parallel
-		{
-			double local_max = -1.;
-			int loc_i = 0, loc_j = 0;
-
-			#pragma omp for collapse(2) nowait	
-			for (int i = k; i < n; ++i)
-				for (int j = k; j < n; ++j)
-				{
-					double aij = fabs(A[i * n + j]);
-					if (aij > local_max) {
-						local_max = aij;
-						loc_i = i;
-						loc_j = j;
-					}
+		for (int i = k; i < n; ++i)
+			for (int j = k; j < n; ++j)
+			{
+				double aij = fabs(A[i * n + j]);
+				if (aij > maximum) {
+					maximum = aij;
+					max_i = i;
+					max_j = j;
 				}
-		
-			#pragma omp critical
-			{		
-				if (local_max > maximum) {
-					maximum = local_max;
-					max_i = loc_i;
-					max_j = loc_j;
-				}
-			}
-		}
+			}	
 
 
 		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
-		if (fabs(maximum) < DBL_EPSILON)
+		if (fabs(maximum) < DBL_EPSILON * norm)
 			return SINGULAR;
 		
 		// Меняем строки местами, если максимум находится не в k строке
@@ -52,7 +39,6 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			int kn = k*n;
 			int in = max_i*n;
 
-			#pragma omp simd
 			for (int i = 0; i < k; ++i)
 			{
 				int kni = kn+i, ini = in+i;
@@ -61,7 +47,6 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 				X[ini] = swap;
 			}
 	
-			#pragma omp parallel for simd
 			for (int i = k; i < n; ++i)
 			{
 				int kni = kn+i, ini = in+i;
@@ -82,7 +67,6 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			c[max_j] = c[k];
 			c[k] = swap_temp;
 
-			#pragma omp simd
 			for (int in = 0; in < n*n; in+=n)
 			{
 				double swap = A[in + k];
@@ -105,7 +89,6 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 		{
 			int pnt_nxt = 0;
 		
-			#pragma omp parallel for	
 			for (int j = 0; j < n; ++j)
 			{
 				int loc_cur = pnt_cur;
@@ -156,7 +139,6 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 		if (fabs(xij) > DBL_EPSILON) X[ij] = xij*inv_akk;
 	}
 	
-	#pragma omp parallel for
 	for (int i = k+1; i < n; ++i)
 	{
 		const int in = i*n;
@@ -164,11 +146,9 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 		A[in + k] = 0;
 		X[in + k] -= X[kk] * aik;
 		
-		#pragma omp simd
 		for (int j = 0; j < k; ++j)
 			X[in + j] -= X[kn + j] * aik;
 		
-		#pragma omp simd
 		for (int j = k+1; j < n; ++j)
 		{
 			A[in + j] -= A[kn + j] * aik;
@@ -185,14 +165,12 @@ void gauss_back_substitution(const int n, double * restrict A, double * restrict
 	{
 		const int kn = k * n;
 
-		#pragma omp parallel for
 		for (int i = 0; i < k; ++i)
 		{
 			const int in = i*n;
 			const double aik = A[in + k];
 			A[in + k] = 0;
 
-			#pragma omp simd
 			for (int j = 0; j < n; ++j)
 				X[in + j] -= X[kn + j] * aik;	
 		}

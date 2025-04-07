@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <omp.h>
 #include "array_io.h"
 #include "io_status.h"
 #include "matrix.h"
@@ -48,40 +47,27 @@ int main(int argc, char *argv[])
 		return 2;
 	}
 
-	if (name)
-	{ /* из файла */
-		io_status ret;
-		ret = read_matrix(a, n, name);
-		do {
-			switch (ret)
-			{
-				case SUCCESS:
-					continue;
-				case ERROR_OPEN:
-					printf("Cannot open %s\n", name);
-					break;
-				case ERROR_READ:
-					printf("Cannot read %s\n", name);
-			}
-			free(a);
-			free(x);
-			free(c);
-			return 3;
-		} while (0);
-	} else init_matrix(a, n, k);
+	res = read_or_init_matrix(a, name, k, n);
+	if (res)
+	{
+		free(a);
+		free(x);
+		free(c);
+
+		return res;
+	}
 
 	init_identity_matrix(x, n);
 
-	#pragma omp simd
 	for (int i = 0; i < n; ++i)
 		c[i] = i;
 
 	printf("Initial matrix:\n");
 	print_matrix(a, n, p);
 
-	t = omp_get_wtime();
+	t = clock();
 	res = t14_solve(n, a, x, c);
-	t = omp_get_wtime() - t;
+	t = clock() - t;
 	
 	if (res == SINGULAR) 
 	{
@@ -93,27 +79,15 @@ int main(int argc, char *argv[])
 		return 4;	
 	}	
 
-	if (name)
-	{ /* из файла */
-		io_status ret;
-		ret = read_matrix(a, n, name);
-		do {
-			switch (ret)
-			{
-				case SUCCESS:
-					continue;
-				case ERROR_OPEN:
-					printf("Cannot open %s\n", name);
-					break;
-				case ERROR_READ:
-					printf("Cannot read %s\n", name);
-			}
-			free(a);
-			free(x);
-			free(c);
-			return 3;
-		} while (0);
-	} else init_matrix(a, n, k);
+	res = read_or_init_matrix(a, name, k, n);
+	if (res)
+	{
+		free(a);
+		free(x);
+		free(c);
+
+		return res;
+	}
 	
 	r1 = get_r1(n, a, x);	
 	r2 = get_r2(n, a, x);	

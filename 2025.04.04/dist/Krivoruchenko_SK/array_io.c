@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <omp.h>
 #include "array_io.h"
 
 io_status read_matrix(double *a, int n, const char *name)
@@ -44,7 +43,30 @@ void init_identity_matrix(double *a, int n)
 {
 	a = memset(a, 0, n * n * sizeof(double));
 	
-	#pragma omp simd
 	for (int i = 0; i < n; ++i)
 		a[i*n + i] = 1.0;
+}
+
+int read_or_init_matrix(double *a, char *name, int k, int n)
+{
+	if (name)
+	{ /* из файла */
+		io_status ret;
+		ret = read_matrix(a, n, name);
+		do {
+			switch (ret)
+			{
+				case SUCCESS:
+					continue;
+				case ERROR_OPEN:
+					printf("Cannot open %s\n", name);
+					break;
+				case ERROR_READ:
+					printf("Cannot read %s\n", name);
+			}
+			return 3;
+		} while (0);
+	} else init_matrix(a, n, k);
+
+	return 0;
 }
