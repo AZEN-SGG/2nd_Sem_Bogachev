@@ -143,17 +143,15 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 	const int kn = k*n;
 	const int kk = kn + k;
 	const double inv_akk = 1./A[kk];
-	A[kk] = 1.;
 
 	if (eps > DBL_EPSILON)
 		eps = DBL_EPSILON;	
 	
-	for (int ij = kk+1; ij < kn+n; ij++)
-		A[ij] *= inv_akk;
-	
-	for (int ij = kn; ij < kn + n; ij++)
-		X[ij] *= inv_akk;
+	// Делим на A[k][k]
+	for (int kj = kk+1; kj < kn+n; kj++)
+		A[kj] *= inv_akk;
 
+	// Меняем обратную матрицу
 	for (int j = 0; j < n; ++j)
 	{
 		double xkj = X[kn + j];
@@ -189,7 +187,6 @@ void gauss_back_substitution(const int n, double * restrict A, double * restrict
 		{
 			const int in = i*n;
 			const double aik = A[in + k];
-			A[in + k] = 0;
 
 			for (int j = 0; j < n; ++j)
 				X[in + j] -= X[kn + j] * aik;	
