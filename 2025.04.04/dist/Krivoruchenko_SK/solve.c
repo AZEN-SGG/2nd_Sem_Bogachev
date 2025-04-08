@@ -45,22 +45,17 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			int kn = k*n;
 			int in = max_i*n;
 
-			for (int i = 0; i < k; ++i)
+			for (int im = max_i, ik = k; im < n*n; im+=n, ik+=n)
 			{
-				int kni = kn+i, ini = in+i;
-				double swap = X[kni];
-				X[kni] = X[ini];
-				X[ini] = swap;
+				double swap = X[ik];
+				X[ik] = X[im];
+				X[im] = swap;
 			}
 	
 			for (int i = k; i < n; ++i)
 			{
 				int kni = kn+i, ini = in+i;
-				double swap = X[kni];
-				X[kni] = X[ini];
-				X[ini] = swap;
-				
-				swap = A[kni];
+				double swap = A[kni];
 				A[kni] = A[ini];
 				A[ini] = swap;
 			}
@@ -96,6 +91,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 //		print_matrix(X, n, n);
 	}
 
+	transpose(n, X);
 	gauss_back_substitution(n, A, X);
 	
 	// Возвращаем строки назад
