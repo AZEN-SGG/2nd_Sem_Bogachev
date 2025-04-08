@@ -32,8 +32,8 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 				}
 			}
 		
-		printf("\n------- K = %d -------\n", k);
-		printf("Maximum = %lf i = %d j = %d\n", maximum, max_i, max_j);
+//		printf("\n------- K = %d -------\n", k);
+//		printf("Maximum = %lf i = %d j = %d\n", maximum, max_i, max_j);
 
 		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
 		if (fabs(maximum) < eps)
@@ -81,19 +81,19 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			}
 		}
 
-		printf("BEFORE GAUSS\n");
-		printf("Original matrix:\n");
-		print_matrix(A, n, n);
-		printf("Inverse matrix:\n");
-		print_matrix(X, n, n);
+//		printf("BEFORE GAUSS\n");
+//		printf("Original matrix:\n");
+//		print_matrix(A, n, n);
+//		printf("Inverse matrix:\n");
+//		print_matrix(X, n, n);
 		
 		gauss_inverse(n, k, A, X);
 		
-		printf("AFTER GAUSS\n");
-		printf("Original matrix:\n");
-		print_matrix(A, n, n);
-		printf("Inverse matrix:\n");
-		print_matrix(X, n, n);
+//		printf("AFTER GAUSS\n");
+//		printf("Original matrix:\n");
+//		print_matrix(A, n, n);
+//		printf("Inverse matrix:\n");
+//		print_matrix(X, n, n);
 	}
 
 	gauss_back_substitution(n, A, X);
@@ -136,6 +136,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 
 	return 0;
 }
+
 // Прямой ход Го ----- йда
 void gauss_inverse(const int n, const int k, double * restrict A, double * restrict X)
 {
@@ -147,7 +148,7 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 	for (int ij = kk+1; ij < kn+n; ij++)
 		A[ij] *= inv_akk;
 	
-	for (int ij = kn; ij <= kk; ij++)
+	for (int ij = kn; ij < kn + n; ij++)
 		X[ij] *= inv_akk;
 	
 	for (int i = k+1; i < n; ++i)
@@ -182,11 +183,11 @@ void gauss_back_substitution(const int n, double * restrict A, double * restrict
 				X[in + j] -= X[kn + j] * aik;	
 		}
 
-		printf("\n------- K = %d -------\n", k);
-		printf("Original matrix:\n");
-		print_matrix(A, n, n);
-		printf("Inverse matrix:\n");
-		print_matrix(X, n, n);
+//		printf("\n------- K = %d -------\n", k);
+//		printf("Original matrix:\n");
+//		print_matrix(A, n, n);
+//		printf("Inverse matrix:\n");
+//		print_matrix(X, n, n);
 	}
 }
 
