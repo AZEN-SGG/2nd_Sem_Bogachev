@@ -23,4 +23,4 @@ gdb: CFLAGS = -mfpmath=sse -std=gnu99 -g
 gdb: clean $(TARGET)
 
 clean:
-	del *.o *.out
+	rm -f *.o *.out

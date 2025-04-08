@@ -87,7 +87,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 //		printf("Inverse matrix:\n");
 //		print_matrix(X, n, n);
 		
-		gauss_inverse(n, k, A, X);
+		gauss_inverse(n, k, A, X, eps);
 		
 //		printf("AFTER GAUSS\n");
 //		printf("Original matrix:\n");
@@ -154,23 +154,23 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 	for (int ij = kn; ij < kn + n; ij++)
 		X[ij] *= inv_akk;
 
-	for (int j = 0; j < k; ++j)
+	for (int j = 0; j < n; ++j)
 	{
-		const double xkj = X[kn + j];
+		double xkj = X[kn + j];
 		if (fabs(xkj) <= eps)
 			continue;
 		
-
+		xkj *= inv_akk;
+		X[kn + j] = xkj;
+		
+		for (int i = k+1; i < n; i++)
+			X[i*n + j] -= xkj * A[i*n + k];
 	}
 
 	for (int i = k+1; i < n; ++i)
 	{
 		const int in = i*n;
 		const double aik = A[in + k];
-		A[in + k] = 0;
-		
-		for (int ij = in, kj = kn; kj < kn + n; ij++, kj++)
-			X[ij] -= X[kj] * aik;
 		
 		for (int ij = in+k+1, kj = kk+1; ij < in+n; ij++, kj++)
 			A[ij] -= A[kj] * aik;
