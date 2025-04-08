@@ -45,11 +45,11 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			int kn = k*n;
 			int in = max_i*n;
 
-			for (int im = max_i, ik = k; im < n*n; im+=n, ik+=n)
+			for (int mj = in, kj = kn; mj < in+n; ++mj, ++kj)
 			{
-				double swap = X[ik];
-				X[ik] = X[im];
-				X[im] = swap;
+				double swap = X[mj];
+				X[mj] = X[kj];
+				X[kj] = swap;
 			}
 	
 			for (int i = k; i < n; ++i)
@@ -91,7 +91,6 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 //		print_matrix(X, n, n);
 	}
 
-	transpose(n, X);
 	gauss_back_substitution(n, A, X);
 	
 	// Возвращаем строки назад
@@ -150,15 +149,17 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 	// Меняем обратную матрицу
 	for (int j = 0; j < n; ++j)
 	{
+		const int BS = 32;
 		double xkj = X[kn + j];
 		if (fabs(xkj) <= eps)
 			continue;
 		
 		xkj *= inv_akk;
 		X[kn + j] = xkj;
-		
-		for (int i = k+1; i < n; i++)
-			X[i*n + j] -= xkj * A[i*n + k];
+
+		for (int i_block = k + 1; i_block < n; i_block += BS)
+			for (int i = i_block; i < i_block + BS && i < n; ++i)
+				X[i * n + j] -= xkj * A[i * n + k];
 	}
 
 	for (int i = k+1; i < n; ++i)

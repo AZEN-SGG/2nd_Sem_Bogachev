@@ -10,17 +10,17 @@ WFLAGS = -fstack-protector-all -W -Wall -Wextra -Wunused \
 
 CFLAGS = -mfpmath=sse -std=gnu99 -O3
 
-TARGET = a.exe
+TARGET = a.out
 OBJ = main.o solve.o array_io.o init_f.o matrix.o
 
 %.o: %.c
 	gcc $(CFLAGS) $(WFLAGS) -c $< -o $@
 
 $(TARGET): $(OBJ)
-	gcc $^ -o $@ -lm -lssp
+	gcc $^ -o $@ -lm
 
 gdb: CFLAGS = -mfpmath=sse -std=gnu99 -g
 gdb: clean $(TARGET)
 
 clean:
-	del -f *.o *.exe
+	rm -f *.o *.out
