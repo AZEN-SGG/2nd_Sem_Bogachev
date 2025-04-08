@@ -93,6 +93,6 @@ double get_matrix_norm(const int n, const double * restrict A)
 		if (sum > norm)
 			norm = sum;
 	}
-
+	
 	return norm;
 }

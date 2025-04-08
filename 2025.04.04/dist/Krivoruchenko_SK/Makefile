@@ -19,5 +19,8 @@ OBJ = main.o solve.o array_io.o init_f.o matrix.o
 $(TARGET): $(OBJ)
 	gcc $^ -o $@ -lm 
 
+gdb: CFLAGS = -mfpmath=sse -std=gnu99 -g
+gdb: clean $(TARGET)
+
 clean:
 	rm -f *.o *.out

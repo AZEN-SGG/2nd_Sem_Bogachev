@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
 	t = clock();
 	res = t14_solve(n, a, x, c);
-	t = clock() - t;
+	t = (clock() - t) / CLOCKS_PER_SEC;
 	
 	if (res == SINGULAR) 
 	{

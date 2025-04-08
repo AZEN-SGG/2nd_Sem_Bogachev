@@ -1,12 +1,20 @@
 #include "solve.h"
 #include "io_status.h"
 #include "array_io.h"
+#include "matrix.h"
 #include <float.h>
 #include <math.h>
+#include <stdio.h>
 
 // c - changes in rows
 int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 {
+	double norm = get_matrix_norm(n, A);
+	double eps = DBL_EPSILON*norm;
+
+	if (norm < DBL_EPSILON)
+		return SINGULAR;
+
 	// Проходимся по главным минорам
 	for (int k = 0; k < n; ++k) {
 		double maximum = -1.;
@@ -25,7 +33,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			}
 
 		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
-		if (fabs(maximum) < DBL_EPSILON)
+		if (fabs(maximum) < eps)
 			return SINGULAR;
 		
 		// Меняем строки местами, если максимум находится не в k строке
@@ -71,6 +79,12 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 		}
 		
 		gauss_inverse(n, k, A, X);
+
+		printf("\n------- K = %d -------\n", k);
+		printf("Original matrix:\n");
+		print_matrix(A, n, n);
+		printf("Inverse matrix:\n");
+		print_matrix(X, n, n);
 	}
 
 	gauss_back_substitution(n, A, X);
@@ -118,37 +132,32 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 {
 	const int kn = k*n;
 	const int kk = kn + k;
-	const double inv_akk = 1./A[kn + k];
-	A[kn + k] = 1.;	
+	const double inv_akk = 1./A[kk];
+	A[kk] = 1.;	
 	
-	for (int ij = kn; ij <= kn+k; ++ij)
+	for (int ij = kk+1; ij < kn+n; ++ij)
 	{
-		double xij = X[ij];
-		if (fabs(xij) > DBL_EPSILON) X[ij] = xij*inv_akk;
-	}
-
-	for (int ij = kn + k+1; ij < kn+n; ++ij)
-	{
-		double aij = A[ij], xij = X[ij];
+		double aij = A[ij];
 		if (fabs(aij) > DBL_EPSILON) A[ij] = aij*inv_akk;
-		if (fabs(xij) > DBL_EPSILON) X[ij] = xij*inv_akk;
 	}
 	
+	for (int ij = kn; ij < kk; ++ij)
+		X[ij] *= inv_akk;
+	
+	X[kk] = inv_akk;
+
 	for (int i = k+1; i < n; ++i)
 	{
 		const int in = i*n;
 		const double aik = A[in + k];
 		A[in + k] = 0;
-		X[in + k] -= X[kk] * aik;
+		X[in + k] = -inv_akk * aik;
 		
-		for (int j = 0; j < k; ++j)
-			X[in + j] -= X[kn + j] * aik;
+		for (int ij = in, kj = kn; kj < kk; ++ij, ++kj)
+			X[ij] -= X[kj] * aik;
 		
-		for (int j = k+1; j < n; ++j)
-		{
-			A[in + j] -= A[kn + j] * aik;
-			X[in + j] -= X[kn + j] * aik;
-		}
+		for (int ij = in+k+1, kj = kk+1; ij < in+n; ++ij, ++kj)
+			A[ij] -= A[kj] * aik;
 	}
 }
 
@@ -169,6 +178,12 @@ void gauss_back_substitution(const int n, double * restrict A, double * restrict
 			for (int j = 0; j < n; ++j)
 				X[in + j] -= X[kn + j] * aik;	
 		}
+
+		printf("\n------- K = %d -------\n", k);
+		printf("Original matrix:\n");
+		print_matrix(A, n, n);
+		printf("Inverse matrix:\n");
+		print_matrix(X, n, n);
 	}
 }
 
