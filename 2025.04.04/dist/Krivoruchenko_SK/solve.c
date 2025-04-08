@@ -31,6 +31,9 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 					max_j = j;
 				}
 			}
+		
+		printf("\n------- K = %d -------\n", k);
+		printf("Maximum = %lf i = %d j = %d\n", maximum, max_i, max_j);
 
 		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
 		if (fabs(maximum) < eps)
@@ -77,10 +80,16 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 				A[in + max_j] = swap;
 			}
 		}
+
+		printf("BEFORE GAUSS\n");
+		printf("Original matrix:\n");
+		print_matrix(A, n, n);
+		printf("Inverse matrix:\n");
+		print_matrix(X, n, n);
 		
 		gauss_inverse(n, k, A, X);
-
-		printf("\n------- K = %d -------\n", k);
+		
+		printf("AFTER GAUSS\n");
 		printf("Original matrix:\n");
 		print_matrix(A, n, n);
 		printf("Inverse matrix:\n");
@@ -127,7 +136,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 
 	return 0;
 }
-
+// Прямой ход Го ----- йда
 void gauss_inverse(const int n, const int k, double * restrict A, double * restrict X)
 {
 	const int kn = k*n;
@@ -135,28 +144,22 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 	const double inv_akk = 1./A[kk];
 	A[kk] = 1.;	
 	
-	for (int ij = kk+1; ij < kn+n; ++ij)
-	{
-		double aij = A[ij];
-		if (fabs(aij) > DBL_EPSILON) A[ij] = aij*inv_akk;
-	}
+	for (int ij = kk+1; ij < kn+n; ij++)
+		A[ij] *= inv_akk;
 	
-	for (int ij = kn; ij < kk; ++ij)
+	for (int ij = kn; ij <= kk; ij++)
 		X[ij] *= inv_akk;
 	
-	X[kk] = inv_akk;
-
 	for (int i = k+1; i < n; ++i)
 	{
 		const int in = i*n;
 		const double aik = A[in + k];
 		A[in + k] = 0;
-		X[in + k] = -inv_akk * aik;
 		
-		for (int ij = in, kj = kn; kj < kk; ++ij, ++kj)
+		for (int ij = in, kj = kn; kj < kn + n; ij++, kj++)
 			X[ij] -= X[kj] * aik;
 		
-		for (int ij = in+k+1, kj = kk+1; ij < in+n; ++ij, ++kj)
+		for (int ij = in+k+1, kj = kk+1; ij < in+n; ij++, kj++)
 			A[ij] -= A[kj] * aik;
 	}
 }
