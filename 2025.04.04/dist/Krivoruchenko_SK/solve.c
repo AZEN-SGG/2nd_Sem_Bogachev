@@ -36,7 +36,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 //		printf("Maximum = %lf i = %d j = %d\n", maximum, max_i, max_j);
 
 		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
-		if (fabs(maximum) < eps)
+		if (maximum < eps)
 			return SINGULAR;
 		
 		// Меняем строки местами, если максимум находится не в k строке
@@ -138,19 +138,31 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 }
 
 // Прямой ход Го ----- йда
-void gauss_inverse(const int n, const int k, double * restrict A, double * restrict X)
+void gauss_inverse(const int n, const int k, double * restrict A, double * restrict X, double eps)
 {
 	const int kn = k*n;
 	const int kk = kn + k;
 	const double inv_akk = 1./A[kk];
-	A[kk] = 1.;	
+	A[kk] = 1.;
+
+	if (eps > DBL_EPSILON)
+		eps = DBL_EPSILON;	
 	
 	for (int ij = kk+1; ij < kn+n; ij++)
 		A[ij] *= inv_akk;
 	
 	for (int ij = kn; ij < kn + n; ij++)
 		X[ij] *= inv_akk;
-	
+
+	for (int j = 0; j < k; ++j)
+	{
+		const double xkj = X[kn + j];
+		if (fabs(xkj) <= eps)
+			continue;
+		
+
+	}
+
 	for (int i = k+1; i < n; ++i)
 	{
 		const int in = i*n;
