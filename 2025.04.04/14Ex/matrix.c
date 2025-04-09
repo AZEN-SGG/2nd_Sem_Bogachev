@@ -19,7 +19,6 @@ void matvec_mul(int n, const double * restrict A, const double * restrict x, dou
 	for (int i = 0; i < n; i++)
 	{
 		double sum = 0;
-		
 		for (int j = 0; j < n; j++)
 			sum += A[i * n + j] * x[j];
 		x_k[i] = sum;
@@ -94,6 +93,6 @@ double get_matrix_norm(const int n, const double * restrict A)
 		if (sum > norm)
 			norm = sum;
 	}
-
+	
 	return norm;
 }

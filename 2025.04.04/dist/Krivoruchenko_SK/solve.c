@@ -36,7 +36,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 //		printf("Maximum = %lf i = %d j = %d\n", maximum, max_i, max_j);
 
 		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
-		if (maximum < eps)
+		if (fabs(maximum) < eps)
 			return SINGULAR;
 		
 		// Меняем строки местами, если максимум находится не в k строке
@@ -45,17 +45,22 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			int kn = k*n;
 			int in = max_i*n;
 
-			for (int mj = in, kj = kn; mj < in+n; ++mj, ++kj)
+			for (int i = 0; i < k; ++i)
 			{
-				double swap = X[mj];
-				X[mj] = X[kj];
-				X[kj] = swap;
+				int kni = kn+i, ini = in+i;
+				double swap = X[kni];
+				X[kni] = X[ini];
+				X[ini] = swap;
 			}
 	
 			for (int i = k; i < n; ++i)
 			{
 				int kni = kn+i, ini = in+i;
-				double swap = A[kni];
+				double swap = X[kni];
+				X[kni] = X[ini];
+				X[ini] = swap;
+				
+				swap = A[kni];
 				A[kni] = A[ini];
 				A[ini] = swap;
 			}
@@ -82,7 +87,7 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 //		printf("Inverse matrix:\n");
 //		print_matrix(X, n, n);
 		
-		gauss_inverse(n, k, A, X, eps);
+		gauss_inverse(n, k, A, X);
 		
 //		printf("AFTER GAUSS\n");
 //		printf("Original matrix:\n");
@@ -92,9 +97,30 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 	}
 
 	gauss_back_substitution(n, A, X);
-	
-	// Возвращаем строки назад
+
 	for (int k = 0; k < n; ++k)
+	{
+		const int kn = k*n;	
+		int i = c[k];
+		
+		while (i != k)
+		{
+			const int in = i*n;
+			const int swap_int = c[i];
+			c[i] = i;
+			i = swap_int;
+
+			for (int ij = in, kj = kn; ij < in+n; ++ij, ++kj)
+			{
+				double swap_temp = X[ij];
+				X[ij] = X[kj];
+				X[kj] = swap_temp;
+			}
+		}
+	}
+
+	// Возвращаем строки назад
+/*	for (int k = 0; k < n; ++k)
 	{
 		int pnt_cur = c[k];
 
@@ -127,41 +153,24 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 
 			c[k] = k;
 		}
-	}
+	}*/
 
 	return 0;
 }
 
 // Прямой ход Го ----- йда
-void gauss_inverse(const int n, const int k, double * restrict A, double * restrict X, double eps)
+void gauss_inverse(const int n, const int k, double * restrict A, double * restrict X)
 {
 	const int kn = k*n;
 	const int kk = kn + k;
 	const double inv_akk = 1./A[kk];
-
-	if (eps > DBL_EPSILON)
-		eps = DBL_EPSILON;	
 	
-	// Делим на A[k][k]
-	for (int kj = kk+1; kj < kn+n; kj++)
-		A[kj] *= inv_akk;
-
-	// Меняем обратную матрицу
-	for (int j = 0; j < n; ++j)
-	{
-		const int BS = 32;
-		double xkj = X[kn + j];
-		if (fabs(xkj) <= eps)
-			continue;
-		
-		xkj *= inv_akk;
-		X[kn + j] = xkj;
-
-		for (int i_block = k + 1; i_block < n; i_block += BS)
-			for (int i = i_block; i < i_block + BS && i < n; ++i)
-				X[i * n + j] -= xkj * A[i * n + k];
-	}
-
+	for (int ij = kk+1; ij < kn+n; ij++)
+		A[ij] *= inv_akk;
+	
+	for (int ij = kn; ij < kn+n; ij++)
+		X[ij] *= inv_akk;
+	
 	for (int i = k+1; i < n; ++i)
 	{
 		const int in = i*n;
@@ -169,6 +178,9 @@ void gauss_inverse(const int n, const int k, double * restrict A, double * restr
 		
 		for (int ij = in+k+1, kj = kk+1; ij < in+n; ij++, kj++)
 			A[ij] -= A[kj] * aik;
+		
+		for (int ij = in, kj = kn; kj < kn + n; ij++, kj++)
+			X[ij] -= X[kj] * aik;
 	}
 }
 

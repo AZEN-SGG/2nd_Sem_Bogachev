@@ -1,15 +1,19 @@
 #include "solve.h"
 #include "io_status.h"
-#include <float.h>
-#include <math.h>
 #include "array_io.h"
 #include "matrix.h"
+#include <float.h>
+#include <math.h>
 #include <stdio.h>
 
 // c - changes in rows
 int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 {
 	double norm = get_matrix_norm(n, A);
+	double eps = DBL_EPSILON*norm;
+
+	if (norm < DBL_EPSILON)
+		return SINGULAR;
 
 	// Проходимся по главным минорам
 	for (int k = 0; k < n; ++k) {
@@ -26,11 +30,13 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 					max_i = i;
 					max_j = j;
 				}
-			}	
-
+			}
+		
+//		printf("\n------- K = %d -------\n", k);
+//		printf("Maximum = %lf i = %d j = %d\n", maximum, max_i, max_j);
 
 		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
-		if (fabs(maximum) < DBL_EPSILON * norm)
+		if (fabs(maximum) < eps)
 			return SINGULAR;
 		
 		// Меняем строки местами, если максимум находится не в k строке
@@ -67,93 +73,79 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			c[max_j] = c[k];
 			c[k] = swap_temp;
 
-			for (int in = 0; in < n*n; in+=n)
+			for (int i = 0; i < n; i++)
 			{
+				const int in = i*n;
 				double swap = A[in + k];
 				A[in + k] = A[in + max_j];
 				A[in + max_j] = swap;
 			}
 		}
+
+//		printf("BEFORE GAUSS\n");
+//		printf("Original matrix:\n");
+//		print_matrix(A, n, n);
+//		printf("Inverse matrix:\n");
+//		print_matrix(X, n, n);
 		
 		gauss_inverse(n, k, A, X);
+		
+//		printf("AFTER GAUSS\n");
+//		printf("Original matrix:\n");
+//		print_matrix(A, n, n);
+//		printf("Inverse matrix:\n");
+//		print_matrix(X, n, n);
 	}
 
 	gauss_back_substitution(n, A, X);
-	
-	// Возвращаем строки назад
+
 	for (int k = 0; k < n; ++k)
 	{
-		int pnt_cur = c[k];
-
-		if (pnt_cur != k)
-		{
-			int pnt_nxt = 0;
+		const int kn = k*n;	
+		int i = c[k];
 		
+		while (i != k)
+		{
+			const int in = i*n;
+			const int swap_int = c[i];
+			c[i] = i;
+			i = swap_int;
+
 			for (int j = 0; j < n; ++j)
 			{
-				int loc_cur = pnt_cur;
-				double temp_cur = X[k*n + j];
-				double temp_nxt = 0;
-
-				do {
-					temp_nxt = X[loc_cur*n + j];
-					X[loc_cur*n + j] = temp_cur;
-					temp_cur = temp_nxt;					
-
-					loc_cur = c[loc_cur];
-				} while (loc_cur != k);
-	
-				X[k*n + j] = temp_cur;
+				double swap_temp = X[in+j];
+				X[in+j] = X[kn+j];
+				X[kn+j] = swap_temp;
 			}
-
-			do {
-				pnt_nxt = c[pnt_cur];
-				c[pnt_cur] = pnt_cur;
-				pnt_cur = pnt_nxt;
-			} while (pnt_nxt != k);
-
-			c[k] = k;
 		}
 	}
 
 	return 0;
 }
 
+// Прямой ход Го ----- йда
 void gauss_inverse(const int n, const int k, double * restrict A, double * restrict X)
 {
 	const int kn = k*n;
 	const int kk = kn + k;
-	const double inv_akk = 1./A[kn + k];
-	A[kn + k] = 1.;	
+	const double inv_akk = 1./A[kk];
 	
-	for (int ij = kn; ij <= kn+k; ++ij)
-	{
-		double xij = X[ij];
-		if (fabs(xij) > DBL_EPSILON) X[ij] = xij*inv_akk;
-	}
-
-	for (int ij = kn + k+1; ij < kn+n; ++ij)
-	{
-		double aij = A[ij], xij = X[ij];
-		if (fabs(aij) > DBL_EPSILON) A[ij] = aij*inv_akk;
-		if (fabs(xij) > DBL_EPSILON) X[ij] = xij*inv_akk;
-	}
+	for (int ij = kk+1; ij < kn+n; ij++)
+		A[ij] *= inv_akk;
+	
+	for (int ij = kn; ij < kn+n; ij++)
+		X[ij] *= inv_akk;
 	
 	for (int i = k+1; i < n; ++i)
 	{
 		const int in = i*n;
 		const double aik = A[in + k];
-		A[in + k] = 0;
-		X[in + k] -= X[kk] * aik;
 		
-		for (int j = 0; j < k; ++j)
-			X[in + j] -= X[kn + j] * aik;
+		for (int ij = in+k+1, kj = kk+1; ij < in+n; ij++, kj++)
+			A[ij] -= A[kj] * aik;
 		
-		for (int j = k+1; j < n; ++j)
-		{
-			A[in + j] -= A[kn + j] * aik;
-			X[in + j] -= X[kn + j] * aik;
-		}
+		for (int ij = in, kj = kn; kj < kn + n; ij++, kj++)
+			X[ij] -= X[kj] * aik;
 	}
 }
 
@@ -169,11 +161,16 @@ void gauss_back_substitution(const int n, double * restrict A, double * restrict
 		{
 			const int in = i*n;
 			const double aik = A[in + k];
-			A[in + k] = 0;
 
 			for (int j = 0; j < n; ++j)
 				X[in + j] -= X[kn + j] * aik;	
 		}
+
+//		printf("\n------- K = %d -------\n", k);
+//		printf("Original matrix:\n");
+//		print_matrix(A, n, n);
+//		printf("Inverse matrix:\n");
+//		print_matrix(X, n, n);
 	}
 }
 

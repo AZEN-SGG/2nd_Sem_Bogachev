@@ -1,29 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 #include "array_io.h"
-#include "io_status.h"
 
-io_status read_matrix(double *a, int n, const char *name, bool transpose)
+io_status read_matrix(double *a, int n, const char *name)
 {
 	int i, j;
 	FILE *fp;
 	if (!(fp = fopen(name, "r"))) return ERROR_OPEN;
 	for (i = 0; i < n; i++)
 		for (j = 0; j < n; j++)
-		{
-			if (transpose)
-			{
-				if (fscanf(fp, "%lf", a + j * n + i) != 1) 
-					{fclose(fp); return ERROR_READ;}
-			} else
-				if (fscanf(fp, "%lf", a + i * n + j) != 1) 
-					{fclose(fp); return ERROR_READ;}
-		}
+			if (fscanf(fp, "%lf", a + i * n + j) != 1) 
+				{fclose(fp); return ERROR_READ;}
 	fclose(fp);
 	return SUCCESS;
 }
 
-void print_matrix(const double *a, int n, int p, bool transpose)
+void print_matrix(const double *a, int n, int p)
 {
 	int np = (n > p ? p : n);
 	int i, j;
@@ -31,17 +23,12 @@ void print_matrix(const double *a, int n, int p, bool transpose)
 	for (i = 0; i < np; i++)
 	{
 		for (j = 0; j < np; j++)
-		{
-			if (transpose)
-				printf(" %10.3e", a[j * n + i]);
-			else
-				printf(" %10.3e", a[i * n + j]);
-		}
+			printf(" %10.3e", a[i * n + j]);
 		printf("\n");
 	}
 }
 
-void init_matrix(double *a, int n, int k, bool transpose)
+void init_matrix(double *a, int n, int k)
 {
 	double (*q)(int, int, int, int);
 	double (*f[])(int, int, int, int) = {f1, f2, f3, f4};
@@ -49,14 +36,8 @@ void init_matrix(double *a, int n, int k, bool transpose)
 	q = f[k-1];
 	for (i = 0; i < n; i++)
 		for (j = 0; j < n; j++)
-		{
-			if (transpose)
-				a[i * n + j] = q(n, n, j+1, i+1);
-			else
-				a[i * n + j] = q(n, n, j+1, i+1);
-		}
+			a[i * n + j] = q(n, n, i+1, j+1);
 }
-
 
 void init_identity_matrix(double *a, int n)
 {
@@ -66,12 +47,12 @@ void init_identity_matrix(double *a, int n)
 		a[i*n + i] = 1.0;
 }
 
-int read_or_init_matrix(double *a, char *name, int k, int n, bool transpose)
+int read_or_init_matrix(double *a, char *name, int k, int n)
 {
 	if (name)
 	{ /* из файла */
 		io_status ret;
-		ret = read_matrix(a, n, name, transpose);
+		ret = read_matrix(a, n, name);
 		do {
 			switch (ret)
 			{
@@ -85,7 +66,7 @@ int read_or_init_matrix(double *a, char *name, int k, int n, bool transpose)
 			}
 			return 3;
 		} while (0);
-	} else init_matrix(a, n, k, transpose);
+	} else init_matrix(a, n, k);
 
 	return 0;
 }

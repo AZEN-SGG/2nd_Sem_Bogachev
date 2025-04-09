@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <time.h>
 #include "array_io.h"
 #include "io_status.h"
@@ -48,7 +47,7 @@ int main(int argc, char *argv[])
 		return 2;
 	}
 
-	res = read_or_init_matrix(a, name, k, n, true);
+	res = read_or_init_matrix(a, name, k, n);
 	if (res)
 	{
 		free(a);
@@ -64,12 +63,12 @@ int main(int argc, char *argv[])
 		c[i] = i;
 
 	printf("Initial matrix:\n");
-	print_matrix(a, n, p, true);
+	print_matrix(a, n, p);
 
 	t = clock();
 	res = t14_solve(n, a, x, c);
 	t = (clock() - t) / CLOCKS_PER_SEC;
-
+	
 	if (res == SINGULAR) 
 	{
 		free(a);
@@ -80,7 +79,7 @@ int main(int argc, char *argv[])
 		return 4;	
 	}	
 
-	res = read_or_init_matrix(a, name, k, n, false);
+	res = read_or_init_matrix(a, name, k, n);
 	if (res)
 	{
 		free(a);
@@ -89,12 +88,12 @@ int main(int argc, char *argv[])
 
 		return res;
 	}
-
+	
 	r1 = get_r1(n, a, x);	
 	r2 = get_r2(n, a, x);	
 	
 	printf("Inverse matrix:\n");
-	print_matrix(x, n, p, false);
+	print_matrix(x, n, p);
 	printf("%s : Task = %d Res1 = %e Res2 = %e Elapsed = %.2f K = %d N = %d\n", argv[0], task, r1, r2, t, k, n);
 
 	free(a);
