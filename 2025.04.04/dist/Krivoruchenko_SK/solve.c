@@ -6,14 +6,15 @@
 #include <math.h>
 #include <stdio.h>
 
+#define EPS 1.2e-16
+
 // c - changes in rows
 int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 {
 	double norm = get_matrix_norm(n, A);
-	double eps = DBL_EPSILON*norm;
+	double eps = EPS*norm;
 
-	if (norm < DBL_EPSILON)
-		return SINGULAR;
+//	printf("NORM = %lf EPS = %lf\n", norm, eps);
 
 	// Проходимся по главным минорам
 	for (int k = 0; k < n; ++k) {
@@ -31,12 +32,12 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 					max_j = j;
 				}
 			}
-		
+			
 //		printf("\n------- K = %d -------\n", k);
 //		printf("Maximum = %lf i = %d j = %d\n", maximum, max_i, max_j);
 
 		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
-		if (fabs(maximum) < eps)
+		if (fabs(maximum) <= eps)
 			return SINGULAR;
 		
 		// Меняем строки местами, если максимум находится не в k строке
@@ -73,8 +74,9 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			c[max_j] = c[k];
 			c[k] = swap_temp;
 
-			for (int in = 0; in < n*n; in+=n)
+			for (int i = 0; i < n; i++)
 			{
+				const int in = i*n;
 				double swap = A[in + k];
 				A[in + k] = A[in + max_j];
 				A[in + max_j] = swap;
@@ -110,50 +112,14 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 			c[i] = i;
 			i = swap_int;
 
-			for (int ij = in, kj = kn; ij < in+n; ++ij, ++kj)
+			for (int j = 0; j < n; ++j)
 			{
-				double swap_temp = X[ij];
-				X[ij] = X[kj];
-				X[kj] = swap_temp;
+				double swap_temp = X[in+j];
+				X[in+j] = X[kn+j];
+				X[kn+j] = swap_temp;
 			}
 		}
 	}
-
-	// Возвращаем строки назад
-/*	for (int k = 0; k < n; ++k)
-	{
-		int pnt_cur = c[k];
-
-		if (pnt_cur != k)
-		{
-			int pnt_nxt = 0;
-		
-			for (int j = 0; j < n; ++j)
-			{
-				int loc_cur = pnt_cur;
-				double temp_cur = X[k*n + j];
-				double temp_nxt = 0;
-
-				do {
-					temp_nxt = X[loc_cur*n + j];
-					X[loc_cur*n + j] = temp_cur;
-					temp_cur = temp_nxt;					
-
-					loc_cur = c[loc_cur];
-				} while (loc_cur != k);
-	
-				X[k*n + j] = temp_cur;
-			}
-
-			do {
-				pnt_nxt = c[pnt_cur];
-				c[pnt_cur] = pnt_cur;
-				pnt_cur = pnt_nxt;
-			} while (pnt_nxt != k);
-
-			c[k] = k;
-		}
-	}*/
 
 	return 0;
 }

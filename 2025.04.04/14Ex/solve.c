@@ -6,14 +6,15 @@
 #include <math.h>
 #include <stdio.h>
 
+#define EPS 1.2e-16
+
 // c - changes in rows
 int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 {
 	double norm = get_matrix_norm(n, A);
-	double eps = DBL_EPSILON*norm;
+	double eps = EPS*norm;
 
-	if (norm < DBL_EPSILON)
-		return SINGULAR;
+//	printf("NORM = %lf EPS = %lf\n", norm, eps);
 
 	// Проходимся по главным минорам
 	for (int k = 0; k < n; ++k) {
@@ -31,12 +32,12 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 					max_j = j;
 				}
 			}
-		
+			
 //		printf("\n------- K = %d -------\n", k);
 //		printf("Maximum = %lf i = %d j = %d\n", maximum, max_i, max_j);
 
 		// Если максимальный по модулю элемент равен нулю, значит матрица вырождена
-		if (fabs(maximum) < eps)
+		if (fabs(maximum) <= eps)
 			return SINGULAR;
 		
 		// Меняем строки местами, если максимум находится не в k строке

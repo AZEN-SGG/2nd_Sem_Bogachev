@@ -10,7 +10,7 @@ WFLAGS = -W -Wall -Wextra -Wunused -Wempty-body -Wlogical-op \
 	 -pedantic-errors -Wfloat-equal -Wwrite-strings -Wno-long-long \
 	 -Wstrict-prototypes -Wmissing-field-initializers -Wpointer-sign 
 
-TARGET = a14.out
+TARGET = a.out
 OBJ = main.o solve.o array_io.o init_f.o matrix.o
 
 %.o: %.c
