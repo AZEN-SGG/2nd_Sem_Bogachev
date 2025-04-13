@@ -10,17 +10,32 @@ WFLAGS = -fstack-protector-all -W -Wall -Wextra -Wunused \
 
 CFLAGS = -mfpmath=sse -std=gnu99 -O3
 
-TARGET = a.exe
+ifeq ($(OS),Windows_NT)
+	EXE = exe
+	CLEAN = del
+	LFLAGS = -lssp -lm
+else
+	EXE = out
+	CLEAN = rm -f
+	LFLAGS = -lm
+endif
+
+TARGET = a.$(EXE)
 OBJ = main.o solve.o array_io.o init_f.o matrix.o
 
 %.o: %.c
 	gcc $(CFLAGS) $(WFLAGS) -c $< -o $@
 
 $(TARGET): $(OBJ)
-	gcc $^ -o $@ -lssp -lm
+	gcc $^ -o $@ $(LFLAGS)
 
-gdb: CFLAGS = -mfpmath=sse -std=gnu99 -g
+# Отладочная сборка (gdb)
+gdb: CFLAGS = -mfpmath=sse -std=gnu99 -g -O0
 gdb: clean $(TARGET)
 
+# Профилировочная сборка (gprof)
+prof: CFLAGS = -mfpmath=sse -std=gnu99 -pg -O3 -fno-omit-frame-pointer
+prof: clean $(TARGET)
+
 clean:
-	del *.o *.exe
+	$(CLEAN) *.o *$(EXE)

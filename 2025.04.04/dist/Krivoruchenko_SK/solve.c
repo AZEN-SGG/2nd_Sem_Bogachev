@@ -91,50 +91,6 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 
 	gauss_back_substitution(n, A, X);
 
-/*
-	for (int k = 0; k < n; ++k)
-	{
-		int i = c[k];
-		
-		if (i != k)
-		{
-			double last_swap = 0;
-			double cur_swap;
-			
-			for (int j = 0; j < n-1; ++j)
-			{
-				int cur_p = i;
-				last_swap = X[k*n + j];
-
-				do {
-					cur_swap = X[cur_p*n + j];
-					X[cur_p*n + j] = last_swap;
-					cur_p = c[cur_p];
-					last_swap = cur_swap;
-				} while (cur_p != k);
-
-				X[k*n + j] = last_swap;
-			}
-
-			last_swap = X[k*n + n-1];
-
-			do 
-			{
-				int last_p = i;
-				i = c[i];
-				c[last_p] = last_p;
-
-				cur_swap = X[last_p*n + n-1];
-				X[last_p*n + n-1] = last_swap;
-				last_swap = cur_swap;
-			} while (i != k);
-
-			X[k*n + n-1] = last_swap;
-			c[k] = k;
-		}
-	}
-*/
-	
 	for (int k = 0; k < n; ++k)
 	{
 		const int kn = k*n;	
