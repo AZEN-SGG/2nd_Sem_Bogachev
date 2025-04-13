@@ -24,14 +24,11 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 		// Ищем максимальный элемент минора
 		for (int i = k; i < n; ++i)
 			for (int j = k; j < n; ++j)
-			{
-				double aij = fabs(A[i * n + j]);
-				if (aij > maximum) {
-					maximum = aij;
+				if (fabs(A[i*n + j]) > maximum) {
+					maximum = fabs(A[i*n + j]);
 					max_i = i;
 					max_j = j;
 				}
-			}
 			
 //		printf("\n------- K = %d -------\n", k);
 //		printf("Maximum = %lf i = %d j = %d\n", maximum, max_i, max_j);
@@ -43,27 +40,22 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 		// Меняем строки местами, если максимум находится не в k строке
 		if (max_i != k)
 		{
-			int kn = k*n;
-			int in = max_i*n;
-
-			for (int i = 0; i < k; ++i)
+			for (int j = 0; j < k; ++j)
 			{
-				int kni = kn+i, ini = in+i;
-				double swap = X[kni];
-				X[kni] = X[ini];
-				X[ini] = swap;
+				double swap = X[k*n + j];
+				X[k*n + j] = X[max_i*n + j];
+				X[max_i*n + j] = swap;
 			}
 	
-			for (int i = k; i < n; ++i)
+			for (int j = k; j < n; ++j)
 			{
-				int kni = kn+i, ini = in+i;
-				double swap = X[kni];
-				X[kni] = X[ini];
-				X[ini] = swap;
+				double swap = X[k*n + j];
+				X[k*n + j] = X[max_i*n + j];
+				X[max_i*n + j] = swap;
 				
-				swap = A[kni];
-				A[kni] = A[ini];
-				A[ini] = swap;
+				swap = A[k*n + j];
+				A[k*n + j] = A[max_i*n + j];
+				A[max_i*n + j] = swap;
 			}
 		}
 
@@ -76,10 +68,9 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 
 			for (int i = 0; i < n; i++)
 			{
-				const int in = i*n;
-				double swap = A[in + k];
-				A[in + k] = A[in + max_j];
-				A[in + max_j] = swap;
+				double swap = A[i*n + k];
+				A[i*n + k] = A[i*n + max_j];
+				A[i*n + max_j] = swap;
 			}
 		}
 
@@ -100,6 +91,50 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 
 	gauss_back_substitution(n, A, X);
 
+/*
+	for (int k = 0; k < n; ++k)
+	{
+		int i = c[k];
+		
+		if (i != k)
+		{
+			double last_swap = 0;
+			double cur_swap;
+			
+			for (int j = 0; j < n-1; ++j)
+			{
+				int cur_p = i;
+				last_swap = X[k*n + j];
+
+				do {
+					cur_swap = X[cur_p*n + j];
+					X[cur_p*n + j] = last_swap;
+					cur_p = c[cur_p];
+					last_swap = cur_swap;
+				} while (cur_p != k);
+
+				X[k*n + j] = last_swap;
+			}
+
+			last_swap = X[k*n + n-1];
+
+			do 
+			{
+				int last_p = i;
+				i = c[i];
+				c[last_p] = last_p;
+
+				cur_swap = X[last_p*n + n-1];
+				X[last_p*n + n-1] = last_swap;
+				last_swap = cur_swap;
+			} while (i != k);
+
+			X[k*n + n-1] = last_swap;
+			c[k] = k;
+		}
+	}
+*/
+	
 	for (int k = 0; k < n; ++k)
 	{
 		const int kn = k*n;	
@@ -127,26 +162,29 @@ int t14_solve(int n, double * restrict A, double * restrict X, int * restrict c)
 // Прямой ход Го ----- йда
 void gauss_inverse(const int n, const int k, double * restrict A, double * restrict X)
 {
-	const int kn = k*n;
-	const int kk = kn + k;
-	const double inv_akk = 1./A[kk];
+	const double inv_akk = 1./A[k*n + k];
 	
-	for (int ij = kk+1; ij < kn+n; ij++)
-		A[ij] *= inv_akk;
-	
-	for (int ij = kn; ij < kn+n; ij++)
-		X[ij] *= inv_akk;
+	for (int j = 0; j < k+1; ++j)
+		X[k*n + j] *= inv_akk;
+
+	for (int j = k+1; j < n; ++j)
+	{
+		A[k*n + j] *= inv_akk;
+		X[k*n + j] *= inv_akk;
+	}
 	
 	for (int i = k+1; i < n; ++i)
 	{
-		const int in = i*n;
-		const double aik = A[in + k];
+		const double aik = A[i*n + k];
 		
-		for (int ij = in+k+1, kj = kk+1; ij < in+n; ij++, kj++)
-			A[ij] -= A[kj] * aik;
-		
-		for (int ij = in, kj = kn; kj < kn + n; ij++, kj++)
-			X[ij] -= X[kj] * aik;
+		for (int j = 0; j < k+1; ++j)
+			X[i*n + j] -= X[k*n + j] * aik;
+
+		for (int j = k+1; j < n; ++j)
+		{
+			A[i*n + j] -= A[k*n + j] * aik;
+			X[i*n + j] -= X[k*n + j] * aik;
+		}
 	}
 }
 
@@ -155,16 +193,12 @@ void gauss_back_substitution(const int n, double * restrict A, double * restrict
 {
 	// Идём с последней строки и вычитаем её из последующих
 	for (int k = n-1; k > 0; --k)
-	{
-		const int kn = k * n;
-
 		for (int i = 0; i < k; ++i)
 		{
-			const int in = i*n;
-			const double aik = A[in + k];
+			const double aik = A[i*n + k];
 
 			for (int j = 0; j < n; ++j)
-				X[in + j] -= X[kn + j] * aik;	
+				X[i*n + j] -= X[k*n + j] * aik;	
 		}
 
 //		printf("\n------- K = %d -------\n", k);
@@ -172,6 +206,5 @@ void gauss_back_substitution(const int n, double * restrict A, double * restrict
 //		print_matrix(A, n, n);
 //		printf("Inverse matrix:\n");
 //		print_matrix(X, n, n);
-	}
 }
 
