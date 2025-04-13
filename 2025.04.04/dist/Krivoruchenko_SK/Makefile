@@ -34,7 +34,7 @@ gdb: CFLAGS = -mfpmath=sse -std=gnu99 -g -O0
 gdb: clean $(TARGET)
 
 # Профилировочная сборка (gprof)
-prof: CFLAGS = -mfpmath=sse -std=gnu99 -pg -O3 -fno-omit-frame-pointer
+prof: CFLAGS = -mfpmath=sse -std=gnu99 -pg -O3
 prof: clean $(TARGET)
 
 clean:
