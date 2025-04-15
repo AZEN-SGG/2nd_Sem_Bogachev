@@ -35,6 +35,7 @@ gdb: clean $(TARGET)
 
 # Профилировочная сборка (gprof)
 prof: CFLAGS = -mfpmath=sse -std=gnu99 -pg -O3
+prof: LFLAGS = -lm =pg
 prof: clean $(TARGET)
 
 clean:
