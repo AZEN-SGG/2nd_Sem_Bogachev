@@ -7,16 +7,15 @@
 // the Newton interpolation polynomial
 double t2_solve (const double x_0, const int n, const double * restrict X, double * restrict Y)
 {
-	double last_x, last_y;
-	
-	double value = 0;
-	double start_value = 0;
+	double value, start_value;
 
 	for (int k = 0; k < n-1; ++k)
 	{
+		double last_x; 
+		double last_y = Y[n-1];
+
 //		printf ("------- K = %d -------\n", k);
 		
-		last_y = Y[n-1];
 		for (int i = n-2; i >= k; --i)
 		{
 			const double x_i = X[i-k];
@@ -33,16 +32,13 @@ double t2_solve (const double x_0, const int n, const double * restrict X, doubl
 		}
 	}
 
-	last_x = X[0];
 	start_value = 1;
-	value = Y[0];
+	value = 0;
 
-	for (int i = 1; i < n; ++i)
+	for (int i = 0; i < n; ++i)
 	{
-		start_value *= (x_0 - last_x);
-		if (fabs(Y[i]) > DBL_EPSILON) 
-			value += Y[i] * start_value;
-		last_x = X[i];
+		value += Y[i] * start_value;
+		start_value *= (x_0 - X[i]);
 	}
 
 	return value;

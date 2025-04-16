@@ -12,7 +12,7 @@
 int main(int argc, char *argv[])
 {
 	double x_0, t, r = 0, *X = 0, *Y = 0;
-	int n, task = 2;
+	int n, task = 3;
 	char *name = 0;
 	io_status ret;
 
@@ -62,9 +62,9 @@ int main(int argc, char *argv[])
 	} while (0);
 
 	t = clock();
-	r = t2_solve(x_0, n, X, Y);
+	r = t3_solve(x_0, n, X, Y);
 	t = (clock() - t) / CLOCKS_PER_SEC;
-	
+
 	if (fabs(r - DBL_MAX) < DBL_EPSILON)
 	{
 		fprintf(stderr, "%s\n", ERR_FUNC);
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 
 		return 4;
 	}
-
+		
 	printf("%s : Task = %d Result = %e Elapsed = %.2f\n", argv[0], task, r, t);
 
 	free(X);

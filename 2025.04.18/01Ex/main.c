@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	// TODO: Удалить вывод в stderr
 	X = (double *)malloc(n * sizeof(double));
 	if (!X)
 	{
@@ -64,6 +63,16 @@ int main(int argc, char *argv[])
 	r = t1_solve(x_0, n, X, Y);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 	
+	if (fabs(r - DBL_MAX) < DBL_EPSILON)
+	{
+		fprintf(stderr, "%s\n", ERR_FUNC);
+
+		free(X);
+		free(Y);
+
+		return 4;
+	}
+
 	printf("%s : Task = %d Result = %e Elapsed = %.2f\n", argv[0], task, r, t);
 
 	free(X);
