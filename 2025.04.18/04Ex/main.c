@@ -11,8 +11,8 @@
 /* ./a.out x_0 n filename */
 int main(int argc, char *argv[])
 {
-	double x_0, t, r = 0, *X = 0, *Y = 0;
-	int n, task = 1;
+	double x_0, t, r = 0, *X = 0, *Y = 0, *D = 0;
+	int n, task = 4;
 	char *name = 0;
 	io_status ret;
 
@@ -41,7 +41,16 @@ int main(int argc, char *argv[])
 		return 2;
 	}
 
-	ret = read_values(X, Y, n, name);
+	D = (double *)malloc(n * sizeof(double));
+	if (!D)
+	{
+		free(X);
+		free(Y);
+		fprintf(stderr, "%s\n", ERR_MEM);
+		return 2;
+	}
+
+	ret = read_values_and_derivatives(X, Y, D, n, name);
 	do {
 		switch (ret)
 		{
@@ -57,28 +66,31 @@ int main(int argc, char *argv[])
 
 		free(X);
 		free(Y);
+		free(D);
 
 		return 3; 
 	} while (0);
 
 	t = clock();
-	r = t1_solve(x_0, n, X, Y);
+	r = t4_solve(x_0, n, X, Y, D);
 	t = (clock() - t) / CLOCKS_PER_SEC;
-	
+
 	if (fabs(r - DBL_MAX) < DBL_EPSILON)
 	{
 		fprintf(stderr, "%s\n", ERR_FUNC);
 
 		free(X);
 		free(Y);
+		free(D);
 
 		return 4;
 	}
-
+		
 	printf("%s : Task = %d Result = %e Elapsed = %.2f\n", argv[0], task, r, t);
 
 	free(X);
 	free(Y);
+	free(D);
 
 	return 0;
 }
