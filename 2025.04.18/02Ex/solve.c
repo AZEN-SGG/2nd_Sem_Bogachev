@@ -14,9 +14,9 @@ double t2_solve (const double x_0, const int n, const double * restrict X, doubl
 
 	for (int k = 0; k < n-1; ++k)
 	{
-		printf ("------- K = %d -------\n", k);
+//		printf ("------- K = %d -------\n", k);
 		
-		last_y = X[n-1];
+		last_y = Y[n-1];
 		for (int i = n-2; i >= k; --i)
 		{
 			const double x_i = X[i-k];
@@ -27,7 +27,7 @@ double t2_solve (const double x_0, const int n, const double * restrict X, doubl
 				return DBL_MAX;
 			
 			Y[i+1] = (last_y - y_i) / (last_x - x_i);
-			printf ("I = %d, f(x%d, ... , x%d) = %lf\n", i, i-k+1, i+2, Y[i+1]);
+//			printf ("I = %d, f(x%d, ... , x%d) = %lf\n", i, i-k+1, i+2, Y[i+1]);
 
 			last_y = y_i;
 		}
