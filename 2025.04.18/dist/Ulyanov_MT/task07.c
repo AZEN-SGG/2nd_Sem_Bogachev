@@ -30,8 +30,13 @@ int main(int argc, char* argv[])
   
 double solve7(double x, double eps)
   {
-  int i = 1, intg;
+  int sign = 1, i = 1, intg;
   double mult = 1, el = 1, res = 0;
+  if (x < 0) 
+      {
+      sign = -1;
+      x = fabs(x);
+      }
   intg = floor(x);
   x = x - intg;
   while (fabs(el) >= eps)
@@ -44,5 +49,6 @@ double solve7(double x, double eps)
       {
       mult *= M_E;
       }
-  return mult * res;
+  if (sign == 1) return mult * res;
+  else return 1 / (mult * res);
   }

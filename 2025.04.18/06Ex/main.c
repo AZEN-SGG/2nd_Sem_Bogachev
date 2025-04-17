@@ -10,7 +10,7 @@
 int main(int argc, char *argv[])
 {
 	double x, eps, t, r1 = 0, r2 = 0;
-	int task = 5;
+	int task = 6;
 
 	if (
 			!((argc == 3) && 
@@ -22,10 +22,10 @@ int main(int argc, char *argv[])
 	}
 
 	t = clock();
-	r1 = fsin(x, eps);
+	r1 = fcos(x, eps);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 
-	r2 = fabs(r1 - sin(x));
+	r2 = fabs(r1 - cos(x));
 
 	printf("%s : Task = %d Result = %e Residual = %e Elapsed = %.2f\n", argv[0], task, r1, r2, t);
 
