@@ -25,34 +25,23 @@ double t4_solve (
 			return DBL_MAX;
 		
 		Y[i+1] = (y_j - y_i) / (x_j - x_i);
-//		printf ("I = %d, f(x%d, ... , x%d) = %lf\n", i, i+1, i+2, Y[i+1]);
 
 		y_j = y_i;
 		x_j = x_i;
 	}
 
-//	for (int i = 1; i < n; ++i)
-//		printf ("f(x%d, x%d) = %lf\n", i-1, i, Y[i]);
-
 	for (int k = 1; k < n*2-1; ++k)
 	{
 		double f_j = D[n-1];
 
-//		printf ("------- K = %d -------\n", k);
-		
 		for (int l = n*2-2; l >= k; --l)
 		{
 			const int i = l >> 1;
 			double x_i, f_i, *f;
 			
-//			printf ("--- L = %d, I = %d ---\n", l , i); 
-
 			if (l & 1)
 			{
 				x_i = X[i-(k>>1)];
-//				printf ("f(x%d, ", i-(k>>1));
-//				for (int j = i-(k>>1)+1; j < i+(l&1); j++)
-//					printf ("x%d, ", j);
 
 				f_i = D[i];
 				f = Y + i + 1;
@@ -60,52 +49,29 @@ double t4_solve (
 			{
 				x_j = X[i];
 				x_i = X[i-(k>>1)-(k&1)];
-//				printf ("f(x%d, ", i-(k>>1)-(k&1));
-//				for (int j = i-(k>>1)-(k&1)+1; j < i+(l&1); j++)
-//					printf ("x%d, ", j);
+
 				f_i = Y[i];
 				f = D + i;
 			}
-
-//			printf ("x%d)\n", i+(l&1)); 
 
 			if (fabs(x_j - x_i) < DBL_EPSILON)
 				return DBL_MAX;
 			
 			*f = (f_j - f_i) / (x_j - x_i);
-//			printf ("f(x%d, x%d, ..., x%d) = %lf\n", i-k, i-k, i+1, Y[i+1]);
-//			printf ("f(x%d, ..., x%d, x%d) = %lf\n", i-k, i+1, i+1, D[i+1]);
-			
 			f_j = f_i;	
-			
-//			printf ("I = %d, f(x%d, ... , x%d) = %lf\n", i, i-k+1, i+2, Y[i+1]);
 		}
-
-//		printf("------- Y -------\n");
-//		for (int i = 0; i < n; ++i)
-//			printf("Y[%d] = %lf\n", i, Y[i]);
-
-//		printf("------- D -------\n");
-//		for (int i = 0; i < n; ++i)
-//			printf("D[%d] = %lf\n", i, D[i]);
 	}
 
 	start_value = 1;
 	value = 0;
 
-//	printf("------- Y -------\n");
-//	for (int i = 0; i < n; ++i)
-//		printf("Y[%d] = %lf\n", i, Y[i]);
-
-//	printf("------- D -------\n");
-//	for (int i = 0; i < n; ++i)
-//		printf("D[%d] = %lf\n", i, D[i]);
-
 	for (int i = 0; i < n; ++i)
 	{
 		const double diff = (x_0 - X[i]);
+
 		value += Y[i] * start_value;
 		start_value *= diff;
+
 		value += D[i] * start_value;
 		start_value *= diff;
 	}
