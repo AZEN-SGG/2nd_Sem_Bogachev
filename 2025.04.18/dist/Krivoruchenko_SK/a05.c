@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
 
 	if (
 			!((argc == 3) && 
-			sscanf(argv[1], "%lf", &x) == 1 &&
-			((sscanf(argv[2], "%lf", &eps) == 1) && eps > 0))
+			sscanf(argv[1], "%le", &x) == 1 &&
+			((sscanf(argv[2], "%le", &eps) == 1) && eps > 0))
 	) {
 		fprintf(stderr, "Usage: %s x eps\n", argv[0]);
 		return 1;

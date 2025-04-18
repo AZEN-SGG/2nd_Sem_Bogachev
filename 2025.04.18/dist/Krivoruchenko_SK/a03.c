@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
 	if (
 			!((argc == 4) && 
-			sscanf(argv[1], "%lf", &x_0) == 1 &&
+			sscanf(argv[1], "%le", &x_0) == 1 &&
 			((sscanf(argv[2], "%d", &n) == 1) && n > 0) &&
 			((name = argv[3]) && name))
 	) {
