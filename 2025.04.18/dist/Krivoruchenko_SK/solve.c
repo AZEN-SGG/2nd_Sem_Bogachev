@@ -2,6 +2,7 @@
 #include "contin_func.h"
 
 #include <stdlib.h>
+#include <stdbool.h>
 #include <float.h>
 #include <math.h>
 
@@ -221,4 +222,82 @@ double fsin (double x, const double eps)
 		answer = flag * ssin(x, eps);
 
 	return answer;
+}
+
+double fcos (double x, const double eps)
+{
+	double answer;
+	short flag = 1;
+
+	if (x - M_PI*2 >= DBL_EPSILON)
+		x = fmod(x, M_PI*2);
+
+	if (x - M_PI >= DBL_EPSILON)
+	{
+		x -= M_PI;
+		flag *= -1;
+	}
+
+	if (x - 1 >= DBL_EPSILON)
+	{
+		x -= M_PI_2;
+		flag *= -2;
+	}
+
+	if (abs(flag) == 2)
+	{
+		x /= 2;
+
+		answer = ((flag > 0) - (flag < 0)) * (2 * ssin(x, eps) * scos(x, eps));
+	} else
+		answer = flag * scos(x, eps);
+
+	return answer;
+}
+
+double fexp (double x, const double eps)
+{
+	double integral, fractal, answer = 1;
+	bool is_negative = false;
+
+	if (x < DBL_EPSILON)
+	{
+		is_negative = true;
+		x = -x;
+	}
+
+	integral = floor(x);
+	fractal = x - integral;
+
+	for (double i = 0; (integral - i) > DBL_EPSILON; ++i)
+		answer *= M_E;
+
+	answer *= sexp(fractal, eps);
+	if (is_negative)
+		answer = 1. / answer;
+
+	return answer;
+}
+
+double dln (double x, const double eps)
+{
+	double value = 0;
+	int b = 0;
+
+	while (x - 2 > DBL_EPSILON)
+	{
+		x *= 0.5;
+		b++;
+	}
+	
+	while (x - 1 <= DBL_EPSILON)
+	{
+		x *= 2;
+		b--;
+	}
+	
+	value = fln(x, eps);
+
+	value += b * M_LN2;
+	return value;
 }

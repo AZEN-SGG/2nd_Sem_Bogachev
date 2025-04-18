@@ -36,3 +36,39 @@ double scos (const double x, const double eps)
 	
 	return value;
 }
+
+double sexp (const double x, const double eps)
+{
+	double value = 1;
+	double monom = x;
+	int i = 1;
+
+	while (monom - eps >= DBL_EPSILON)
+	{
+		value += monom;
+
+		i++;
+		monom *= x/i;
+	}
+
+	return value;
+}
+
+double fln (const double x, const double eps)
+{
+	const double z = (x - 1) / (x + 1);
+	double value = 0;
+	double monom = z, el = z;
+	int i = 1;
+
+	while (el - eps > DBL_EPSILON)
+	{
+		value += el;
+
+		i+=2;
+		monom *= z*z;
+		el = monom / i;
+	}
+
+	return 2 * value;
+}

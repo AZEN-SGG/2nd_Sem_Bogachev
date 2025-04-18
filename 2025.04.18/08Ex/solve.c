@@ -2,7 +2,6 @@
 #include "contin_func.h"
 
 #include <stdlib.h>
-#include <stdbool.h>
 #include <math.h>
 #include <float.h>
 

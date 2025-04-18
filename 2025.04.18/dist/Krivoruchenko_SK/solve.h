@@ -11,5 +11,8 @@ double t4_solve (
 		double * restrict D
 		);
 double fsin (double x, const double eps);
+double fcos (double x, const double eps);
+double fexp (double x, const double eps);
+double dln (double x, const double eps);
 
 #endif
