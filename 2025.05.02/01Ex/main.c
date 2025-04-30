@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	status ret;
 	
 	double (*f) (double);
-	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6, sin};
+	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6, sin}; // TODO: Remove sin
 	int len_f = sizeof(f_lst) / sizeof(f_lst[0]);
 
 	if (
@@ -34,8 +34,10 @@ int main(int argc, char *argv[])
 	t = clock();
 	ret = t1_solve(f, a, b, eps, m, &x, &it);
 	t = (clock() - t) / CLOCKS_PER_SEC;
-	
+		
 	cl = get_call_count();
+
+//	printf("x = %e\tf(x) = %e\n", x, f(x)); 
 
 	do {
 		switch (ret) 
