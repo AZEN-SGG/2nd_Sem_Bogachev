@@ -23,6 +23,16 @@ status t1_solve (
 	memcpy(&bits, &y_b, sizeof(bits));
 	sgn_b = (bits >> 63) & 1;
 
+	if (fabs(y_a) - eps < DBL_EPSILON)
+	{
+		*x = a;
+		return SUCCESS;
+	} if (fabs(y_b) - eps < DBL_EPSILON)
+	{
+		*x = b;
+		return SUCCESS;
+	}
+
 	if (sgn_a == sgn_b)
 	{
 		*x = DBL_MAX;
