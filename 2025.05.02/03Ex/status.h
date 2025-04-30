@@ -7,6 +7,7 @@ typedef enum _status {
 	RUN_TIME,
 	HIGH_ERROR,
 	DIVERGE,
+	BOUNDARIES,
 } status;
 
 #endif

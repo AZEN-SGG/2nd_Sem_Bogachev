@@ -41,22 +41,22 @@ status t3_solve (
 	
 	for (it = 0; it < m; ++it)
 	{
-		c = (y_a * b - y_b * a) / (y_a - y_b);
+		c = a - ((a - b) / (y_a - y_b)) * y_a;
 		y = f(c);
 		
 		memcpy(&bits, &y, sizeof(bits));
 		sgn_c = (bits >> 63) & 1;
 		
-		if (fabs(y) - eps < DBL_EPSILON)
+		if ((c - a < DBL_EPSILON) || (c - b > DBL_EPSILON))
+		{
+			ret = BOUNDARIES;
+			break;
+		} else if (fabs(y) - eps < DBL_EPSILON)
 		{
 			ret = SUCCESS;
 			break;
-		} else if ((fabs(c - a) < DBL_EPSILON) || (fabs(c - b) < DBL_EPSILON))
-		{
-			ret = HIGH_ERROR;
-			break;
 		} else if (sgn_c == sgn_a)
-		{
+		{	
 			a = c;
 			y_a = y;
 

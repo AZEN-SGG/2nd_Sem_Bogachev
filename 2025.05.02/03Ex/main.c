@@ -57,6 +57,9 @@ int main(int argc, char *argv[])
 			case DIVERGE:
 				fprintf(stderr, "Error: with code %d - The function is diverging!\n", ret);
 				break;
+			case BOUNDARIES:
+				fprintf(stderr, "Error: with code %d - Goes beyond the boundaries!\n", ret);
+				break;
 		}
 		
 		fprintf(stdout, "%s : Task = %d NOT FOUND Count = %d T = %.2f\n", argv[0], task, cl, t);
