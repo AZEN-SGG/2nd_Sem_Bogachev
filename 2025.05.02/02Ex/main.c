@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 			sscanf(argv[1], "%lf", &a) == 1 &&
 			sscanf(argv[2], "%lf", &b) == 1 &&
 			(a <= b) &&
-			(sscanf(argv[3], "%lf", &eps) == 1 && (eps >= 0)) &&
+			sscanf(argv[3], "%lf", &eps) == 1 &&
 			((sscanf(argv[4], "%d", &m) == 1) && m > 0) &&
 			((sscanf(argv[5], "%d", &k) == 1) && ((0 <= k) && (k <= len_f))))
 	) {

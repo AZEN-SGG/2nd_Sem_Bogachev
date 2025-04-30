@@ -10,7 +10,7 @@
 int main(int argc, char *argv[])
 {
 	double t, a, b, eps, x = 0;
-	int m, k, cl, it = 0, task = 1;
+	int m, k, cl, it = 0, task = 3;
 	status ret;
 	
 	double (*f) (double);
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 	f = f_lst[k];
 
 	t = clock();
-	ret = t1_solve(f, a, b, eps, m, &x, &it);
+	ret = t3_solve(f, a, b, eps, m, &x, &it);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 		
 	cl = get_call_count();
@@ -53,6 +53,9 @@ int main(int argc, char *argv[])
 				break;
 			case HIGH_ERROR:
 				fprintf(stderr, "Error: with code %d - The solution was found with a high error rate!\n", ret);
+				break;
+			case DIVERGE:
+				fprintf(stderr, "Error: with code %d - The function is diverging!\n", ret);
 				break;
 		}
 		
