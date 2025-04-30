@@ -57,23 +57,11 @@ status t3_solve (
 			break;
 		} else if (sgn_c == sgn_a)
 		{
-			if (fabs(c) - fabs(a) > DBL_EPSILON)
-			{
-				ret = DIVERGE;
-				break;
-			}
-
 			a = c;
 			y_a = y;
 
 		} else if (sgn_c == sgn_b)
 		{
-			if (fabs(c) - fabs(b) > DBL_EPSILON)
-			{
-				ret = DIVERGE;
-				break;
-			}
-
 			b = c;
 			y_b = y;
 		}
