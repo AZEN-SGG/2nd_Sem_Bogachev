@@ -3,27 +3,23 @@
 #include <math.h>
 #include <float.h>
 
-int t7_solve (
+int t2_solve (
 		double (*f) (double), 
+		double (*d) (double), 
 		double x_0, double eps, 
 		int m, double *x
 ) {
 	int it = 0;
 	double y = f(x_0);
 
-	if (fabs(y - x_0) - eps < DBL_EPSILON)
-	{
-		*x = x_0;
-		return 1;
-	}
+	for (it = 1; it < m; ++it)
+	{	
+		if (y - eps < DBL_EPSILON)
+			break;
 
-	for (it = 0; it < m; ++it)
-	{
-		x_0 = y;
+		x_0 -= (y / d(x_0));
 		y = f(x_0);
 		
-		if (fabs(y - x_0) - eps < DBL_EPSILON)
-			break;
 	}
 	
 	*x = x_0;

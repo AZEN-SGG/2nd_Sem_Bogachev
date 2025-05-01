@@ -81,7 +81,6 @@ double f4 (double x)
 
 double d4 (double x)
 {
-	double x_2 = x * x;
 	cl_d++;
 
 	return -4 * x - 4 * ((x * x) * x);
@@ -96,7 +95,7 @@ double f5 (double x)
 double d5 (double x)
 {
 	cl_d++;
-	return (((signbit(x)) ? -1 : 1) * (1.0 / (sqrt(fabs(x) + 1))) * 0.5;
+	return (((signbit(x)) ? -1 : 1) * (1.0 / (sqrt(fabs(x) + 1)))) * 0.5;
 }
 
 double f6 (double x)

@@ -13,10 +13,9 @@ int main(int argc, char *argv[])
 	
 	double (*f) (double);
 	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6, sin}; // TODO: Remove sin
+	double (*d_lst[]) (double) = {d0, d1, d2, d3, d4, d5, d6, cos}; // TODO: Remove cos
 	int len_f = sizeof(f_lst) / sizeof(f_lst[0]);
 
-	double (*d) (double);
-	double (*d_lst[]) (double) = {d0, d1, d2, d3, d4, d5, d6, cos}; // TODO: Remove cos
 
 	if (
 			!((argc == 5) && 
@@ -35,7 +34,7 @@ int main(int argc, char *argv[])
 	it = t2_solve(f, d_lst[k], x_0, eps, m, &x);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 		
-	cl = get_call_count();
+	cl = get_call_function_count();
 
 	if (it >= m)
 	{
