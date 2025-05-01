@@ -1,62 +1,33 @@
 #include "solve.h"
-#include "status.h"
 
 #include <math.h>
 #include <float.h>
 
-status t4_solve (
+int t7_solve (
 		double (*f) (double), 
-		double a, double b, 
-		double eps, int m, double *x, int *m_it
+		double x_0, double eps, 
+		int m, double *x
 ) {
 	int it = 0;
-	status ret = SUCCESS;
-	double c = DBL_MAX, y, y_a = f(a), y_b = f(b);
+	double y = f(x_0);
 
-	if (fabs(y_a) - eps < DBL_EPSILON)
+	if (fabs(y - x_0) - eps < DBL_EPSILON)
 	{
-		*x = a;
-		return SUCCESS;
-	} if (fabs(y_b) - eps < DBL_EPSILON)
-	{
-		*x = b;
-		return SUCCESS;
-	} if (fabs(fabs(y_b) - fabs(y_a)) < DBL_EPSILON)
-	{
-		*x = a;
-		return EQUAL;
+		*x = x_0;
+		return 1;
 	}
 
 	for (it = 0; it < m; ++it)
 	{
-		c = b - ((b - a) / (y_b - y_a)) * y_b;
-		y = f(c);
+		x_0 = y;
+		y = f(x_0);
 		
-		if (fabs(y) - eps < DBL_EPSILON)
-		{
-			ret = SUCCESS;
+		if (fabs(y - x_0) - eps < DBL_EPSILON)
 			break;
-		} else if (fabs(y_a) - fabs(y_b) > DBL_EPSILON)
-		{
-			a = c;
-			y_a = y;
-		} else if (fabs(y_b) - fabs(y_a) > DBL_EPSILON)
-		{
-			b = c;
-			y_b = y;
-		} else
-		{
-			ret = EQUAL;
-			break;
-		}
 	}
 	
-	if (it >= m)
-		ret = RUN_TIME;
-	
-	*x = c;
-	*m_it = it;
+	*x = x_0;
 
-	return ret;
+	return it;
 }
 

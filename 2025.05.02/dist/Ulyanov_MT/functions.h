@@ -1,0 +1,15 @@
+double f0(double);
+double f1(double);
+double f2(double);
+double f3(double);
+double f4(double);
+double f5(double);
+double f6(double);
+double der_f0(double);
+double der_f1(double);
+double der_f2(double);
+double der_f3(double);
+double der_f4(double);
+double der_f5(double);
+double der_f6(double);
+int get_count(void);
