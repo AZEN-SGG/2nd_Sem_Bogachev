@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 		
 	cl = get_call_function_count();
 
-	if (it >= m)
+	if (it > m)
 	{
 		fprintf(stdout, "%s : Task = %d NOT FOUND Count = %d T = %.2f\n", argv[0], task, cl, t);
 		return -2;
