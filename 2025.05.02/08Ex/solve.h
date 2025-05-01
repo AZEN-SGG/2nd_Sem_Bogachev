@@ -1,12 +1,10 @@
 #ifndef SOLVE_H
 #define SOLVE_H
 
-#include "status.h"
-
-status t8_solve (
+int t8_solve (
 		double (*f) (double), 
 		double a, double b, 
-		double eps, int m, double *x, int *m_it
+		double eps, int m, double *x
 		);
 
 #endif

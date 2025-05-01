@@ -1,8 +1,8 @@
 #include "solve.h"
-#include "status.h"
 
 #include <math.h>
 #include <float.h>
+#include <stdbool.h>
 
 
 int t8_solve (
@@ -11,54 +11,46 @@ int t8_solve (
 		double eps, int m, double *x
 ) {
 	int it = 0;
-	status ret = SUCCESS;
-	double c = DBL_MAX, y, y_a = f(a), y_b = f(b);
+	double x_l = 0, y_l = 0, c = a, y = f(a);
 
-	if (fabs(y_a) - eps < DBL_EPSILON)
+	if (fabs(b - a) < DBL_EPSILON)
 	{
 		*x = a;
-		return SUCCESS;
-	} if (fabs(y_b) - eps < DBL_EPSILON)
-	{
-		*x = b;
-		return SUCCESS;
-	} if (fabs(fabs(y_b) - fabs(y_a)) < DBL_EPSILON)
-	{
-		*x = a;
-		return EQUAL;
+		return 1;
 	}
 
-	for (it = 0; it < m; ++it)
+	for (double h = (b - a) * 0.1; fabs(h) > DBL_EPSILON; h *= -0.1)
 	{
-		double h = (b - a) * 0.1;
-		c = a + h;
-		y = f(c);
+		do {
+			if (it >= m)
+				break;
+
+			it++;
+			x_l = c;
+			y_l = y;
+			
+			c += h;
+			y = f(c);
+		} while (((y - y_l) - eps) > DBL_EPSILON);
 		
-		if (fabs(y) - eps < DBL_EPSILON)
-		{
-			ret = SUCCESS;
+		if (it >= m)
 			break;
-		} else if (fabs(y_a) - fabs(y_b) > DBL_EPSILON)
+
+		if ((c - b) > DBL_EPSILON)
 		{
-			a = c;
-			y_a = y;
-		} else if (fabs(y_b) - fabs(y_a) > DBL_EPSILON)
+			x_l = b;
+			y_l = f(b);
+			break;
+		} else if ((a - c) > DBL_EPSILON)
 		{
-			b = c;
-			y_b = y;
-		} else
-		{
-			ret = EQUAL;
+			x_l = a;
+			y_l = f(b);
 			break;
 		}
 	}
 	
-	if (it >= m)
-		ret = RUN_TIME;
-	
-	*x = c;
-	*m_it = it;
+	*x = x_l;
 
-	return ret;
+	return it;
 }
 
