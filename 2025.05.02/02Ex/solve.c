@@ -16,7 +16,7 @@ int t2_solve (
 		double y = f(x_0);
 		double dy = d(x_0);
 
-		if (y - eps < DBL_EPSILON)
+		if (fabs(y) - eps < DBL_EPSILON)
 			break;
 		
 		if (fabs(dy) < DBL_EPSILON)

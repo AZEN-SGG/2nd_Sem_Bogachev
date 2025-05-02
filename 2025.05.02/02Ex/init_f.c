@@ -1,6 +1,7 @@
 #include "init_f.h"
 
 #include <math.h>
+#include <float.h>
 
 
 static int cl_f = 0;
@@ -40,8 +41,9 @@ double f1 (double x)
 
 double d1 (double x)
 {
+	(void)x;
 	cl_d++;
-	return x;
+	return 1;
 }
 
 double f2 (double x)
@@ -53,7 +55,7 @@ double f2 (double x)
 double d2 (double x)
 {
 	cl_d++;
-	return - 2 * x;
+	return -2 * x;
 }
 
 double f3 (double x)
@@ -95,7 +97,11 @@ double f5 (double x)
 double d5 (double x)
 {
 	cl_d++;
-	return (((signbit(x)) ? -1 : 1) * (1.0 / (sqrt(fabs(x) + 1)))) * 0.5;
+	if (x < -DBL_EPSILON)
+		return (-1.0 / (sqrt(fabs(x) + 1))) * 0.5;
+	else if (x > DBL_EPSILON)
+		return (1.0 / (sqrt(fabs(x) + 1))) * 0.5;
+	return 0;
 }
 
 double f6 (double x)
@@ -109,5 +115,9 @@ double d6 (double x)
 	double sqrt_x = sqrt(fabs(x) + 1);
 	cl_d++;
 	
-	return (((signbit(x)) ? -1 : 1) * (1.0 / (sqrt(sqrt_x + 1) * sqrt_x))) * 0.25;
+	if (x < -DBL_EPSILON)
+		return (-1.0 / (sqrt(sqrt_x + 1) * sqrt_x)) * 0.25;
+	else if (x > DBL_EPSILON)
+		return (1.0 / (sqrt(sqrt_x + 1) * sqrt_x)) * 0.25;
+	return 0;
 }
