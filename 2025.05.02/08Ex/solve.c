@@ -2,8 +2,6 @@
 
 #include <math.h>
 #include <float.h>
-#include <stdbool.h>
-
 
 int t8_solve (
 		double (*f) (double), 

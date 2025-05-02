@@ -21,12 +21,15 @@ int t2_solve (
 		
 		if (fabs(dy) < DBL_EPSILON)
 		{
-			it = m+1;
+			it = -1;
 			break;
 		}
 
 		x_0 -= (y / dy);
 	}
+
+	if (it > m)
+		it = -1;
 	
 	*x = x_0;
 	return it;

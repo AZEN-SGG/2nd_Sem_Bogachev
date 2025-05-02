@@ -9,13 +9,11 @@
 int main(int argc, char *argv[])
 {
 	double t, x_0, eps, x = 0;
-	int m, k, cl, it, task = 2;
+	int m, k, cl, it, task = 7;
 	
 	double (*f) (double);
 	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6};
-	double (*d_lst[]) (double) = {d0, d1, d2, d3, d4, d5, d6};
 	int len_f = sizeof(f_lst) / sizeof(f_lst[0]);
-
 
 	if (
 			!((argc == 5) && 
@@ -31,10 +29,10 @@ int main(int argc, char *argv[])
 	f = f_lst[k];
 
 	t = clock();
-	it = t2_solve(f, d_lst[k], x_0, eps, m, &x);
+	it = t7_solve(f, x_0, eps, m, &x);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 		
-	cl = get_call_function_count();
+	cl = get_call_count();
 
 	if (it < 0)
 	{
@@ -42,7 +40,7 @@ int main(int argc, char *argv[])
 		return -2;
 	} else
 	{
-		fprintf(stdout, "%s : Task = %d X = %e Res = %e Its = %d Count = %d T = %.2f\n", argv[0], task, x, f(x), it, cl, t);
+		printf("%s : Task = %d X = %e Res = %e Its = %d Count = %d T = %.2f\n", argv[0], task, x, f(x), it, cl, t);
 		return 0;
 	}
 }
