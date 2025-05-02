@@ -10,7 +10,7 @@ int t8_solve (
 		double a, double b, 
 		double eps, int m, double *x
 ) {
-	int it = 0;
+	int it = 1;
 	double x_l = 0, y_l = 0, c = a, y = f(a);
 
 	if (fabs(b - a) < DBL_EPSILON)
@@ -22,7 +22,7 @@ int t8_solve (
 	for (double h = (b - a) * 0.1; fabs(h) > DBL_EPSILON; h *= -0.1)
 	{
 		do {
-			if (it >= m)
+			if (it > m)
 				break;
 
 			it++;
@@ -33,8 +33,11 @@ int t8_solve (
 			y = f(c);
 		} while (((y - y_l) - eps) > DBL_EPSILON);
 		
-		if (it >= m)
+		if (it > m)
+		{
+			it = -1;
 			break;
+		}
 
 		if ((c - b) > DBL_EPSILON)
 		{

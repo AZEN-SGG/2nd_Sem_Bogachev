@@ -17,7 +17,7 @@ int t7_solve (
 		return 1;
 	}
 
-	for (it = 0; it < m; ++it)
+	for (it = 1; it <= m; ++it)
 	{
 		x_0 = y;
 		y = f(x_0);
@@ -25,6 +25,9 @@ int t7_solve (
 		if (fabs(y - x_0) - eps < DBL_EPSILON)
 			break;
 	}
+
+	if (it > m)
+		it = -1;
 	
 	*x = x_0;
 

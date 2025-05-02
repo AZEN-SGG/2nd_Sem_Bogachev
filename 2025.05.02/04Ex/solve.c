@@ -1,42 +1,38 @@
 #include "solve.h"
-#include "status.h"
 
 #include <math.h>
 #include <float.h>
 
-status t4_solve (
+int t4_solve (
 		double (*f) (double), 
 		double a, double b, 
-		double eps, int m, double *x, int *m_it
+		double eps, int m, double *x
 ) {
 	int it = 0;
-	status ret = SUCCESS;
 	double c = DBL_MAX, y, y_a = f(a), y_b = f(b);
 
 	if (fabs(y_a) - eps < DBL_EPSILON)
 	{
 		*x = a;
-		return SUCCESS;
+		return 1;
 	} if (fabs(y_b) - eps < DBL_EPSILON)
 	{
 		*x = b;
-		return SUCCESS;
+		return 1;
 	} if (fabs(fabs(y_b) - fabs(y_a)) < DBL_EPSILON)
 	{
 		*x = a;
-		return EQUAL;
+		return -1;
 	}
 
-	for (it = 0; it < m; ++it)
+	for (it = 1; it <= m; ++it)
 	{
 		c = b - ((b - a) / (y_b - y_a)) * y_b;
 		y = f(c);
 		
 		if (fabs(y) - eps < DBL_EPSILON)
-		{
-			ret = SUCCESS;
 			break;
-		} else if (fabs(y_a) - fabs(y_b) > DBL_EPSILON)
+		else if (fabs(y_a) - fabs(y_b) > DBL_EPSILON)
 		{
 			a = c;
 			y_a = y;
@@ -45,18 +41,14 @@ status t4_solve (
 			b = c;
 			y_b = y;
 		} else
-		{
-			ret = EQUAL;
-			break;
-		}
+			it = m+1;
 	}
 	
-	if (it >= m)
-		ret = RUN_TIME;
+	if (it > m)
+		it = -1;
 	
 	*x = c;
-	*m_it = it;
 
-	return ret;
+	return it;
 }
 

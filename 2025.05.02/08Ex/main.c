@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	int m, k, it, cl, task = 8;
 	
 	double (*f) (double);
-	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6, sin}; // TODO: Remove sin
+	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6};
 	int len_f = sizeof(f_lst) / sizeof(f_lst[0]);
 
 	if (
@@ -36,13 +36,13 @@ int main(int argc, char *argv[])
 		
 	cl = get_call_count();
 
-	if (it >= m)
+	if (it < 0)
 	{
 		fprintf(stdout, "%s : Task = %d NOT FOUND Count = %d T = %.2f\n", argv[0], task, cl, t);
 		return -2;
 	} else 
 	{
-		printf("%s : Task = %d X = %e Res = %e Its = %d Count = %d T = %.2f\n", argv[0], task, x, f(x), it, cl, t);
+		fprintf(stdout, "%s : Task = %d X = %e Res = %e Its = %d Count = %d T = %.2f\n", argv[0], task, x, f(x), it, cl, t);
 		return 0;
 	}
 }
