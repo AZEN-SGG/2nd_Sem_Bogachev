@@ -38,4 +38,10 @@ int t8_solve (
 		double eps, int m, double *x
 		);
 
+int t9_solve (
+		double (*f) (double), 
+		double a, double b, 
+		double eps, int m, double *x
+		);
+
 #endif
