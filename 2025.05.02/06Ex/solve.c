@@ -31,22 +31,22 @@ int t6_solve (
 			return it;
 		}
 
-		// Можно возвращение значений функции в y_lst можно было встроить в суммирование полинома, но мало толку
+		// Можно возвращение значений функции в x_lst можно было встроить в суммирование полинома, но мало толку
 		for (int i = 0; i < len; ++i)
 		{
-			double yi = t_lst[i];
-			y_lst[i] = yi;
+			double xi = t_lst[i];
+			x_lst[i] = xi;
 
-			if (is_equal(y, yi))
+			if (is_equal(x, xi))
 				return -1;
 			
-			if ((fabs(yi) - fabs(*maximum)) > DBL_EPSILON)
-				maximum = &yi;
+			if ((fabs(xi) - fabs(*maximum)) > DBL_EPSILON)
+				maximum = &xi;
 		}
 
-		*maximum = y;
+		*(maximum - len) = y;
+		*maximum = x;
 		*(maximum + len) = x;
-		*(maximum + (len << 1)) = y;
 	}
 
 	(void)a;
