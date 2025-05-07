@@ -9,10 +9,10 @@
 int main(int argc, char *argv[])
 {
 	double t, a, b, eps, x = 0;
-	int m, k, cl, it, task = 1;
+	int m, k, cl, it, task = 5;
 	
 	double (*f) (double);
-	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6};
+	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6}; //TODO: Rem f7
 	int len_f = sizeof(f_lst) / sizeof(f_lst[0]);
 
 	if (
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	f = f_lst[k];
 
 	t = clock();
-	it = t1_solve(f, a, b, eps, m, &x);
+	it = t5_solve(f, a, b, eps, m, &x);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 		
 	cl = get_call_count();
