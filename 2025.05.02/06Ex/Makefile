@@ -21,7 +21,7 @@ else
 endif
 
 TARGET = a06.$(EXE)
-OBJ = main.o solve.o init_f.o
+OBJ = main.o solve.o init_f.o array_io.o polynom.o
 
 %.o: %.c
 	gcc $(WFLAGS) $(LDFLAGS) -c $< -o $@
