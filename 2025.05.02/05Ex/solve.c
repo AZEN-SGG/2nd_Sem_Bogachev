@@ -12,7 +12,7 @@ int t5_solve (
 		double eps, int m, double *x
 ) {
 	int it;
-	double c = (a + b) / 2;
+	double c = (a + b) * 0.5;
 
 	double y_a = f(a);
 	double y_c = f(c);
@@ -34,61 +34,17 @@ int t5_solve (
 
 	for (it = 1; it < m+1; ++it)
 	{
-		double x_new, y_new, *temp_pnt = 0, *inner_max_pnt;
-		const double m_1 = (y_c - y_a) / (c - a);
-		const double m_2 = (y_b - y_c) / (b - c);
+		double *temp_pnt = 0, *inner_max_pnt;
+		const double angle = (c - a) / (y_c - y_a);
+		const double x_new = a - 
+			angle * y_a +
+		       	((((b - c) / (y_b - y_c)) - angle) / (y_b - y_a)) * y_a * y_c;
+		const double y_new = f(x_new);
 
-		const double A = (m_2 - m_1) / (b - a);
-		const double B = m_1 - A * (a + c);
-		const double C = y_a - a * m_1 + A * a * c;
-		
-		const double D = B * B - 4 * A * C;
-
-		if (is_null(A))
-			return -3;
-		else if (D < -DBL_EPSILON)
-			return -1;
-		else if (D > DBL_EPSILON)
+		if (is_eps(y_new, eps))
 		{
-			const double sqrt_D = sqrt(D);
-			const double inv_A = 1./(2 * A);
-
-			double x_1 = (-B + sqrt_D) * inv_A;
-			double x_2 = (-B - sqrt_D) * inv_A;
-
-			double y_x_1 = f(x_1);
-			double y_x_2 = f(x_2);
-
-			if (is_eps(y_x_1, eps))
-			{
-				*x = x_1;
-				return it;
-			} else if (is_eps(y_x_2, eps))
-			{
-				*x = x_2;
-				return it;
-			} else if (y_x_2 - y_x_1 > DBL_EPSILON)
-			{
-				x_new = x_1;
-				y_new = y_x_1;
-			} else
-			{
-				x_new = x_2;
-				y_new = y_x_2;
-			}
-		} else
-		{
-			double x_1 = -B / (2 * A);
-			double y_x_1 = f(x_1);
-
-			if (is_eps(y_x_1, eps))
-			{
-				*x = x_1;
-				return it;
-			}
-
-			x_new = x_1;
-			y_new = y_x_1;
+			*x = x_new;
+			return it;
 		}
 
 		if (
