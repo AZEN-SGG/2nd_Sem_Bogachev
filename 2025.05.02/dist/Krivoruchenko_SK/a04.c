@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
 	double t, a, b, eps, x = 0;
-	int m, k, it, cl, task = 9;
+	int m, k, cl, it, task = 4;
 	
 	double (*f) (double);
 	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6};
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	f = f_lst[k];
 
 	t = clock();
-	it = t9_solve(f, a, b, eps, m, &x);
+	it = t4_solve(f, a, b, eps, m, &x);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 		
 	cl = get_call_count();
@@ -40,9 +40,9 @@ int main(int argc, char *argv[])
 	{
 		fprintf(stdout, "%s : Task = %d NOT FOUND Count = %d T = %.2f\n", argv[0], task, cl, t);
 		return -2;
-	} else 
+	} else
 	{
-		fprintf(stdout, "%s : Task = %d X = %e Res = %e Its = %d Count = %d T = %.2f\n", argv[0], task, x, f(x), it, cl, t);
+		printf("%s : Task = %d X = %e Res = %e Its = %d Count = %d T = %.2f\n", argv[0], task, x, f(x), it, cl, t);
 		return 0;
 	}
 }
