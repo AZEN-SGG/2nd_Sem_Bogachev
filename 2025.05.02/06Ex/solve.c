@@ -43,7 +43,7 @@ int t6_solve (
 				return -1;
 			
 			if ((fabs(yi) - fabs(*maximum)) > DBL_EPSILON)
-				maximum = &yi;
+				maximum = y_lst + i;
 		}
 
 		*maximum = y;

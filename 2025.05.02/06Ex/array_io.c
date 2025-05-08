@@ -12,7 +12,7 @@ int init_array (
 
 	double *y_lst = d;
 	double *x_lst = d + len;
-	double *t_lst = d + (len < 1);
+	double *t_lst = d + (len << 1);
 
 	double x = a;
 
