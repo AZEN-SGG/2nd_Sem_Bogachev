@@ -11,7 +11,7 @@ if [ -f Makefile ]; then
 	make
 fi
 
-if [ -f a0$prog.out ]; then
+if [ ! -f a0$prog.out ]; then
 	echo "Отсутствует исполняемый файл... [a0$prog.out]"
 	echo "Завершение..."
 	exit 1

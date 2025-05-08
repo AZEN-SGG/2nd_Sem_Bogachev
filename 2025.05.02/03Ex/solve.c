@@ -1,4 +1,5 @@
 #include "solve.h"
+#include "comp.h"
 
 #include <math.h>
 #include <float.h>
@@ -21,11 +22,11 @@ int t3_solve (
 	memcpy(&bits, &y_b, sizeof(bits));
 	sgn_b = (bits >> 63) & 1;
 
-	if (fabs(y_a) - eps < DBL_EPSILON)
+	if (is_eps(y_a, eps))
 	{
 		*x = a;
 		return 1;
-	} if (fabs(y_b) - eps < DBL_EPSILON)
+	} else if (is_eps(y_b, eps))
 	{
 		*x = b;
 		return 1;
@@ -39,15 +40,15 @@ int t3_solve (
 	
 	for (it = 1; it <= m; ++it)
 	{
-		c = a - ((a - b) / (y_a - y_b)) * y_a;
+		c = a - ((b - a) / (y_b - y_a)) * y_a;
 		y = f(c);
 		
 		memcpy(&bits, &y, sizeof(bits));
 		sgn_c = (bits >> 63) & 1;
 		
-		if ((c - a < DBL_EPSILON) || (c - b > DBL_EPSILON))
+		if (is_equal(a, c) || is_equal(c, b))
 			it = m+1;
-		else if (fabs(y) - eps < DBL_EPSILON)
+		else if (is_eps(y, eps))
 			break;
 		else if (sgn_c == sgn_a)
 		{	
