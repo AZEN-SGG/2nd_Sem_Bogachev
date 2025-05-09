@@ -29,18 +29,21 @@ rm -f $outlog $errlog
 
 echo "Тест запущен..."
 
+i=2
+
 for (( k = 3 ; k < 7; k++ )); do 
-	echo "------- K = $k -------"
 	for (( a = -100 ; a < -40 ; a++ )); do 
 		for (( b = -9 ; b < 10 ; b++ )); do
 			echo "./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k"
-			./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k
+			echo "$i $(./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k)"
+			((i+=2))
 		done
 	done
 	for (( a = -9 ; a < 10 ; a++ )); do 
 		for (( b = 11 ; b < 100 ; b++ )); do
-			echo "./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k"
-			./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k
+			echo "$i ./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k"
+			echo "$i $(./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k)"
+			((i+=2))
 		done
 	done
 done >$outlog 2>$errlog

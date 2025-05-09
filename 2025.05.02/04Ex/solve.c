@@ -1,4 +1,5 @@
 #include "solve.h"
+#include "comp.h"
 
 #include <math.h>
 #include <float.h>
@@ -11,15 +12,15 @@ int t4_solve (
 	int it = 0;
 	double c = DBL_MAX, y, y_a = f(a), y_b = f(b);
 
-	if (fabs(y_a) - eps < DBL_EPSILON)
+	if (is_eps(y_a, eps))
 	{
 		*x = a;
 		return 1;
-	} if (fabs(y_b) - eps < DBL_EPSILON)
+	} if (is_eps(y_b, eps))
 	{
 		*x = b;
 		return 1;
-	} if (fabs(fabs(y_b) - fabs(y_a)) < DBL_EPSILON)
+	} if (is_equal(fabs(y_b), fabs(y_a)))
 	{
 		*x = a;
 		return -1;
@@ -30,17 +31,20 @@ int t4_solve (
 		c = b - ((b - a) / (y_b - y_a)) * y_b;
 		y = f(c);
 		
-		if (fabs(y) - eps < DBL_EPSILON)
+		if (is_eps(y, eps))
 			break;
 		else if (fabs(y_a) - fabs(y_b) > DBL_EPSILON)
 		{
 			a = c;
 			y_a = y;
-		} else if (fabs(y_b) - fabs(y_a) > DBL_EPSILON)
+		} else 
+		// if (fabs(y_b) - fabs(y_a) > DBL_EPSILON)
 		{
 			b = c;
 			y_b = y;
-		} else
+		} 
+		
+		if (is_equal(y_a, y_b))
 			it = m+1;
 	}
 	

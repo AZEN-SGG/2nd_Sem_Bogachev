@@ -46,9 +46,7 @@ int t3_solve (
 		memcpy(&bits, &y, sizeof(bits));
 		sgn_c = (bits >> 63) & 1;
 		
-		if (is_equal(a, c) || is_equal(c, b))
-			it = m+1;
-		else if (is_eps(y, eps))
+		if (is_eps(y, eps))
 			break;
 		else if (sgn_c == sgn_a)
 		{	
