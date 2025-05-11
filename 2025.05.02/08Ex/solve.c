@@ -33,20 +33,20 @@ int t8_solve (
 			y_l = y;
 
 			x += h;
+			y = f(x);
+			if ((y_l - y) > DBL_EPSILON)
+				break;
 
 			if ((a - x) > DBL_EPSILON || (x - b) > DBL_EPSILON) {
 				*res = x_l;
 				return it;
 			}
 
-			y = f(x);
-			if ((y_l - y) > DBL_EPSILON) {
-				if ((y_l - y) < eps) {
-					*res = x_l;
-					return it;
-				}
-				break;
-			}
+		}
+
+		if ((y_l - y) < eps) {
+			*res = x_l;
+			return it;
 		}
 	}
 
