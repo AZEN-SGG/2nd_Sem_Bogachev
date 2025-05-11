@@ -26,6 +26,19 @@ int t4_solve (
 		double eps, int m, double *x
 		);
 		
+int t5_solve (
+		double (*f) (double), 
+		double a, double b, 
+		double eps, int m, double *x
+		);
+
+int t6_solve (
+		double (*f) (double), 
+		const int m, double *d,
+		double a, double b, 
+		const double eps, const int M, double *res
+		);
+
 int t7_solve (
 		double (*f) (double), 
 		double x_0, double eps, 
@@ -35,7 +48,7 @@ int t7_solve (
 int t8_solve (
 		double (*f) (double), 
 		double a, double b, 
-		double eps, int m, double *x
+		double eps, int m, double *res
 		);
 
 int t9_solve (
