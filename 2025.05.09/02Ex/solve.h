@@ -1,7 +1,9 @@
 #ifndef SOLVE_H
 #define SOLVE_H
 
-int t2_solve (
+#define NUM_FPE 1e-300
+
+double t2_solve (
 		double (*f) (double), 
 		double x, double h 
 );

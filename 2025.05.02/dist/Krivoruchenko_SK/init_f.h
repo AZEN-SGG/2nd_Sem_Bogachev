@@ -2,7 +2,7 @@
 #define INIT_F_H
 
 int get_call_count (void);
-int get_call_function_count (void) ;
+int get_call_function_count (void);
 int get_call_derivative_count (void);
 
 double f0 (double x);

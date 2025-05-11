@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 			(a <= b) &&
 			(sscanf(argv[4], "%lf", &eps) == 1 && (eps >= 0)) &&
 			((sscanf(argv[5], "%d", &num_iter) == 1) && num_iter > 0) &&
-			((sscanf(argv[6], "%d", &k) == 1) && ((0 <= k) && (k <= len_f))))
+			((sscanf(argv[6], "%d", &k) == 1) && ((0 <= k) && (k < len_f))))
 	) {
 		fprintf(stderr, "Usage: %s m a b eps M k\n", argv[0]);
 		return -1;

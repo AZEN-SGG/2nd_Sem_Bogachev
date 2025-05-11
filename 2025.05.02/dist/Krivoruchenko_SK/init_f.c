@@ -1,6 +1,7 @@
 #include "init_f.h"
 
 #include <math.h>
+#include <float.h>
 
 
 static int cl = 0;
@@ -11,9 +12,9 @@ int get_call_count (void)
 	return cl;
 }
 
-int get_call_function_count (void) 
+int get_call_function_count (void)
 {
-	return cl_f;
+	return cl;
 }
 
 int get_call_derivative_count (void)

@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	int m, k, cl, it, task = 5;
 	
 	double (*f) (double);
-	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6}; //TODO: Rem f7
+	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6}; 
 	int len_f = sizeof(f_lst) / sizeof(f_lst[0]);
 
 	if (
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 			(a <= b) &&
 			(sscanf(argv[3], "%lf", &eps) == 1 && (eps >= 0)) &&
 			((sscanf(argv[4], "%d", &m) == 1) && m > 0) &&
-			((sscanf(argv[5], "%d", &k) == 1) && ((0 <= k) && (k <= len_f))))
+			((sscanf(argv[5], "%d", &k) == 1) && ((0 <= k) && (k < len_f))))
 	) {
 		fprintf(stderr, "Usage: %s a b eps M k\n", argv[0]);
 		return -1;

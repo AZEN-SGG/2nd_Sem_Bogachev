@@ -1,6 +1,8 @@
 #ifndef INIT_F_H
 #define INIT_F_H
 
+#define NUM_FPE 1e-300
+
 int get_call_count (void); 
 double f0 (double x);
 double f1 (double x);

@@ -3,12 +3,13 @@
 #include <math.h>
 #include <float.h>
 
-int t3_solve (
+double t3_solve (
 		double (*f) (double), 
 		double x, double h 
 ) {
-	if (h < DBL_EPSILON)
+	double h_2 = h * h;
+	if (h_2 < NUM_FPE)
 		return DBL_MAX;
-	return (f(x + h) - 2 * f(x) + f(x - h)) / (h * h);
+	return (f(x + h) - 2 * f(x) + f(x - h)) / h_2;
 }
 
