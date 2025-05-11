@@ -1,4 +1,6 @@
 #include "solve.h"
+#include "comp.h"
+#include "polynom.h"
 
 #include <math.h>
 #include <float.h>
