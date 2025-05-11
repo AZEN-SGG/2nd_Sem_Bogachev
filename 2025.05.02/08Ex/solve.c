@@ -6,17 +6,54 @@
 int t8_solve (
 		double (*f) (double), 
 		double a, double b, 
-		double eps, int m, double *x
+		double eps, int m, double *res
 ) {
 	int it = 1;
-	double x_l = 0, y_l = 0, c = a, y = f(a);
+	double h = a - b;
+	double x_l = 0, y_l = 0, x = a, y = f(a);
 
 	if (fabs(b - a) < DBL_EPSILON)
 	{
-		*x = a;
+		*res = a;
 		return 1;
 	}
 
+	while (it <= m)
+	{
+		h *= -0.1;
+
+		while (1)
+		{
+			it++;
+
+			if (it > m)
+				return -1;
+
+			x_l = x;
+			y_l = y;
+
+			x += h;
+
+			if ((a - x) > DBL_EPSILON || (x - b) > DBL_EPSILON) {
+				*res = x_l;
+				return it;
+			}
+
+			y = f(x);
+			if ((y_l - y) > DBL_EPSILON) {
+				if ((y_l - y) < eps) {
+					*res = x_l;
+					return it;
+				}
+				break;
+			}
+		}
+	}
+
+	return -1;
+}
+
+/*
 	for (double h = (b - a) * 0.1; fabs(h) > DBL_EPSILON; h *= -0.1)
 	{
 		do {
@@ -54,4 +91,4 @@ int t8_solve (
 
 	return it;
 }
-
+*/

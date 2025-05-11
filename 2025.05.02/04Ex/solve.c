@@ -28,7 +28,8 @@ int t4_solve (
 
 	for (it = 1; it <= m; ++it)
 	{
-		c = b - ((b - a) / (y_b - y_a)) * y_b;
+		// c = b - ((b - a) / (y_b - y_a)) * y_b;
+		c = a - ((b - a) / (y_b - y_a)) * y_a;
 		y = f(c);
 		
 		if (is_eps(y, eps))

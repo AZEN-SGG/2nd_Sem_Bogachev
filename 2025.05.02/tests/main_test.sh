@@ -1,5 +1,7 @@
 script_name="$(basename "$0")"
+
 iter="1000"
+eps="1e-14"
 
 if [ "$#" -ne 1 ]; then
 	echo "Не указан как параметр номер программы"
@@ -34,15 +36,15 @@ i=2
 for (( k = 3 ; k < 7; k++ )); do 
 	for (( a = -100 ; a < -40 ; a++ )); do 
 		for (( b = -9 ; b < 10 ; b++ )); do
-			echo "./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k"
-			echo "$i $(./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k)"
+			echo "./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" $eps $iter $k"
+			echo "$i $(./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" $eps $iter $k)"
 			((i+=2))
 		done
 	done
 	for (( a = -9 ; a < 10 ; a++ )); do 
 		for (( b = 11 ; b < 100 ; b++ )); do
-			echo "$i ./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k"
-			echo "$i $(./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k)"
+			echo "$i ./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" $eps $iter $k"
+			echo "$i $(./a0$prog.out "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" $eps $iter $k)"
 			((i+=2))
 		done
 	done
