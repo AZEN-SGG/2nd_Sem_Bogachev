@@ -1,8 +1,8 @@
-#ifndef COMP_H
-#define COMP_H
+#ifndef SOLVE_H
+#define SOLVE_H
 
-#include <float.h>
 #include <math.h>
+#include <float.h>
 
 static inline double * fpmax (double *pa, double *pb, double fa, double fb, double *max_f_p)
 {
@@ -44,7 +44,13 @@ static inline int is_null (const double a)
 
 static inline int is_eps (const double a, const double eps)
 {
-	return ((a < 0) ? -a : a) < eps;
+	return (((a < 0) ? -a : a) - eps) < DBL_EPSILON;
 }
+
+int t5_solve (
+		double (*f) (double), 
+		double a, double b, 
+		double eps, int m, double *x
+		);
 
 #endif

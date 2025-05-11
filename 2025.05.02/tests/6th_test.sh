@@ -1,7 +1,9 @@
 script_name="$(basename "$0")"
+prog="6"
+
 iter="1000"
 poly_deg="10"
-prog="6"
+eps="1e-14"
 
 mkdir -p tests
 
@@ -17,25 +19,35 @@ if [ ! -f a0$prog.out ]; then
 	exit 1
 fi
 
+outlog="$(pwd)/tests/out_a0${prog}_$script_name.log"
+errlog="$(pwd)/tests/err_a0${prog}_$script_name.log"
+
+rm -f $outlog $errlog
+
 echo "Тест запущен..."
 
 for (( k = 3 ; k < 7; k++ )); do 
-	echo "------- K = $k -------"
 	for (( a = -100 ; a < -40 ; a++ )); do 
 		for (( b = -9 ; b < 10 ; b++ )); do
-			echo "./a0$prog.out $poly_deg "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k"
-			./a0$prog.out $poly_deg "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k
+			x="$(echo "$a / 10" | bc -l)"
+			y="$(echo "$b / 10" | bc -l)"
+			cmd="./a0$prog.out $poly_deg $x $y $eps $iter $k"
+			echo "$cmd"
+			$cmd
 		done
 	done
 	for (( a = -9 ; a < 10 ; a++ )); do 
 		for (( b = 11 ; b < 100 ; b++ )); do
-			echo "./a0$prog.out $poly_deg "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k"
-			./a0$prog.out $poly_deg "$(echo "$a / 10" | bc -l)" "$(echo "$b / 10" | bc -l)" 1e-16 $iter $k
+			x="$(echo "$a / 10" | bc -l)"
+			y="$(echo "$b / 10" | bc -l)"
+			cmd="./a0$prog.out $poly_deg $x $y $eps $iter $k"
+			echo "$cmd"
+			$cmd
 		done
 	done
-done >$(pwd)/tests/out_$script_name.log 2>$(pwd)/tests/err_$script_name.log
+done >$outlog 2>$errlog
 
-echo "Тест записан в ./tests/out_$script_name.log"
-echo "Ошибки записаны в ./tests/err_$script_name.log"
+echo "Тест записан в $outlog"
+echo "Ошибки записаны в $errlog"
 echo "Тест завершен"
 

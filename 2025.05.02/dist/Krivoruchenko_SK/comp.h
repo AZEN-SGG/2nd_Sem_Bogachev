@@ -44,7 +44,7 @@ static inline int is_null (const double a)
 
 static inline int is_eps (const double a, const double eps)
 {
-	return ((a < 0) ? -a : a) < eps;
+	return (((a < 0) ? -a : a) - eps) < DBL_EPSILON;
 }
 
 #endif
