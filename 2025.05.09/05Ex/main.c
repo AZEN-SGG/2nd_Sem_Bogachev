@@ -10,7 +10,7 @@
 int main (int argc, char *argv[])
 {
 	double t, integral, a, b;
-	int k, n, calls, task = 4;
+	int k, n, calls, task = 5;
 	
 	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6};
 	int len_f = sizeof(f_lst) / sizeof(f_lst[0]);
@@ -28,7 +28,7 @@ int main (int argc, char *argv[])
 
 
 	t = clock();
-	integral = t4_solve(f_lst[k], a, b, n);
+	integral = t5_solve(f_lst[k], a, b, n);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 	
 	calls = get_call_count();

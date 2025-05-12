@@ -19,7 +19,7 @@ int main (int argc, char *argv[])
 			!((argc == 4) && 
 			sscanf(argv[1], "%lf", &x) == 1 &&
 			((sscanf(argv[2], "%lf", &h) == 1) && (h > 0)) &&
-			((sscanf(argv[3], "%d", &k) == 1) && ((0 <= k) && (k <= len_f))))
+			((sscanf(argv[3], "%d", &k) == 1) && ((0 <= k) && (k < len_f))))
 	) {
 		fprintf(stderr, "Usage: %s x h k\n", argv[0]);
 		return -1;

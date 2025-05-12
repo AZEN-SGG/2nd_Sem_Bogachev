@@ -20,8 +20,8 @@ else
 	CLEAN = rm -f
 endif
 
-TARGET = a04.$(EXE)
-OBJ = main.o solve.o
+TARGET = a05.$(EXE)
+OBJ = main.o solve.o 
 
 %.o: %.c
 	gcc $(WFLAGS) $(LDFLAGS) -c $< -o $@
