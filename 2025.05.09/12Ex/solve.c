@@ -5,42 +5,49 @@
 
 #define MAX_ITER 30
 
-int t8_solve (
-		double (*f) (double), 
+int t12_solve (
+		double (*xt) (double), 
+		double (*yt) (double),
 		double a, double b,
 		double eps, double *res
 ) {
 	int it;
 
-	double n = 1;
-	double h = (b - a);
-	double integ_n = (f(a) + f(b)) * h*0.5;
+	int n = 1;
+	double h = (b - a) * 0.5;
+	double x = xt(b) - xt(a);
+	double y = yt(b) - yt(a);
+	double len_n = sqrt(x * x + y * y);
 
 	for (it = 1; it <= MAX_ITER; ++it)
 	{
-		double x = a + h*0.5;
-		double integ_2n = 0;
+		double t = a;
+		double tn = a + h;
+		double len_2n = 0;
 	
 		for (int i = 0; i < n; i++)
 		{
-			integ_2n += f(x);
-			x += h;
+			x = xt(tn) - xt(t);
+			y = yt(tn) - yt(t);
+			len_2n += sqrt(x * x + y * y);
+
+			t = tn;
+			tn += h;
 		}
 
 		h *= 0.5;
-		integ_2n = integ_2n * h + integ_n * 0.5;
 
-		if (fabs(integ_2n - integ_n) < eps)
+		if (fabs(len_2n - len_n) < eps)
 			break;
 		
-		integ_n = integ_2n;
-		n *= 2;
+		len_n = len_2n;
+		n <<= 1;
 	}
 
 	if (it > MAX_ITER) 
 		return -1;
 	
-	*res = integ_n;
+	*res = len_n;
 
 	return n;
 }

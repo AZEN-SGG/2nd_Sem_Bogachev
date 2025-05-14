@@ -20,7 +20,7 @@ else
 	CLEAN = rm -f
 endif
 
-TARGET = a08.$(EXE)
+TARGET = a12.$(EXE)
 OBJ = main.o solve.o
 
 %.o: %.c
