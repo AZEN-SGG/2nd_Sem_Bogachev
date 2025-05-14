@@ -13,7 +13,7 @@ int t9_solve (
 	int it;
 	double integ_n;
 
-	double n = 2;
+	int n = 2;
 	double h = (b - a) * 0.5;
 	double s1 = (f(a) + f(b)) * h/3;
 	double s2 = f(a + h) * h*4/3;
@@ -23,7 +23,7 @@ int t9_solve (
 		double x = a + h*0.5;
 		double s2_2n = 0;
 
-		for (int i = 1; i < n; i++)
+		for (int i = 0; i < n; i++)
 		{
 			s2_2n += f(x);
 			x += h;
@@ -31,7 +31,7 @@ int t9_solve (
 
 		s2_2n *= h*2/3;
 
-		if (fabs(s2_2n - s1 * 0.5 - s2 * 0.75) < eps) {
+		if (fabs((s2_2n - s1 * 0.5) - s2 * 0.75) < eps) {
 			integ_n = s1 + s2;
 			break;
 		}
@@ -40,7 +40,7 @@ int t9_solve (
 		s2 = s2_2n;
 
 		h *= 0.5;
-		n *= 2;
+		n <<= 1;
 	}
 
 	if (it > MAX_ITER) 
