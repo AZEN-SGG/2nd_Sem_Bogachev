@@ -2,7 +2,7 @@ FLAGS = -fstack-protector-all -W -Wall -Wextra -Wunused -Wcast-align -Werror -pe
 
 OBJ_COMMON = solve.o
 
-NUMS = 1 2 3 4 5 6 7
+NUMS = 1 2 3 4 5 6 7 8 9 10 11
 
 OUTS = $(foreach n,$(NUMS),$(shell printf "a%02d.out\n" "$(n)"))
 

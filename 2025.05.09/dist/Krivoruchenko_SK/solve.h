@@ -2,6 +2,7 @@
 #define SOLVE_H
 
 #define NUM_FPE 1e-300
+#define MAX_ITER 30
 
 #include "init_f.h"
 
@@ -63,6 +64,38 @@ double t7_solve (
 		double (*f) (double), 
 		double a, double b,
 		int n	
+);
+
+// -------
+
+int t8_solve (
+		double (*f) (double), 
+		double a, double b,
+		double eps, double *res
+);
+
+// -------
+
+int t9_solve (
+		double (*f) (double), 
+		double a, double b,
+		double eps, double *res
+);
+
+// -------
+
+double t10_solve (
+		double (*f) (double), 
+		double a, double eps, 
+		double *res
+);
+
+// -------
+
+double t11_solve (
+		double (*f) (double), 
+		double a, double eps, 
+		double *res
 );
 
 // -------
