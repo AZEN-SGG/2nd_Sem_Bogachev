@@ -100,4 +100,11 @@ double t11_solve (
 
 // -------
 
+int t12_solve (
+		double (*x) (double), 
+		double (*y) (double),
+		double a, double b,
+		double eps, double *res
+);
+
 #endif
