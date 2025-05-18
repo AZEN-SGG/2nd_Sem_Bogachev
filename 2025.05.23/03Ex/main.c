@@ -49,7 +49,7 @@ int main (int argc, char *argv[])
 	} while (0);	
 
 	print_list(head, p);
-
+	
 	t = clock();
 	res = t3_solve(head);
 	t = (clock() - t) / CLOCKS_PER_SEC;

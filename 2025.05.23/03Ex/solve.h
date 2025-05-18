@@ -3,6 +3,6 @@
 
 #include "node.h"
 
-int t2_solve (node *head);
+int t3_solve (node *head);
 
 #endif
