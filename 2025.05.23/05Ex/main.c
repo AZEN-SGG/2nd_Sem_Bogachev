@@ -8,13 +8,13 @@
 #include "io_node.h"
 #include "status.h"
 
-/* ./a02.out p filename */
+/* ./a05.out p filename */
 int main (int argc, char *argv[])
 {
 	node *head;
 	char *name;
 	double t;
-	int p, res, task = 2;
+	int p, res, task = 5;
 	io_status ret;
 
 	if (
@@ -51,7 +51,7 @@ int main (int argc, char *argv[])
 	print_list(head, p);
 
 	t = clock();
-	res = t2_solve(head);
+	res = t5_solve(head);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 	
 	delete_list(head);
