@@ -68,6 +68,9 @@ io_status read_list (node **list, const char *filename)
 
 		lunit = unit;
 	}
+	
+	if (!head)
+		return ERR_READ;
 
 	*list = head;
 
