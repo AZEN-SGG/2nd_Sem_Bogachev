@@ -31,6 +31,13 @@ cleanup_and_exit() {
     exit 1
 }
 
+replace_in_file() {
+	local file="$1"
+	local num="$2"
+
+	sed -i -E "s|([\"'])solve\.h\1|\1solve_${num}.h\1|g" "$file"
+}
+
 # Проход по задачам
 for num in "${tasks[@]}"; do
     folder=$(printf "%02dEx" "$num")
@@ -44,12 +51,15 @@ for num in "${tasks[@]}"; do
             cleanup_and_exit "Файл $src не найден"
         fi
 
-        base=$(basename "$file" .c)
+        base="${file%.*}"
         ext="${file##*.}"
         dest_file="$dest_dir/${base}_${folder:0:2}.$ext"
 
         cp "$src" "$dest_file" || cleanup_and_exit "Ошибка копирования $src"
         copied_files+=("$dest_file")
+	if [[ "$file" == "main.c" || "$file" == "solve.c" ]]; then
+		replace_in_file "$dest_file" "${folder:0:2}"
+	fi
     done
 done
 
