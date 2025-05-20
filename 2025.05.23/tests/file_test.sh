@@ -19,7 +19,7 @@ rm -f "$outlog" "$errlog"
 
 echo "Тест запущен..."
 
-for npr in {1..7} ; do
+for npr in {1..10} ; do
 	num=$(printf "%02d" "$npr")
 	prog="a$num.out"
 	if [ -f $prog ]; then

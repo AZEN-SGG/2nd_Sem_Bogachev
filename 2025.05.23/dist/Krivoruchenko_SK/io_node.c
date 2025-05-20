@@ -17,6 +17,17 @@ int get_length (node * head)
 	return i;
 }
 
+void delete_nodes (node *head, const int count)
+{
+	for (int i = 0; i < count; ++i)
+	{
+		node *temp = head;
+		head = head->next;
+
+		delete_node(temp);
+	}
+}
+
 void delete_list (node * head)
 {
 	node *curr, *next;

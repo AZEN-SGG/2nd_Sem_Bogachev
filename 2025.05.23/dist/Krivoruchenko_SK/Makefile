@@ -2,17 +2,17 @@ FLAGS = -fstack-protector-all -W -Wall -Wextra -Wunused -Wcast-align -Werror -pe
 
 OBJ_COMMON = io_node.o
 
-NUMS = 1 2 3 4 5 6 7 8 9 10 11 12
+NUMS = 1 2 3 4 5 6 7 8 9 10
 
 OUTS = $(foreach n,$(NUMS),$(shell printf "a%02d.out\n" "$(n)"))
 
 all: $(OUTS)
 
 %.o: %.c
-	gcc -c $(FLAGS) $<
+	-gcc -c $(FLAGS) $<
 
 a%.out: main_%.o solve_%.o $(OBJ_COMMON)
-	gcc $(FLAGS) $^ -o $@ -lm
+	-gcc $(FLAGS) $^ -o $@ -lm
 
 clean:
 	 rm -f *.o *.out
