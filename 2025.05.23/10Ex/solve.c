@@ -24,13 +24,12 @@ node * t10_solve (node *head)
 				if (start) {
 					delete_nodes(start->next, down+1);
 					start->next = next;
-					last = start;
+					curr = start;
 				} else {
 					delete_nodes(head, down+1);
 					head = next;
-					last = NULL;
+					curr = NULL;
 				}
-				curr = NULL;
 			}
 			down = 0;
 		}

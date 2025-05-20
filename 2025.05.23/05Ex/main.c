@@ -11,7 +11,7 @@
 /* ./a05.out p filename */
 int main (int argc, char *argv[])
 {
-	node *head;
+	node *head = NULL;
 	char *name;
 	double t;
 	int p, res, task = 5;
