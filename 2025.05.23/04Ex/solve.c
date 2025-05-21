@@ -42,6 +42,11 @@ int t4_solve (node *head)
 		last = head;
 		head = next;
 	}
+	
+	if (strcmp(head->string, last->string) <= 0)
+			if (strict)
+				if (maximum < count)
+					maximum = count;
 
 	return maximum;
 }
