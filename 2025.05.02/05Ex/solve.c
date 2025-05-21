@@ -39,6 +39,13 @@ int t5_solve (
 	else if (is_equal(b, c))
 		return -1;
 
+	if (
+		is_equal(y_a, y_b) ||
+		is_equal(y_a, y_c) ||
+		is_equal(y_b, y_c)
+	   )
+		return -3;
+
 	for (it = 1; it < m+1; ++it)
 	{
 		double *temp_pnt = 0, *inner_max_pnt;
@@ -60,6 +67,14 @@ int t5_solve (
 			is_equal(x_new, b)
 		   )
 			return -1;
+
+		if (
+			is_equal(y_new, y_a) ||
+			is_equal(y_new, y_c) ||
+			is_equal(y_new, y_b)
+		   )
+			return -3;
+
 
 		inner_max_pnt = fp_abs_max(&c, &b, &y_c, &y_b, &temp_pnt);	
 		*fp_abs_max(&a, inner_max_pnt, &y_a, temp_pnt, &temp_pnt) = x_new;
