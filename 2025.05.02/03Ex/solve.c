@@ -40,7 +40,10 @@ int t3_solve (
 	
 	for (it = 1; it <= m; ++it)
 	{
-		c = a - ((a - b) / (y_a - y_b)) * y_a;
+		if (fabs(y_b) < fabs(y_a))
+			c = b - ((a - b) / (y_a - y_b)) * y_b;
+		else
+			c = a - ((a - b) / (y_a - y_b)) * y_a;
 		y = f(c);
 		
 		memcpy(&bits, &y, sizeof(bits));

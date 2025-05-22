@@ -40,8 +40,7 @@ int t5_solve (
 		return -1;
 
 	if (
-		is_equal(y_a, y_b) ||
-		is_equal(y_a, y_c) ||
+		(is_equal(y_a, y_b) || is_equal(y_a, y_c)) ||
 		is_equal(y_b, y_c)
 	   )
 		return -3;
@@ -49,11 +48,26 @@ int t5_solve (
 	for (it = 1; it < m+1; ++it)
 	{
 		double *temp_pnt = 0, *inner_max_pnt;
-		const double angle = (c - a) / (y_c - y_a);
-		const double x_new = a - 
+		double angle, x_new, y_new;
+		
+		if (is_equal(y_a, y_b))
+			return -3;
+		else if (is_equal(y_a, y_c))
+			return -3;
+		else if (is_equal(y_b, y_c))
+			return -3;
+
+		if (
+			(is_equal(y_a, y_b) || is_equal(y_a, y_c)) ||
+			is_equal(y_b, y_c)
+		)
+			return -3;
+
+		angle = (c - a) / (y_c - y_a);
+		x_new = a - 
 			angle * y_a +
 		       	((((b - c) / (y_b - y_c)) - angle) / (y_b - y_a)) * y_a * y_c;
-		const double y_new = f(x_new);
+		y_new = f(x_new);
 
 		if (is_eps(y_new, eps))
 		{
@@ -62,15 +76,15 @@ int t5_solve (
 		}
 
 		if (
-			is_equal(x_new, a) ||
-			is_equal(x_new, c) ||
+			(is_equal(x_new, a) ||
+			is_equal(x_new, c)) ||
 			is_equal(x_new, b)
 		   )
 			return -1;
 
 		if (
-			is_equal(y_new, y_a) ||
-			is_equal(y_new, y_c) ||
+			(is_equal(y_new, y_a) ||
+			is_equal(y_new, y_c)) ||
 			is_equal(y_new, y_b)
 		   )
 			return -3;

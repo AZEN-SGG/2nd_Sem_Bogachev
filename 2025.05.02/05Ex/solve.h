@@ -3,6 +3,9 @@
 
 #include <math.h>
 #include <float.h>
+#include <stdio.h>
+
+#define EPS 1e-16
 
 static inline double * fpmax (double *pa, double *pb, double fa, double fb, double *max_f_p)
 {
@@ -34,7 +37,7 @@ static inline int is_equal (const double a, const double b)
 {
 	double diff = a - b;
 	double max_val = (a > b) ? a : b;
-	return ((diff < 0) ? -diff : diff) < (DBL_EPSILON * max_val);
+	return (fabs(diff) < (EPS * fabs(max_val)));
 }
 
 static inline int is_null (const double a)
