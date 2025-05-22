@@ -1,0 +1,853 @@
+=================
+=== ЗАДАЧА 1 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Запуск: ./a01.out 5 test1.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.01
+apple
+banana
+apple
+cherry
+date
+./a01.out : Task = 1 Result = 1 Elapsed = 0.00
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Запуск: ./a01.out 5 test2.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+one
+one
+two
+two
+two
+./a01.out : Task = 1 Result = 3 Elapsed = 0.00
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Запуск: ./a01.out 5 test3.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+a
+b
+c
+d
+e
+./a01.out : Task = 1 Result = 1 Elapsed = 0.00
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Запуск: ./a01.out 5 test4.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+h
+g
+f
+e
+d
+./a01.out : Task = 1 Result = 2 Elapsed = 0.00
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Запуск: ./a01.out 5 test5.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+cat
+dog
+cat
+bird
+fish
+./a01.out : Task = 1 Result = 1 Elapsed = 0.00
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Запуск: ./a01.out 5 test6.txt
+ОШИБКА: Программа завершилась с кодом 254
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Запуск: ./a01.out 5 test7.txt
+
+------------------------------------------------------------
+total allocation requests:      2 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+single
+./a01.out : Task = 1 Result = 2 Elapsed = 0.00
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Запуск: ./a01.out 5 test8.txt
+
+------------------------------------------------------------
+total allocation requests:      6 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.01
+very_long_string_1234567890
+short
+medium_length_string_123
+./a01.out : Task = 1 Result = 2 Elapsed = 0.00
+
+
+=================
+=== ЗАДАЧА 2 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Запуск: ./a02.out 5 test1.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+apple
+banana
+apple
+cherry
+date
+./a02.out : Task = 2 Result = 5 Elapsed = 0.00
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Запуск: ./a02.out 5 test2.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+one
+one
+two
+two
+two
+./a02.out : Task = 2 Result = 1 Elapsed = 0.00
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Запуск: ./a02.out 5 test3.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+a
+b
+c
+d
+e
+./a02.out : Task = 2 Result = 7 Elapsed = 0.00
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Запуск: ./a02.out 5 test4.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+h
+g
+f
+e
+d
+./a02.out : Task = 2 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Запуск: ./a02.out 5 test5.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+cat
+dog
+cat
+bird
+fish
+./a02.out : Task = 2 Result = 3 Elapsed = 0.00
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Запуск: ./a02.out 5 test6.txt
+ОШИБКА: Программа завершилась с кодом 254
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Запуск: ./a02.out 5 test7.txt
+
+------------------------------------------------------------
+total allocation requests:      2 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.01
+single
+./a02.out : Task = 2 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Запуск: ./a02.out 5 test8.txt
+
+------------------------------------------------------------
+total allocation requests:      6 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+very_long_string_1234567890
+short
+medium_length_string_123
+./a02.out : Task = 2 Result = 0 Elapsed = 0.00
+
+
+=================
+=== ЗАДАЧА 3 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Запуск: ./a03.out 5 test1.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+apple
+banana
+apple
+cherry
+date
+./a03.out : Task = 3 Result = 2 Elapsed = 0.00
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Запуск: ./a03.out 5 test2.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+one
+one
+two
+two
+two
+./a03.out : Task = 3 Result = 3 Elapsed = 0.00
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Запуск: ./a03.out 5 test3.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+a
+b
+c
+d
+e
+./a03.out : Task = 3 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Запуск: ./a03.out 5 test4.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.01
+h
+g
+f
+e
+d
+./a03.out : Task = 3 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Запуск: ./a03.out 5 test5.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+cat
+dog
+cat
+bird
+fish
+./a03.out : Task = 3 Result = 3 Elapsed = 0.00
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Запуск: ./a03.out 5 test6.txt
+ОШИБКА: Программа завершилась с кодом 254
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Запуск: ./a03.out 5 test7.txt
+ОШИБКА: SEGFAULT (нарушение сегментации)
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Запуск: ./a03.out 5 test8.txt
+
+------------------------------------------------------------
+total allocation requests:      6 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.01
+very_long_string_1234567890
+short
+medium_length_string_123
+./a03.out : Task = 3 Result = 0 Elapsed = 0.00
+
+
+=================
+=== ЗАДАЧА 4 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Запуск: ./a04.out 5 test1.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+apple
+banana
+apple
+cherry
+date
+./a04.out : Task = 4 Result = 2 Elapsed = 0.00
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Запуск: ./a04.out 5 test2.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+one
+one
+two
+two
+two
+./a04.out : Task = 4 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Запуск: ./a04.out 5 test3.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+a
+b
+c
+d
+e
+./a04.out : Task = 4 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Запуск: ./a04.out 5 test4.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.01
+h
+g
+f
+e
+d
+./a04.out : Task = 4 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Запуск: ./a04.out 5 test5.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+cat
+dog
+cat
+bird
+fish
+./a04.out : Task = 4 Result = 2 Elapsed = 0.00
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Запуск: ./a04.out 5 test6.txt
+ОШИБКА: Программа завершилась с кодом 254
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Запуск: ./a04.out 5 test7.txt
+ОШИБКА: SEGFAULT (нарушение сегментации)
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Запуск: ./a04.out 5 test8.txt
+
+------------------------------------------------------------
+total allocation requests:      6 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+very_long_string_1234567890
+short
+medium_length_string_123
+./a04.out : Task = 4 Result = 0 Elapsed = 0.00
+
+
+=================
+=== ЗАДАЧА 5 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Запуск: ./a05.out 5 test1.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+apple
+banana
+apple
+cherry
+date
+./a05.out : Task = 5 Result = 3 Elapsed = 0.00
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Запуск: ./a05.out 5 test2.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+one
+one
+two
+two
+two
+./a05.out : Task = 5 Result = 2 Elapsed = 0.00
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Запуск: ./a05.out 5 test3.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+a
+b
+c
+d
+e
+./a05.out : Task = 5 Result = 8 Elapsed = 0.00
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Запуск: ./a05.out 5 test4.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+h
+g
+f
+e
+d
+./a05.out : Task = 5 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Запуск: ./a05.out 5 test5.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+cat
+dog
+cat
+bird
+fish
+./a05.out : Task = 5 Result = 2 Elapsed = 0.00
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Запуск: ./a05.out 5 test6.txt
+ОШИБКА: Программа завершилась с кодом 254
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Запуск: ./a05.out 5 test7.txt
+
+------------------------------------------------------------
+total allocation requests:      2 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+single
+./a05.out : Task = 5 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Запуск: ./a05.out 5 test8.txt
+
+------------------------------------------------------------
+total allocation requests:      6 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+very_long_string_1234567890
+short
+medium_length_string_123
+./a05.out : Task = 5 Result = 0 Elapsed = 0.00
+
+
+=================
+=== ЗАДАЧА 6 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Запуск: ./a06.out 5 test1.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+apple
+banana
+apple
+cherry
+date
+./a06.out : Task = 6 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Запуск: ./a06.out 5 test2.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+one
+one
+two
+two
+two
+./a06.out : Task = 6 Result = 3 Elapsed = 0.00
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Запуск: ./a06.out 5 test3.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.01
+a
+b
+c
+d
+e
+./a06.out : Task = 6 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Запуск: ./a06.out 5 test4.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+h
+g
+f
+e
+d
+./a06.out : Task = 6 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Запуск: ./a06.out 5 test5.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.01
+cat
+dog
+cat
+bird
+fish
+./a06.out : Task = 6 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Запуск: ./a06.out 5 test6.txt
+ОШИБКА: Программа завершилась с кодом 254
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Запуск: ./a06.out 5 test7.txt
+
+------------------------------------------------------------
+total allocation requests:      2 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+single
+./a06.out : Task = 6 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Запуск: ./a06.out 5 test8.txt
+
+------------------------------------------------------------
+total allocation requests:      6 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+very_long_string_1234567890
+short
+medium_length_string_123
+./a06.out : Task = 6 Result = 0 Elapsed = 0.00
+
+
+=================
+=== ЗАДАЧА 7 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Запуск: ./a07.out 5 test1.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+apple
+banana
+apple
+cherry
+date
+./a07.out : Task = 7 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Запуск: ./a07.out 5 test2.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+one
+one
+two
+two
+two
+./a07.out : Task = 7 Result = 1 Elapsed = 0.00
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Запуск: ./a07.out 5 test3.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+a
+b
+c
+d
+e
+./a07.out : Task = 7 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Запуск: ./a07.out 5 test4.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+h
+g
+f
+e
+d
+./a07.out : Task = 7 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Запуск: ./a07.out 5 test5.txt
+
+------------------------------------------------------------
+total allocation requests:     16 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+cat
+dog
+cat
+bird
+fish
+./a07.out : Task = 7 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Запуск: ./a07.out 5 test6.txt
+ОШИБКА: Программа завершилась с кодом 254
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Запуск: ./a07.out 5 test7.txt
+
+------------------------------------------------------------
+total allocation requests:      2 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+single
+./a07.out : Task = 7 Result = 0 Elapsed = 0.00
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Запуск: ./a07.out 5 test8.txt
+
+------------------------------------------------------------
+total allocation requests:      6 ; max. mem used 0 kBytes
+leak      0 Bytes in 0 blocks
+WORK TIME - 00:00:00.00
+very_long_string_1234567890
+short
+medium_length_string_123
+./a07.out : Task = 7 Result = 0 Elapsed = 0.00
+
+
+=================
+=== ЗАДАЧА 8 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a08.out не найден!
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a08.out не найден!
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a08.out не найден!
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a08.out не найден!
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a08.out не найден!
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a08.out не найден!
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a08.out не найден!
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a08.out не найден!
+
+
+=================
+=== ЗАДАЧА 9 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a09.out не найден!
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a09.out не найден!
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a09.out не найден!
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a09.out не найден!
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a09.out не найден!
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a09.out не найден!
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a09.out не найден!
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a09.out не найден!
+
+
+=================
+=== ЗАДАЧА 10 ===
+=================
+Тестируемый файл: test1.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a10.out не найден!
+
+Тестируемый файл: test2.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a10.out не найден!
+
+Тестируемый файл: test3.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a10.out не найден!
+
+Тестируемый файл: test4.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a10.out не найден!
+
+Тестируемый файл: test5.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a10.out не найден!
+
+Тестируемый файл: test6.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a10.out не найден!
+
+Тестируемый файл: test7.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a10.out не найден!
+
+Тестируемый файл: test8.txt
+Максимум выводимых элементов: 5
+Исполняемый файл ./a10.out не найден!
+
+
+Найдено ошибок: 33

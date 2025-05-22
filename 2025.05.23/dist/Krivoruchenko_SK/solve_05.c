@@ -24,6 +24,9 @@ int t5_solve (node *head)
 	
 	if (maximum < count)
 		maximum = count;
+	
+	if (maximum == 1)
+		maximum = 0;
 
 	return maximum;
 }

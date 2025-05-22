@@ -31,7 +31,9 @@ int t3_solve (node *head)
 					local = 0;
 				} else
 					local++;
-			}
+			} else
+				if (cmp_next >= 0)
+					local = 1;
 		} else {
 			count += local;
 			local = 0;
