@@ -33,7 +33,7 @@ static inline double * fp_abs_max (double *pa, double *pb, double *fa, double *f
 static inline int is_equal (const double a, const double b)
 {
 	double diff = a - b;
-	double max_val = (a > b) ? a : b;
+	double max_val = fabs((a > b) ? a : b);
 	return ((diff < 0) ? -diff : diff) < (DBL_EPSILON * max_val);
 }
 
@@ -44,7 +44,7 @@ static inline int is_null (const double a)
 
 static inline int is_eps (const double a, const double eps)
 {
-	return ((a < 0) ? -a : a) < eps;
+	return (((a < 0) ? -a : a) - eps) < DBL_EPSILON;
 }
 
 #endif

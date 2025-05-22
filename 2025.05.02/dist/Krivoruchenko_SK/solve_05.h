@@ -1,8 +1,11 @@
-#ifndef COMP_H
-#define COMP_H
+#ifndef SOLVE_H
+#define SOLVE_H
 
-#include <float.h>
 #include <math.h>
+#include <float.h>
+#include <stdio.h>
+
+#define EPS 1e-16
 
 static inline double * fpmax (double *pa, double *pb, double fa, double fb, double *max_f_p)
 {
@@ -33,8 +36,8 @@ static inline double * fp_abs_max (double *pa, double *pb, double *fa, double *f
 static inline int is_equal (const double a, const double b)
 {
 	double diff = a - b;
-	double max_val = fabs((a > b) ? a : b);
-	return ((diff < 0) ? -diff : diff) < (DBL_EPSILON * max_val);
+	double max_val = (a > b) ? a : b;
+	return (fabs(diff) < (EPS * fabs(max_val)));
 }
 
 static inline int is_null (const double a)
@@ -46,5 +49,11 @@ static inline int is_eps (const double a, const double eps)
 {
 	return (((a < 0) ? -a : a) - eps) < DBL_EPSILON;
 }
+
+int t5_solve (
+		double (*f) (double), 
+		double a, double b, 
+		double eps, int m, double *x
+		);
 
 #endif

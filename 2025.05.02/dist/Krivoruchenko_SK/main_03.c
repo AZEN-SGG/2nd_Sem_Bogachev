@@ -3,13 +3,13 @@
 #include <math.h>
 
 #include "init_f.h"
-#include "solve.h"
+#include "solve_03.h"
 
 /* ./a.out a b eps M k */
 int main(int argc, char *argv[])
 {
 	double t, a, b, eps, x = 0;
-	int m, k, cl, it, task = 1;
+	int m, k, cl, it, task = 3;
 	
 	double (*f) (double);
 	double (*f_lst[]) (double) = {f0, f1, f2, f3, f4, f5, f6};
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 			(a <= b) &&
 			(sscanf(argv[3], "%lf", &eps) == 1 && (eps >= 0)) &&
 			((sscanf(argv[4], "%d", &m) == 1) && m > 0) &&
-			((sscanf(argv[5], "%d", &k) == 1) && ((0 <= k) && (k < len_f))))
+			((sscanf(argv[5], "%d", &k) == 1) && ((0 <= k) && (k <= len_f))))
 	) {
 		fprintf(stderr, "Usage: %s a b eps M k\n", argv[0]);
 		return -1;
@@ -31,18 +31,18 @@ int main(int argc, char *argv[])
 	f = f_lst[k];
 
 	t = clock();
-	it = t1_solve(f, a, b, eps, m, &x);
+	it = t3_solve(f, a, b, eps, m, &x);
 	t = (clock() - t) / CLOCKS_PER_SEC;
 		
 	cl = get_call_count();
-	
+
 	if (it < 0)
 	{
 		fprintf(stdout, "%s : Task = %d NOT FOUND Count = %d T = %.2f\n", argv[0], task, cl, t);
 		return -2;
-	} else 
+	} else
 	{
-		printf("%s : Task = %d X = %e Res = %e Its = %d Count = %d T = %.2f\n", argv[0], task, x, f(x), it, cl, t);
+		fprintf(stdout, "%s : Task = %d X = %e Res = %e Its = %d Count = %d T = %.2f\n", argv[0], task, x, f(x), it, cl, t);
 		return 0;
 	}
 }
