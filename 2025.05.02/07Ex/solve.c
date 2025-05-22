@@ -19,6 +19,8 @@ int t7_solve (
 			x_0 = y;
 			break;
 		}
+		
+		x_0 = y;
 	}
 
 	if (it > m)
