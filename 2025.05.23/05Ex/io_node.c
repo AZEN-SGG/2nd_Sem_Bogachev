@@ -27,10 +27,21 @@ void delete_list (node * head)
 	}
 }
 
+void delete_nodes (node *head, const int count)
+{
+	for (int i = 0; i < count; ++i)
+	{
+		node *temp = head;
+		head = head->next;
+
+		delete_node(temp);
+	}
+}
+
 io_status read_list (node **list, const char *filename)
 {
 	FILE *fp = 0;
-	char *string, buf[LEN_STR];
+	char *string, buf[LEN_STR] = {0};
 	node *head, *lunit, *unit;
 
 	head = lunit = unit = NULL;
@@ -40,6 +51,7 @@ io_status read_list (node **list, const char *filename)
 
 	while (fgets(buf, LEN_STR, fp))
 	{
+		int len = strcspn(buf, "\n");
 		unit = (node *)malloc(sizeof(node));
 		if (!unit) {
 			fclose(fp);
@@ -50,8 +62,8 @@ io_status read_list (node **list, const char *filename)
 
 		unit->next = NULL;
 		
-		buf[strcspn(buf, "\n")] = '\0';
-		string = strdup(buf);
+		buf[len] = '\0';
+		string = (char *)malloc((len+1) * sizeof(char));
 		if (!string) {
 			fclose(fp);
 			free(unit);
@@ -59,6 +71,8 @@ io_status read_list (node **list, const char *filename)
 
 			return ERR_MEM;
 		}
+
+		strcpy(string, buf);
 
 		unit->string = string;
 		if (!lunit) 

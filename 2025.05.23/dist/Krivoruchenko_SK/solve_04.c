@@ -10,6 +10,9 @@ int t4_solve (node *head)
 
 	last = head;
 	head = last->next;
+	
+	if (!head)
+		return 0;
 
 	for (next = head->next; next; next = head->next)
 	{
