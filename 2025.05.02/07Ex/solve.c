@@ -9,21 +9,16 @@ int t7_solve (
 		int m, double *x
 ) {
 	int it = 0;
-	double y = f(x_0);
-
-	if (fabs(y - x_0) - eps < DBL_EPSILON)
-	{
-		*x = x_0;
-		return 1;
-	}
 
 	for (it = 1; it <= m; ++it)
 	{
-		x_0 = y;
-		y = f(x_0);
+		const double y = f(x_0);
+		const double max = fabs((y < x_0) ? x_0 : y);
 		
-		if (fabs(y - x_0) - eps < DBL_EPSILON)
+		if (fabs(y - x_0) < eps * max) {
+			x_0 = y;
 			break;
+		}
 	}
 
 	if (it > m)
