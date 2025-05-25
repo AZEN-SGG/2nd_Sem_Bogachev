@@ -26,19 +26,16 @@ int main(int argc, char** argv)
     if (status==-1)
     {
         printf("Cannot open file\n");
-        delete_node(N);
         return -1;
     }
     else if (status==-2)
     {
         printf("Cannot read file\n");
-        delete_node(N);
         return -2;
     }
     else if (status==3)
     {
         printf("Cannot allocate memory\n");
-        delete_node(N);
         return -2;
     }
     print_node(p, N);

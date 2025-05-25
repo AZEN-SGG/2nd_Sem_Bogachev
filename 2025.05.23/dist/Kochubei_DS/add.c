@@ -157,11 +157,11 @@ void delete_node(node* head)
     while(1)
     {
         node* pointer;
+            if (head==0) break;
         free(head->string);
         pointer=head;
         head=head->next;
         free(pointer);
-        if (head==0) break;
     }
 }
 

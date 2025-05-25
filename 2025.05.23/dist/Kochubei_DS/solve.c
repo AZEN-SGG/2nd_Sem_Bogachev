@@ -332,6 +332,215 @@ node* solve8(node* head)
 
 }
 
+
+
+node* solve9(node* head)
+{
+    node* tmp1;
+    node* tmp2;
+    node* tmp3;
+    int was_thrown=0;
+    int last_eq=0;
+    tmp1=head;
+    if (head->next==0)
+    {
+        return head;
+    }
+    if (head->next->next==0)
+    {
+        return head;
+    }
+    tmp1=head;
+    tmp2=head->next;
+    tmp3=head->next->next;
+    while(tmp3->next!=0)
+    {
+        if (was_thrown==0)
+        {
+            if (strcmp(tmp1->string, tmp2->string)<=0 && strcmp(tmp2->string, tmp3->string)>=0)
+            {
+                if (strcmp(tmp2->string, tmp3->string)==0)
+                {
+                    last_eq=1;
+                }
+                else
+                {
+                    last_eq=0;
+                }
+                free(tmp2->string);
+                tmp2->string=0;
+                was_thrown=1;
+            }
+            else
+            {
+                was_thrown=0;
+            }
+        }
+        else
+        {
+            if (last_eq==1 && strcmp(tmp2->string, tmp3->string)>=0)
+            {
+                if (strcmp(tmp2->string, tmp3->string)==0)
+                {
+                    last_eq=1;
+                }
+                else
+                {
+                    last_eq=0;
+                }
+                free(tmp2->string);
+                tmp2->string=0;
+                was_thrown=1;
+            }
+            else
+            {
+                was_thrown=0;
+            }
+        }
+        tmp1=tmp2;
+        tmp2=tmp3;
+        tmp3=tmp3->next;
+    }
+    tmp1=head;
+    tmp2=head->next;
+    tmp3=head->next->next;
+    while(1)
+    {
+        if (tmp2->string==0)
+        {
+            free(tmp2);
+            tmp1->next=tmp3;
+            if (tmp3->next==0)
+            {
+                break;
+            }
+            tmp2=tmp3;
+            tmp3=tmp3->next;
+        }
+        else
+        {
+            if (tmp3->next==0)
+            {
+                break;
+            }
+            tmp1=tmp2;
+            tmp2=tmp3;
+            tmp3=tmp3->next;
+        }
+    }
+    return head;
+}
+
+
+
+
+node* solve10(node* head)
+{
+    node* tmp1;
+    node* tmp2;
+    node* tmp3;
+    int last=0;
+    if (head->next==0)
+    {
+        return head;
+    }
+    tmp1=head;
+    tmp2=head->next;
+    while(1)
+    {
+        if (strcmp(tmp1->string, tmp2->string)>=0)
+        {
+            free(tmp1->string);
+            tmp1->string=0;
+            last=1;
+        }
+        else
+        {
+            if (last==1)
+            {
+                free(tmp1->string);
+                tmp1->string=0;
+                last=0;
+            }
+        }
+        if (tmp2->next==0)
+        {
+            break;
+        }
+        tmp1=tmp2;
+        tmp2=tmp2->next;
+    }
+
+    if (last==1)
+    {
+        free(tmp2->string);
+        tmp2->string=0;
+    }
+    tmp1=head;
+    tmp2=head->next;
+    if (head->next->next==0)
+    {
+        if (tmp1->string==0)
+        {
+            free(tmp1);
+            free(tmp2);
+            return 0;
+        }
+        else
+        {
+            return head;
+        }
+    }
+    tmp3=head->next->next;
+    while(1)
+    {
+        if (tmp2->string==0)
+        {
+            free(tmp2);
+            tmp1->next=tmp3;
+            if (tmp3->next==0)
+            {
+                if (tmp3->string==0)
+                {
+                    tmp1->next=0;
+                    free(tmp3);
+                }
+                break;
+            }
+            tmp2=tmp3;
+            tmp3=tmp3->next;
+        }
+        else
+        {
+            if (tmp3->next==0)
+            {
+                if (tmp3->string==0)
+                {
+                    tmp2->next=0;
+                    free(tmp3);
+                }
+                break;
+            }
+            tmp1=tmp2;
+            tmp2=tmp3;
+            tmp3=tmp3->next;
+        }
+    }
+    if (head->string==0)
+    {
+        node* ret=head->next;
+        free(head);
+        return ret;
+    }
+    return head;
+}
+
+
+
+
+
+
+/*/
 node* solve9(node* head)
 {
     char s[1]={'\0'};
@@ -423,7 +632,6 @@ node* solve9(node* head)
     return head;
 }
 
-
 node* solve10(node* head)
 {
 
@@ -499,7 +707,7 @@ node* solve10(node* head)
 
 
 
-/*/
+
 node* solve10(node* head)
 {
     int flag=0;
@@ -540,7 +748,7 @@ node* solve10(node* head)
                 copy_node(ptr2, &tmp2);
                 copy_node(ptr3, &tmp3);
                 flag=0;
-                
+
                 ptr1->next=ptr3;
                 free(ptr2->string);
                 free(ptr2);
@@ -584,7 +792,7 @@ node* solve10(node* head)
             printf("DELETED 1\n");
             print_node(100, base.next);
         }
-        
+
         else
         {
             if (flag==1)
@@ -601,7 +809,7 @@ node* solve10(node* head)
                 copy_node(ptr2, &tmp2);
                 copy_node(ptr3, &tmp3);
                 flag=0;
-                
+
                 ptr1->next=ptr3;
                 free(ptr2->string);
                 free(ptr2);
@@ -629,7 +837,7 @@ node* solve10(node* head)
             }
 
         }
-        
+
     }
     return base.next;
 }
